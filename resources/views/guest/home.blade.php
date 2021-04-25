@@ -17,7 +17,7 @@
         @foreach ($features as $feature)
             <div class="feature-item">
                 <div class="feature-item-header">
-                    <div class="feature-item-icon"><i class="far fa-heart"></i></div>
+                    <div class="feature-item-icon"><i class="far fa-heart is-red"></i></div>
                     <div class="feature-item-title">{{ $feature->title }}</div>
                 </div>
 
@@ -26,5 +26,10 @@
                 </div>
             </div>
         @endforeach
+    </div>
+
+    <h3 class="is-color-white">{{ __('app.last_members') }}</h3>
+    <div class="home-members">
+        @include('widgets.lastmembers')
     </div>
 @endsection

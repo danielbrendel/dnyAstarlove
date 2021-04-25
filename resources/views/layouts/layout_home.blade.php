@@ -5,6 +5,7 @@
         <meta name="author" content="{{ env('APP_AUTHOR') }}">
         <meta name="description" content="{{ env('APP_DESCRIPTION') }}">
         <meta name="keywords" content="{{ env('APP_KEYWORDS') }}">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>{{ env('APP_NAME') }}</title>
 
@@ -21,7 +22,7 @@
         <script src="{{ asset('js/app.js') }}"></script>
     </head>
 
-    <body style="background-image: url('{{ asset('gfx/' . \App\Models\AppModel::getBackground()) }}');">
+    <body style="background-image: url('{{ asset('gfx/backgrounds/' . \App\Models\AppModel::getBackground()) }}');">
         <div id="main" style="background-color: rgba(0, 0, 0, {{ \App\Models\AppModel::getAlphaChannel() }});">
             @include('layouts.navbar')
 
@@ -38,6 +39,8 @@
                     </div>
                 </div>
             </div>
+
+            @include('widgets.bottombar')
         </div>
     </body>
 
