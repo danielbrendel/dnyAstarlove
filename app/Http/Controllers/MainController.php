@@ -8,6 +8,21 @@ use App\Models\FeatureItemModel;
 
 class MainController extends Controller
 {
+    /**
+     * Construct object
+     * 
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
+     * Show index page according to auth status
+     * 
+     * @return mixed
+     */
     public function index()
     {
         if (\Auth::guest()) {

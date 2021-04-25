@@ -42,6 +42,16 @@ a.is-link-grey:hover {
   color: #c80000;
 }
 
+.is-online {
+  position: absolute;
+  right: 2px;
+  top: 5px;
+  width: 10px;
+  height: 10px;
+  background-color: #00c800;
+  border-radius: 50%;
+}
+
 .navbar {
   background-color: transparent;
 }

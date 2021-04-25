@@ -5,7 +5,7 @@
             <img src="{{ asset('gfx/avatars/' . $member->avatar) }}" alt="avatar">
 
             @if (\App\Models\User::isMemberOnline($member->id))
-                <span class="is-online"></span>
+                <span class="is-online" title="{{ Illuminate\Support\Carbon::parse($member->last_action)->diffForHumans() }}"></span>
             @endif 
         </div>
 
