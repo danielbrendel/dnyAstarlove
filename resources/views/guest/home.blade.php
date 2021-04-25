@@ -10,7 +10,7 @@
     </div>
 
     <div class="home-description">
-        {{ $settings->description }}
+        {!! $settings->description !!}
     </div>
 
     <div class="home-features">
