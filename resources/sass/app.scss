@@ -1,0 +1,110 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
+
+//Global
+html {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+}
+body {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    padding: 0;
+}
+a.is-underline:hover {
+    text-decoration: underline !important;
+}
+a.is-hover-black:hover {
+    color: rgb(0, 0, 0) !important;
+}
+
+//Navbar
+.navbar {
+    background-color: transparent;
+}
+.navbar-brand {
+    font-family: 'Dancing Script', 'Nunito', 'sans-serif';
+    font-size: 1.4em;
+}
+.navbar-item {
+    color: rgb(255, 255, 255);
+}
+a.navbar-item {
+    color: rgb(255, 255, 255) !important;
+}
+a.navbar-item:hover {
+    background-color: transparent;
+}
+
+//Main
+#main {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.content {
+    width: 100%;
+    min-height: 100%;
+    overflow-y: auto;
+}
+
+//Home
+.home-headline h1 {
+    color: rgb(255, 255, 255);
+    margin-bottom: 5px;
+}
+.home-subline h2 {
+    color: rgb(255, 255, 255);
+    margin-bottom: 25px;
+    font-style: italic;
+}
+.home-description {
+    color: rgb(255, 255, 255);
+    margin-top: 64px;
+}
+.home-features {
+    margin-top: 64px;
+    display: inline-block;
+    text-align: center;
+}
+
+//Home feature item
+.feature-item {
+    position: relative;
+    display: inline-block;
+    width: 350px;
+    height: 150px;
+    border-radius: 15px;
+    border-color: #ccc;
+    border-style: solid;
+    border-collapse: separate;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-bottom: 30px;
+}
+.feature-item-header {
+    height: 46px;
+    padding: 10px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    background-color: rgb(241, 126, 221);
+}
+.feature-item-icon {
+    display: inline-block;
+    margin-right: 5px;
+}
+.feature-item-title {
+    display: inline-block;
+}
+.feature-item-description {
+    padding: 10px;
+    text-align: left;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    color: rgb(200, 200, 200);
+    background-color: rgba(116, 14, 171, 0.5);
+}
