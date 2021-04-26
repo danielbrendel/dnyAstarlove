@@ -40,7 +40,13 @@ class MemberController extends Controller
      */
     public function profiles()
     {
-        return view('member.profiles');
+        try {
+            $this->validateLogin();
+
+            return view('member.profiles');
+        } catch (\Exception $e) {
+            return redirect('/')->with('error', $e->getMessage());
+        }
     }
 
     /**
@@ -73,6 +79,8 @@ class MemberController extends Controller
     public function queryProfiles()
     {
         try {
+            $this->validateLogin();
+
             $geo = (int)request('georange', env('APP_GEORANGE', 1000));
             $male = request('male', 1);
             $female = request('female', 1);
@@ -99,6 +107,8 @@ class MemberController extends Controller
     public function saveGeoLocation()
     {
         try {
+            $this->validateLogin();
+
             $latitude = request('latitude', null);
             $longitude = request('longitude', null);
 

@@ -61,6 +61,27 @@ class Controller extends BaseController
     }
 
     /**
+     * Validate login of current user
+     * 
+     * @throws \Exception
+     */
+    protected function validateLogin()
+    {
+        try {
+            if (\Auth::guest()) {
+                throw new \Exception(__('app.login_required'));
+            }
+
+            $user = User::where('id', '=', auth()->id())->first();
+            if ($user->deactivated) {
+                throw new \Exception(__('app.account_deactivated'));
+            }
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
      * Generate captcha
      * 
      * @return array

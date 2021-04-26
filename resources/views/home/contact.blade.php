@@ -50,7 +50,7 @@
                 </div>
 
                 <div class="field">
-                    <label class="label">{{ $captcha[0] }} + {{ $captcha[1] }} = ?</label>
+                    <label class="label">{{ $captchadata[0] }} + {{ $captchadata[1] }} = ?</label>
                     <div class="control">
                         <input type="text" name="captcha" required>
                     </div>

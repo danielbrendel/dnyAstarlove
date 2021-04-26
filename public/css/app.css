@@ -300,6 +300,7 @@ a.navbar-item:hover {
 }
 
 .profile-avatar img {
+  border: 2px solid #ccc;
   border-radius: 50%;
   width: 128px;
   height: 128px;
