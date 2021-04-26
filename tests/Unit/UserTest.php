@@ -45,4 +45,50 @@ class UserTest extends TestCase
         $result = User::isMemberOnline($userId);
         $this->assertTrue($result);
     }
+
+    public function testRegister()
+    {
+        $name = md5(random_bytes(55));
+        $email = $name . '@domain.tld';
+        $password = 'test';
+        $password_confirm = $password;
+
+        $id = User::register([
+            'username' => $name,
+            'email' => $email,
+            'password' => $password,
+            'password_confirmation' => $password_confirm,
+            'captcha' => null
+        ]);
+
+        $this->assertTrue($id > 0);
+
+        $user = User::where('id', '=', $id)->first();
+
+        $this->assertIsObject($user);
+        $this->assertTrue(isset($user->name));
+        $this->assertTrue(isset($user->email));
+    }
+
+    public function testQueryProfiles()
+    {
+        $result = User::queryProfiles(1000, 1, 1, 1, 18, 100, 0, null);
+
+        $this->assertIsArray($result);
+        
+        foreach ($result as $item) {
+            $this->assertTrue(isset($item->name));
+            $this->assertTrue(isset($item->avatar));
+            $this->assertTrue(isset($item->is_online));
+        }
+    }
+
+    public function testStoreGeoLocation()
+    {
+        $latitude = '10.000000';
+        $longitude = '5.000000';
+
+        $result = User::storeGeoLocation($latitude, $longitude);
+        $this->addToAssertionCount(1);
+    }
 }

@@ -69,7 +69,7 @@ class FeatureItemModel extends Model
     {
         try {
             $item = new self();
-            $item->name = $name;
+            $item->title = $title;
             $item->description = $description;
             $item->save();
         } catch (\Exception $e) {

@@ -40,4 +40,43 @@ class AppModelTest extends TestCase
 
         $this->assertIsString($result);
     }
+
+    public function testGetRegInfo()
+    {
+        $result = AppModel::getRegInfo();
+
+        $this->assertIsString($result);
+    }
+
+    public function testGetCookieConsentText()
+    {
+        $result = AppModel::getCookieConsentText();
+
+        $this->assertIsString($result);
+    }
+
+    public function testGetTermsOfService()
+    {
+        $result = AppModel::getTermsOfService();
+
+        $this->assertIsString($result);
+    }
+
+    public function testGetImprint()
+    {
+        $result = AppModel::getImprint();
+
+        $this->assertIsString($result);
+    }
+
+    public function testCreateTicket()
+    {
+        $name = md5(random_bytes(55));
+        $email = $name . '@domain.tld';
+        $subject = md5(random_bytes(55));
+        $text = md5(random_bytes(55));
+
+        $result = AppModel::createTicket($name, $email, $subject, $text);
+        $this->addToAssertionCount(1);
+    }
 }
