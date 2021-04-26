@@ -1863,7 +1863,11 @@ window.vue = new Vue({
       invalidUsername: 'The name is invalid. Please use only alphanumeric characters, numbers 0-9 and the characters \'-\' and \'_\'. Also number only identifiers are considered invalid',
       nonavailableUsername: 'The given name is already in use',
       passwordMismatching: 'The passwords do not match',
-      passwordMatching: 'The passwords do match'
+      passwordMatching: 'The passwords do match',
+      age: 'Age',
+      status: 'Status',
+      location: 'Location',
+      gender: 'Gender'
     }
   },
   methods: {
@@ -1981,6 +1985,121 @@ window.vue = new Vue({
       setTimeout(function () {
         document.getElementById('flash-success').style.display = 'none';
       }, 3500);
+    },
+    getSearchGeoRange: function getSearchGeoRange() {
+      var cookies = document.cookie.split(';');
+
+      for (var i = 0; i < cookies.length; i++) {
+        if (cookies[i].indexOf('search_georange') !== -1) {
+          return cookies[i].substr(cookies[i].indexOf('=') + 1);
+        }
+      }
+
+      return 1000;
+    },
+    setSearchGeoRange: function setSearchGeoRange(value) {
+      var expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
+      document.cookie = 'search_georange=' + value + '; expires=' + expDate.toUTCString() + ';';
+    },
+    getSearchGenderMale: function getSearchGenderMale() {
+      var cookies = document.cookie.split(';');
+
+      for (var i = 0; i < cookies.length; i++) {
+        if (cookies[i].indexOf('search_gender_male') !== -1) {
+          return parseInt(cookies[i].substr(cookies[i].indexOf('=') + 1));
+        }
+      }
+
+      return true;
+    },
+    setSearchGenderMale: function setSearchGenderMale(value) {
+      var expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
+      document.cookie = 'search_gender_male=' + value + '; expires=' + expDate.toUTCString() + ';';
+    },
+    getSearchGenderFemale: function getSearchGenderFemale() {
+      var cookies = document.cookie.split(';');
+
+      for (var i = 0; i < cookies.length; i++) {
+        if (cookies[i].indexOf('search_gender_female') !== -1) {
+          return parseInt(cookies[i].substr(cookies[i].indexOf('=') + 1));
+        }
+      }
+
+      return true;
+    },
+    setSearchGenderFemale: function setSearchGenderFemale(value) {
+      var expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
+      document.cookie = 'search_gender_female=' + value + '; expires=' + expDate.toUTCString() + ';';
+    },
+    getSearchGenderDiverse: function getSearchGenderDiverse() {
+      var cookies = document.cookie.split(';');
+
+      for (var i = 0; i < cookies.length; i++) {
+        if (cookies[i].indexOf('search_gender_diverse') !== -1) {
+          return parseInt(cookies[i].substr(cookies[i].indexOf('=') + 1));
+        }
+      }
+
+      return true;
+    },
+    setSearchGenderDiverse: function setSearchGenderDiverse(value) {
+      var expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
+      document.cookie = 'search_gender_diverse=' + value + '; expires=' + expDate.toUTCString() + ';';
+    },
+    getSearchAgeFrom: function getSearchAgeFrom() {
+      var cookies = document.cookie.split(';');
+
+      for (var i = 0; i < cookies.length; i++) {
+        if (cookies[i].indexOf('search_age_from') !== -1) {
+          return parseInt(cookies[i].substr(cookies[i].indexOf('=') + 1));
+        }
+      }
+
+      return 18;
+    },
+    setSearchAgeFrom: function setSearchAgeFrom(value) {
+      var expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
+      document.cookie = 'search_age_from=' + value + '; expires=' + expDate.toUTCString() + ';';
+    },
+    getSearchAgeTill: function getSearchAgeTill() {
+      var cookies = document.cookie.split(';');
+
+      for (var i = 0; i < cookies.length; i++) {
+        if (cookies[i].indexOf('search_age_till') !== -1) {
+          return parseInt(cookies[i].substr(cookies[i].indexOf('=') + 1));
+        }
+      }
+
+      return 100;
+    },
+    setSearchAgeTill: function setSearchAgeTill(value) {
+      var expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
+      document.cookie = 'search_age_till=' + value + '; expires=' + expDate.toUTCString() + ';';
+    },
+    getSearchOnlyOnline: function getSearchOnlyOnline() {
+      var cookies = document.cookie.split(';');
+
+      for (var i = 0; i < cookies.length; i++) {
+        if (cookies[i].indexOf('search_onlyonline') !== -1) {
+          return parseInt(cookies[i].substr(cookies[i].indexOf('=') + 1));
+        }
+      }
+
+      return false;
+    },
+    setSearchOnlyOnline: function setSearchOnlyOnline(value) {
+      var expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
+      document.cookie = 'search_onlyonline=' + value + '; expires=' + expDate.toUTCString() + ';';
+    },
+    renderProfileForm: function renderProfileForm(elem) {
+      var online = '';
+
+      if (elem.is_online) {
+        online = '<span class="profile-avatar-online"></span>';
+      }
+
+      var html = "\n                <div class=\"profile\">\n                    <div class=\"profile-avatar\">\n                        <a href=\"" + window.location.origin + '/user/' + elem.name + "\"><img src=\"" + window.location.origin + '/gfx/avatars/' + elem.avatar + "\" alt=\"avatar\"></a>\n                        " + online + "\n                    </div>\n\n                    <div class=\"profile-name\"><a href=\"" + window.location.origin + '/user/' + elem.name + "\">" + elem.name + "</a></div>\n\n                    <div class=\"profile-info\">\n                        <div><strong>" + this.translationTable.age + ": </strong>" + elem.age + "</div>\n                        <div><strong>" + this.translationTable.status + ": </strong>" + elem.rel_status + "</div>\n                        <div><strong>" + this.translationTable.location + ": </strong>" + elem.location + "</div>\n                        <div><strong>" + this.translationTable.gender + ": </strong>" + elem.gender + "</div>\n                    </div>\n\n                    <div class=\"profile-introduction\">\n                        " + elem.introduction + "\n                    </div>\n                </div>\n            ";
+      return html;
     }
   }
 });

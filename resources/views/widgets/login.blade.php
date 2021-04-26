@@ -46,7 +46,7 @@
 
                 <div>
                     <br/>
-                    <a href="javascript:void(0);" onclick="window.vue.bShowRegister = true; window.vue.bShowLogin = false;">{{ __('app.no_account_yet') }}</a>
+                    <a class="is-link-blue" href="javascript:void(0);" onclick="window.vue.bShowRegister = true; window.vue.bShowLogin = false;">{{ __('app.no_account_yet') }}</a>
                 </div>
             </section>
             <footer class="modal-card-foot is-stretched">
@@ -55,7 +55,7 @@
             </span>
             <span class="is-right">
                 <div class="recover-pw">
-                    <center><a href="javascript:void(0)" onclick="window.vue.bShowRecover = true; window.vue.bShowLogin = false;">{{ __('app.recover_password') }}</a></center>
+                    <center><a class="is-link-blue" href="javascript:void(0)" onclick="window.vue.bShowRecover = true; window.vue.bShowLogin = false;">{{ __('app.recover_password') }}</a></center>
                 </div>
             </span>
             </footer>

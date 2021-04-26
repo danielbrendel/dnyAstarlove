@@ -29,6 +29,11 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     /**
+     * @var int
+     */
+    const INTRODUCTION_SHORT_DISPLAY_LEN = 145;
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -128,6 +133,21 @@ class User extends Authenticatable
     }
 
     /**
+     * Get user by auth id
+     * 
+     * @return mixed
+     * @throws \Exception
+     */
+    public static function getByAuthId()
+    {
+        try {
+            return static::where('id', '=', auth()->id())->first();
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
      * Return if string is a valid identifier for user name
      * 
      * @param $ident
@@ -183,6 +203,7 @@ class User extends Authenticatable
             $user->name = $attr['username'];
             $user->password = password_hash($attr['password'], PASSWORD_BCRYPT);
             $user->email = $attr['email'];
+            $user->email_verified_at = date('Y-m-d H:i:s');
             $user->avatar = 'default.png';
             $user->account_confirm = md5($attr['email'] . $attr['username'] . random_bytes(55));
             $user->save();
@@ -285,6 +306,120 @@ class User extends Authenticatable
             $user->password = password_hash($password, PASSWORD_BCRYPT);
             $user->password_reset = '';
             $user->save();
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Query user profiles
+     * 
+     * @param $range
+     * @param $male
+     * @param $female
+     * @param $diverse
+     * @param $from
+     * @param $till
+     * @param $online
+     * @param $paginate
+     * @return array
+     * @throws \Exception
+     */
+    public static function queryProfiles($range, $male, $female, $diverse, $from, $till, $online, $paginate = null)
+    {
+        try {
+            $user = static::getByAuthId();
+
+            $query = \DB::table(with(new self)->getTable())
+                ->select(\DB::raw('id, name, avatar, birthday, gender, realname, rel_status, last_action, introduction, location, latitude, longitude, SQRT(POW(69.1 * (latitude - ' . $user->latitude . '), 2) + POW(69.1 * (' . $user->longitude . ' - longitude) * COS(latitude / 57.3), 2)) AS distance'))
+                ->where('deactivated', '=', false)
+                ->where('account_confirm', '=', '_confirmed')
+                ->where('id', '<>', $user->id)
+                ->havingRaw('distance <= ?', [$range]);
+
+            $gender = array();
+            if ($male) {
+                $gender[] = 1;
+            }
+            if ($female) {
+                $gender[] = 2;
+            }
+            if ($diverse) {
+                $gender[] = 3;
+            }
+
+            $query->whereRaw('(gender IN (' . implode(',', $gender) . '))');
+
+            if (($from !== null) && (is_numeric($from))) {
+                $query->whereRaw('TIMESTAMPDIFF(YEAR, birthday, CURDATE()) >= ?', [(int)$from]);
+            }
+
+            if (($till !== null) && (is_numeric($till))) {
+                $query->whereRaw('TIMESTAMPDIFF(YEAR, birthday, CURDATE()) <= ?', [(int)$till]);
+            }
+
+            if ($online) {
+                $query->whereRaw('TIMESTAMPDIFF(MINUTE, last_action, CURDATE()) <= ?', [(int)env('APP_ONLINEMINUTELIMIT', 30)]);
+            }
+
+            if ($paginate !== null) {
+                $query->where('last_action', '<', $paginate);
+            }
+
+            $query->orderBy('last_action', 'desc')->limit(env('APP_MAXUSERPACK', 30));
+
+            $items = $query->get();
+
+            foreach ($items as &$item) {
+                if (strlen($item->introduction) >= self::INTRODUCTION_SHORT_DISPLAY_LEN) {
+                    $item->introduction = substr($item->introduction, 0, self::INTRODUCTION_SHORT_DISPLAY_LEN) . ' ...';
+                }
+
+                switch ($item->gender) {
+                    case 1:
+                        $item->gender = __('app.gender_male');
+                        break;
+                    case 2:
+                        $item->gender = __('app.gender_female');
+                        break;
+                    case 3:
+                        $item->gender = __('app.gender_diverse');
+                        break;
+                    default:
+                        $item->gender = __('app.gender_unspecified');
+                        break;
+                }
+
+                $item->age = Carbon::parse($user->birthday)->age;
+
+                $item->is_online = static::isMemberOnline($item->id);
+            }
+
+            return $items->toArray();
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Save geo position of user
+     *
+     * @param $latitude
+     * @param $longitude
+     * @return void
+     * @throws Exception
+     */
+    public static function storeGeoLocation($latitude, $longitude)
+    {
+        try {
+            $item = static::where('deactivated', '=', false)->where('id', '=', auth()->id())->first();
+            if (!$item) {
+                throw new \Exception(__('app.user_not_found_or_deactivated'));
+            }
+
+            $item->latitude = $latitude;
+            $item->longitude = $longitude;
+            $item->save();
         } catch (\Exception $e) {
             throw $e;
         }

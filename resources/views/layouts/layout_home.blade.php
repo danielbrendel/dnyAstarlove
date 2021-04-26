@@ -140,6 +140,23 @@
 
         <script src="{{ asset('js/app.js') }}"></script>
         <script>
+            window.transferGeolocation = function(geodata) {
+                let latitude = geodata.coords.latitude;
+                let longitude = geodata.coords.longitude;
+
+                window.vue.ajaxRequest('post', '{{ url('/member/geo') }}', { latitude: latitude, longitude: longitude }, function(response) {
+                    if (response.code == 500) {
+                        console.error(response.msg);
+                    }
+                });
+            };
+
+            window.queryGeoLocation = function() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(window.transferGeolocation);
+                }
+            };
+
             document.addEventListener('DOMContentLoaded', function() {
                 @if (Session::has('flash.error'))
                     setTimeout('window.vue.showError()', 500);
@@ -148,7 +165,20 @@
                 @if (Session::has('flash.success'))
                     setTimeout('window.vue.showSuccess()', 500);
                 @endif
+
+                @auth
+                    window.geoLoopTransmission = function() {
+                        window.queryGeoLocation();
+
+                        setTimeout('window.geoLoopTransmission()', 1000 * 150)
+                    }
+
+                    @if ((!isset($_GET['clep_geo'])) || ($_GET['clep_geo'] == 0))
+                        setTimeout('window.geoLoopTransmission()', 2500);
+                    @endif
+                @endauth
             });
         </script>
+        @yield('javascript')
     </body>
 </html>

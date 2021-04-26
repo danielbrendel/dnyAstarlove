@@ -34,6 +34,16 @@ class MemberController extends Controller
     }
 
     /**
+     * Show profiles page
+     * 
+     * @return \Illuminate\View\View
+     */
+    public function profiles()
+    {
+        return view('member.profiles');
+    }
+
+    /**
      * Check for username availability and identifier validity
      *
      * @return \Illuminate\Http\JsonResponse
@@ -51,6 +61,51 @@ class MemberController extends Controller
 
             return response()->json(array('code' => 200, 'data' => $data));
         } catch (\Exception $e) {
+            return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
+        }
+    }
+
+    /**
+     * Query user profiles
+     * 
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function queryProfiles()
+    {
+        try {
+            $geo = (int)request('georange', env('APP_GEORANGE', 1000));
+            $male = request('male', 1);
+            $female = request('female', 1);
+            $diverse = request('diverse', 1);
+            $from = request('from', 18);
+            $till = request('till', 100);
+            $online = request('online', false);
+            $paginate = request('paginate', null);
+
+            $data = User::queryProfiles($geo, $male, $female, $diverse, $from, $till, $online, $paginate);
+
+            return response()->json(array('code' => 200, 'data' => $data));
+        } catch (\Exception $e) {
+            return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
+        }
+    }
+
+    /**
+     * Store member geo position
+     *
+     * @return \Illuminate\Http\JsonResponse
+     * @throws Exception
+     */
+    public function saveGeoLocation()
+    {
+        try {
+            $latitude = request('latitude', null);
+            $longitude = request('longitude', null);
+
+            User::storeGeoLocation($latitude, $longitude);
+
+            return response()->json(array('code' => 200));
+        } catch (Exception $e) {
             return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
         }
     }

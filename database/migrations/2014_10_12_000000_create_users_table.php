@@ -40,6 +40,7 @@ class CreateUsersTable extends Migration
             $table->string('realname')->nullable();
             $table->integer('height')->nullable();
             $table->integer('weight')->nullable();
+            $table->string('rel_status')->nullable();
             $table->string('introduction', 1024)->nullable();
             $table->string('interests', 1024)->nullable();
             $table->string('music', 1024)->nullable();

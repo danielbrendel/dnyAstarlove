@@ -25,6 +25,10 @@ window.vue = new Vue({
             nonavailableUsername: 'The given name is already in use',
             passwordMismatching: 'The passwords do not match',
             passwordMatching: 'The passwords do match',
+            age: 'Age',
+            status: 'Status',
+            location: 'Location',
+            gender: 'Gender',
         },
     },
 
@@ -152,7 +156,157 @@ window.vue = new Vue({
         {
             document.getElementById('flash-success').style.display = 'inherit';
             setTimeout(function() { document.getElementById('flash-success').style.display = 'none'; }, 3500);
-        }
+        },
+
+        getSearchGeoRange: function () {
+            let cookies = document.cookie.split(';');
+
+            for (let i = 0; i < cookies.length; i++) {
+                if (cookies[i].indexOf('search_georange') !== -1) {
+                    return cookies[i].substr(cookies[i].indexOf('=') + 1);
+                }
+            }
+
+            return 1000;
+        },
+
+        setSearchGeoRange: function(value) {
+            let expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
+            document.cookie = 'search_georange=' + value + '; expires=' + expDate.toUTCString() + ';';
+        },
+
+        getSearchGenderMale: function () {
+            let cookies = document.cookie.split(';');
+
+            for (let i = 0; i < cookies.length; i++) {
+                if (cookies[i].indexOf('search_gender_male') !== -1) {
+                    return parseInt(cookies[i].substr(cookies[i].indexOf('=') + 1));
+                }
+            }
+
+            return true;
+        },
+
+        setSearchGenderMale: function(value) {
+            let expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
+            document.cookie = 'search_gender_male=' + value + '; expires=' + expDate.toUTCString() + ';';
+        },
+
+        getSearchGenderFemale: function () {
+            let cookies = document.cookie.split(';');
+
+            for (let i = 0; i < cookies.length; i++) {
+                if (cookies[i].indexOf('search_gender_female') !== -1) {
+                    return parseInt(cookies[i].substr(cookies[i].indexOf('=') + 1));
+                }
+            }
+
+            return true;
+        },
+
+        setSearchGenderFemale: function(value) {
+            let expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
+            document.cookie = 'search_gender_female=' + value + '; expires=' + expDate.toUTCString() + ';';
+        },
+
+        getSearchGenderDiverse: function () {
+            let cookies = document.cookie.split(';');
+
+            for (let i = 0; i < cookies.length; i++) {
+                if (cookies[i].indexOf('search_gender_diverse') !== -1) {
+                    return parseInt(cookies[i].substr(cookies[i].indexOf('=') + 1));
+                }
+            }
+
+            return true;
+        },
+
+        setSearchGenderDiverse: function(value) {
+            let expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
+            document.cookie = 'search_gender_diverse=' + value + '; expires=' + expDate.toUTCString() + ';';
+        },
+
+        getSearchAgeFrom: function () {
+            let cookies = document.cookie.split(';');
+
+            for (let i = 0; i < cookies.length; i++) {
+                if (cookies[i].indexOf('search_age_from') !== -1) {
+                    return parseInt(cookies[i].substr(cookies[i].indexOf('=') + 1));
+                }
+            }
+
+            return 18;
+        },
+
+        setSearchAgeFrom: function(value) {
+            let expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
+            document.cookie = 'search_age_from=' + value + '; expires=' + expDate.toUTCString() + ';';
+        },
+
+        getSearchAgeTill: function () {
+            let cookies = document.cookie.split(';');
+
+            for (let i = 0; i < cookies.length; i++) {
+                if (cookies[i].indexOf('search_age_till') !== -1) {
+                    return parseInt(cookies[i].substr(cookies[i].indexOf('=') + 1));
+                }
+            }
+
+            return 100;
+        },
+
+        setSearchAgeTill: function(value) {
+            let expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
+            document.cookie = 'search_age_till=' + value + '; expires=' + expDate.toUTCString() + ';';
+        },
+
+        getSearchOnlyOnline: function () {
+            let cookies = document.cookie.split(';');
+
+            for (let i = 0; i < cookies.length; i++) {
+                if (cookies[i].indexOf('search_onlyonline') !== -1) {
+                    return parseInt(cookies[i].substr(cookies[i].indexOf('=') + 1));
+                }
+            }
+
+            return false;
+        },
+
+        setSearchOnlyOnline: function(value) {
+            let expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
+            document.cookie = 'search_onlyonline=' + value + '; expires=' + expDate.toUTCString() + ';';
+        },
+
+        renderProfileForm: function(elem) {
+            let online = '';
+            if (elem.is_online) {
+                online = '<span class="profile-avatar-online"></span>';
+            }
+
+            let html = `
+                <div class="profile">
+                    <div class="profile-avatar">
+                        <a href="` + window.location.origin + '/user/' + elem.name + `"><img src="` + window.location.origin + '/gfx/avatars/' + elem.avatar + `" alt="avatar"></a>
+                        ` + online + `
+                    </div>
+
+                    <div class="profile-name"><a href="` + window.location.origin + '/user/' + elem.name + `">` + elem.name + `</a></div>
+
+                    <div class="profile-info">
+                        <div><strong>` + this.translationTable.age + `: </strong>` + elem.age + `</div>
+                        <div><strong>` + this.translationTable.status + `: </strong>` + elem.rel_status + `</div>
+                        <div><strong>` + this.translationTable.location + `: </strong>` + elem.location + `</div>
+                        <div><strong>` + this.translationTable.gender + `: </strong>` + elem.gender + `</div>
+                    </div>
+
+                    <div class="profile-introduction">
+                        ` + elem.introduction + `
+                    </div>
+                </div>
+            `;
+
+            return html;
+        },
     }
 });
 

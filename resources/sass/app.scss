@@ -76,10 +76,10 @@ a.is-link-grey:hover {
     cursor: pointer;
 }
 a.is-link-blue {
-    color: rgb(0, 0, 255);
+    color: rgb(0, 162, 232);
 }
 a.is-link-blue:hover {
-    color: rgb(0, 0, 255);
+    color: rgb(0, 162, 232);
     text-decoration: underline;
 }
 
@@ -239,4 +239,63 @@ a.navbar-item:hover {
 }
 .is-flash-success {
     background-color: rgb(50, 202, 50);
+}
+
+//Profiles
+.profiles-filter {
+    margin-top: 5px;
+}
+.profiles-filter-options {
+    margin-top: 25px;
+}
+.profile {
+    position: relative;
+    display: inline-block;
+    width: 286px;
+    height: 390px;
+    margin-bottom: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: rgb(220, 220, 220);
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.profile-avatar {
+    position: relative;
+    margin-top: 10px;
+    text-align: center;
+}
+.profile-avatar.is-online {
+    right: -50px;
+}
+.profile-avatar img {
+    border-radius: 50%;
+    width: 128px;
+    height: 128px;
+}
+.profile-avatar-online {
+    position: absolute;
+    right: 87px;
+    top: 19px;
+    width: 10px;
+    height: 10px;
+    background-color: rgb(0, 200, 0);
+    border-radius: 50%;
+}
+.profile-name {
+    position: relative;
+    font-size: 1.5em;
+    font-family: 'Nunito', 'sans-serif';
+    text-align: center;
+}
+.profile-info {
+    position: relative;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.profile-introduction {
+    margin-top: 15px;
+    font-size: 0.8em;
+    font-style: italic;
+    padding: 10px;
 }

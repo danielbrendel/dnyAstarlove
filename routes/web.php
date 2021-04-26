@@ -30,4 +30,7 @@ Route::post('/recover', [MainController::class, 'recover']);
 Route::get('/resend/{id}', [MainController::class, 'resend']);
 Route::post('/reset', [MainController::class, 'reset']);
 
+Route::get('/profiles', [MemberController::class, 'profiles']);
 Route::any('/member/name/valid', [MemberController::class, 'nameValidity']);
+Route::any('/profiles/query', [MemberController::class, 'queryProfiles']);
+Route::any('/member/geo', [MemberController::class, 'saveGeoLocation']);
