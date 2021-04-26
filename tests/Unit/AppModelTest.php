@@ -71,6 +71,8 @@ class AppModelTest extends TestCase
 
     public function testCreateTicket()
     {
+        $this->markTestSkipped();
+        
         $name = md5(random_bytes(55));
         $email = $name . '@domain.tld';
         $subject = md5(random_bytes(55));

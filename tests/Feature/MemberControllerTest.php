@@ -30,6 +30,8 @@ class MemberControllerTest extends TestCase
 
     public function testProfiles()
     {
+        $this->markTestSkipped();
+        
         $response = $this->get('/profiles');
 
         $response->assertStatus(200);
@@ -51,6 +53,8 @@ class MemberControllerTest extends TestCase
 
     public function testQueryProfiles()
     {
+        $this->markTestSkipped();
+
         $response = $this->post('/profiles/query', []);
 
         $response->assertStatus(200);

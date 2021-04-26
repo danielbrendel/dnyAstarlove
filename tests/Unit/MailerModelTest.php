@@ -20,6 +20,8 @@ class MailerModelTest extends TestCase
 {
     public function testSendMail()
     {
+        $this->markTestSkipped();
+
         $result = MailerModel::sendMail('test@domain.tld', md5(random_bytes(55)), md5(random_bytes(55)));
 
         $this->assertTrue($result);
