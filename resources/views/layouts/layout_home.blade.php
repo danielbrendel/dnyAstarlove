@@ -22,6 +22,8 @@
 
         <link rel="stylesheet" type="text/css" href="{{ asset('css/bulma.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/metro-all.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/quill.core.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/quill.snow.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
 
         @if (env('APP_ENV') === 'production')
@@ -31,6 +33,7 @@
         @endif
         <script src="{{ asset('js/fontawesome.js') }}"></script>
         <script src="{{ asset('js/metro.min.js') }}"></script>
+        <script src="{{ asset('js/quill.min.js') }}"></script>
     </head>
 
     <body style="background-image: url('{{ asset('gfx/backgrounds/' . \App\Models\AppModel::getBackground()) }}');">

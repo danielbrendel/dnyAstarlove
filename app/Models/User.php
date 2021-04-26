@@ -101,6 +101,22 @@ class User extends Authenticatable
     }
 
     /**
+     * Get user by ID
+     * 
+     * @param $id
+     * @return mixed
+     * @throws \Exception
+     */
+    public static function get($id)
+    {
+        try {
+            return static::where('id', '=', $id)->first();
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
      * Get user by name
      * 
      * @param $name

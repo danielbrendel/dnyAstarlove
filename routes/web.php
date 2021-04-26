@@ -14,6 +14,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\MessageController;
 
 Route::get('/', [MainController::class, 'index']);
 Route::get('/faq', [MainController::class, 'faq']);
@@ -34,3 +35,10 @@ Route::get('/profiles', [MemberController::class, 'profiles']);
 Route::any('/member/name/valid', [MemberController::class, 'nameValidity']);
 Route::post('/profiles/query', [MemberController::class, 'queryProfiles']);
 Route::any('/member/geo', [MemberController::class, 'saveGeoLocation']);
+
+Route::get('/messages', [MessageController::class, 'list']);
+Route::get('/messages/list', [MessageController::class, 'fetchList']);
+Route::get('/messages/show/{id}', [MessageController::class, 'show']);
+Route::get('/messages/create', [MessageController::class, 'create']);
+Route::post('/messages/send', [MessageController::class, 'send']);
+Route::any('/messages/unread/count', [MessageController::class, 'unreadCount']);

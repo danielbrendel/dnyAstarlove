@@ -307,6 +307,30 @@ window.vue = new Vue({
 
             return html;
         },
+
+        renderMessageListItem: function(item) {
+            let html = `
+                <div class="messages-item ` + ((!item.seen) ? 'is-new-message' : '') + `">
+                    <div class="messages-item-avatar">
+                        <img src="` + window.location.origin + `/gfx/avatars/` + item.user.avatar + `">
+                    </div>
+        
+                    <div class="messages-item-name">
+                        <a href="` + window.location.origin + `/u/` + item.user.name + `">` + item.user.name + `</a>
+                    </div>
+        
+                    <div class="messages-item-subject">
+                        <a href="` + window.location.origin + `/messages/show/` + item.id + `">` + item.subject + `</a>
+                    </div>
+        
+                    <div class="messages-item-date" title="` + item.created_at + `">
+                        ` + item.diffForHumans + `
+                    </div>
+                </div>
+            `;
+        
+            return html;
+        },
     }
 });
 

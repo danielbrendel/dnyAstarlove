@@ -61,5 +61,14 @@ return [
     'genders' => 'Genders',
     'only_online_profiles' => 'Show only online users',
     'search' => 'Search',
-    'no_more_profiles' => 'No more profiles found'
+    'no_more_profiles' => 'No more profiles found',
+    'create' => 'Create',
+    'no_messages' => 'No messages found',
+    'type_something' => 'Type something...',
+    'username' => 'Username',
+    'subject' => 'Subject',
+    'text' => 'Text',
+    'message_thread' => 'Conversation with :name',
+    'send' => 'Send',
+    'message_sent' => 'Message has been sent'
 ];
