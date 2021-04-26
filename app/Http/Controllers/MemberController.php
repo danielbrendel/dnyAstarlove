@@ -14,6 +14,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use App\Models\User;
 
 /**
@@ -117,6 +118,48 @@ class MemberController extends Controller
             return response()->json(array('code' => 200));
         } catch (Exception $e) {
             return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
+        }
+    }
+
+    /**
+     * Show user profile
+     * 
+     * @return mixed
+     */
+    public function showUser($name)
+    {
+        try {
+            $user = User::getByName($name);
+
+            if ((!$user) || ($user->deactivated)) {
+                throw new \Exception(__('app.user_not_found_or_deactivated'));
+            }
+
+            $user->age = Carbon::parse($user->birthday)->age;
+
+            switch ($user->gender) {
+                case User::GENDER_MALE:
+                    $user->gender = __('app.gender_male');
+                    break;
+                case User::GENDER_FEMALE:
+                    $user->gender = __('app.gender_female');
+                    break;
+                case User::GENDER_DIVERSE:
+                    $user->gender = __('app.gender_diverse');
+                    break;
+                default:
+                    $user->gender = __('app.gender_unspecified');
+                    break;
+            }
+
+            $user->is_online = User::isMemberOnline($user->id);
+            $user->last_seen = Carbon::parse($user->last_action)->diffForHumans();
+
+            return view('member.profile', [
+                'user' => $user
+            ]);
+        } catch (\Exception $e) {
+            return redirect('/')->with('error', $e->getMessage());
         }
     }
 }

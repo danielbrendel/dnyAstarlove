@@ -43,6 +43,10 @@
             {{ __('app.notifications') }}
         </a>
 
+        <a class="navbar-item" href="{{ url('/user/' . \App\Models\User::get(auth()->id())->name) }}">
+            {{ __('app.profile') }}
+        </a>
+
         <a class="navbar-item" href="{{ url('/settings') }}">
             {{ __('app.settings') }}
         </a>

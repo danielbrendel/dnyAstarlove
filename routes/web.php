@@ -35,6 +35,7 @@ Route::get('/profiles', [MemberController::class, 'profiles']);
 Route::any('/member/name/valid', [MemberController::class, 'nameValidity']);
 Route::post('/profiles/query', [MemberController::class, 'queryProfiles']);
 Route::any('/member/geo', [MemberController::class, 'saveGeoLocation']);
+Route::get('/user/{name}', [MemberController::class, 'showUser']);
 
 Route::get('/messages', [MessageController::class, 'list']);
 Route::get('/messages/list', [MessageController::class, 'fetchList']);

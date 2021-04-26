@@ -71,6 +71,9 @@ a.is-link-grey:hover {
     padding: 25px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    @media screen and (min-width: 1089px) {
+        margin-top: 55px;
+    }
 }
 .is-pointer {
     cursor: pointer;
@@ -84,6 +87,9 @@ a.is-link-blue:hover {
 }
 .is-color-grey {
     color: rgb(150, 150, 150);
+}
+.is-color-green {
+    color: rgb(34, 198, 91);
 }
 
 //Navbar
@@ -395,4 +401,85 @@ a.navbar-item:hover {
 .message-thread-text {
     color: rgb(150, 150, 150);
     margin-left: 25px;
+}
+
+//User information
+.user {
+    position: relative;
+    width: 100%;
+}
+.user-frame-top {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+.user-frame-left {
+    display: inline-block;
+    width: 35%;
+    @media screen and (max-width: 512px) {
+        width: 100%;
+    }
+    margin-bottom: 25px;
+}
+.user-frame-right {
+    display: inline-block;
+    width: 64%;
+    vertical-align: top;
+    @media screen and (max-width: 512px) {
+        width: 100%;
+    }
+    margin-bottom: 25px;
+}
+.user-frame-bottom {
+    position: relative;
+}
+.user-photos-avatar img {
+    width: 256px;
+    height: 256px;
+}
+.user-photos-photo {
+    display: inline-block;
+}
+.user-photos-photo img {
+    width: 82px;
+    height: 82px;
+}
+.user-name {
+    color: rgb(150, 150, 150);
+}
+.user-realname {
+    color: rgb(0, 0, 0);
+    font-size: 1.4em;
+    font-weight: bold;
+}
+.user-online {
+    margin-top: 10px;
+    font-size: 0.9em;
+}
+.user-baseinfos {
+    margin-top: 15px;
+    color: rgb(100, 100, 100);
+}
+.user-introduction {
+    margin-top: 15px;
+    font-style: italic;
+    color: rgb(100, 100, 100);
+    padding: 15px;
+    height: 134px;
+    overflow-y: auto;
+    background-color: rgb(200, 200, 200);
+    border-radius: 5px;
+}
+.user-options {
+    margin-top: 25px;
+    vertical-align: bottom;
+}
+.user-frame-bottom {
+    margin-top: 25px;
+}
+.user-text-info {
+    margin-top: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgb(150, 150, 150);
+    font-style: italic;
 }

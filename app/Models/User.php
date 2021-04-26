@@ -33,6 +33,10 @@ class User extends Authenticatable
      */
     const INTRODUCTION_SHORT_DISPLAY_LEN = 145;
 
+    const GENDER_MALE = 1;
+    const GENDER_FEMALE = 2;
+    const GENDER_DIVERSE = 3;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -371,13 +375,13 @@ class User extends Authenticatable
 
             $gender = array();
             if ($male) {
-                $gender[] = 1;
+                $gender[] = static::GENDER_MALE;
             }
             if ($female) {
-                $gender[] = 2;
+                $gender[] = static::GENDER_FEMALE;
             }
             if ($diverse) {
-                $gender[] = 3;
+                $gender[] = static::GENDER_DIVERSE;
             }
 
             $query->whereRaw('(gender IN (' . implode(',', $gender) . '))');
@@ -408,13 +412,13 @@ class User extends Authenticatable
                 }
 
                 switch ($item->gender) {
-                    case 1:
+                    case static::GENDER_MALE:
                         $item->gender = __('app.gender_male');
                         break;
-                    case 2:
+                    case static::GENDER_FEMALE:
                         $item->gender = __('app.gender_female');
                         break;
-                    case 3:
+                    case static::GENDER_DIVERSE:
                         $item->gender = __('app.gender_diverse');
                         break;
                     default:

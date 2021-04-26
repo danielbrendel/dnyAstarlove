@@ -35,6 +35,9 @@ class CreateUsersTable extends Migration
             $table->dateTime('last_action')->useCurrent(); //Use to determine online status
             $table->boolean('admin')->default(false);
             $table->string('avatar');
+            $table->string('photo1')->nullable();
+            $table->string('photo2')->nullable();
+            $table->string('photo3')->nullable();
             $table->integer('gender')->default(0); //0 = unspecified, 1 = male, 2 = female, 3 = diverse
             $table->dateTime('birthday')->nullable();
             $table->string('realname')->nullable();

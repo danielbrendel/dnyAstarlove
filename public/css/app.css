@@ -81,6 +81,11 @@ a.is-link-grey:hover {
   border: 1px solid #ccc;
   border-radius: 5px;
 }
+@media screen and (min-width: 1089px) {
+  .form {
+    margin-top: 55px;
+  }
+}
 
 .is-pointer {
   cursor: pointer;
@@ -97,6 +102,10 @@ a.is-link-blue:hover {
 
 .is-color-grey {
   color: #969696;
+}
+
+.is-color-green {
+  color: #22c65b;
 }
 
 .navbar {
@@ -452,4 +461,103 @@ a.navbar-item:hover {
 .message-thread-text {
   color: #969696;
   margin-left: 25px;
+}
+
+.user {
+  position: relative;
+  width: 100%;
+}
+
+.user-frame-top {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.user-frame-left {
+  display: inline-block;
+  width: 35%;
+  margin-bottom: 25px;
+}
+@media screen and (max-width: 512px) {
+  .user-frame-left {
+    width: 100%;
+  }
+}
+
+.user-frame-right {
+  display: inline-block;
+  width: 64%;
+  vertical-align: top;
+  margin-bottom: 25px;
+}
+@media screen and (max-width: 512px) {
+  .user-frame-right {
+    width: 100%;
+  }
+}
+
+.user-frame-bottom {
+  position: relative;
+}
+
+.user-photos-avatar img {
+  width: 256px;
+  height: 256px;
+}
+
+.user-photos-photo {
+  display: inline-block;
+}
+
+.user-photos-photo img {
+  width: 82px;
+  height: 82px;
+}
+
+.user-name {
+  color: #969696;
+}
+
+.user-realname {
+  color: black;
+  font-size: 1.4em;
+  font-weight: bold;
+}
+
+.user-online {
+  margin-top: 10px;
+  font-size: 0.9em;
+}
+
+.user-baseinfos {
+  margin-top: 15px;
+  color: #646464;
+}
+
+.user-introduction {
+  margin-top: 15px;
+  font-style: italic;
+  color: #646464;
+  padding: 15px;
+  height: 134px;
+  overflow-y: auto;
+  background-color: #c8c8c8;
+  border-radius: 5px;
+}
+
+.user-options {
+  margin-top: 25px;
+  vertical-align: bottom;
+}
+
+.user-frame-bottom {
+  margin-top: 25px;
+}
+
+.user-text-info {
+  margin-top: 15px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #969696;
+  font-style: italic;
 }
