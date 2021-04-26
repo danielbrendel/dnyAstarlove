@@ -15,7 +15,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFeatureItemModelsTable extends Migration
+class CreateCaptchaModelsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -24,10 +24,10 @@ class CreateFeatureItemModelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('feature_item_models', function (Blueprint $table) {
+        Schema::create('captcha_models', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('description', 1024);
+            $table->string('hash');
+            $table->string('sum');
             $table->timestamps();
         });
     }
@@ -39,6 +39,6 @@ class CreateFeatureItemModelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('feature_item_models');
+        Schema::dropIfExists('captcha_models');
     }
 }

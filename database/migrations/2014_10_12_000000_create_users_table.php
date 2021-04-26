@@ -1,5 +1,16 @@
 <?php
 
+/*
+    Astarlove (dnyAstarlove) developed by Daniel Brendel
+
+    (C) 2021 by Daniel Brendel
+
+    Contact: dbrendel1988<at>gmail<dot>com
+    GitHub: https://github.com/danielbrendel/
+
+    Released under the MIT license
+*/
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,8 +31,9 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('account_confirm');
-            $table->string('password_reset');
+            $table->string('password_reset')->nullable();
             $table->dateTime('last_action')->useCurrent(); //Use to determine online status
+            $table->boolean('admin')->default(false);
             $table->string('avatar');
             $table->integer('gender')->default(0); //0 = unspecified, 1 = male, 2 = female, 3 = diverse
             $table->dateTime('birthday')->nullable();
@@ -32,6 +44,10 @@ class CreateUsersTable extends Migration
             $table->string('interests', 1024)->nullable();
             $table->string('music', 1024)->nullable();
             $table->string('job', 1024)->nullable();
+            $table->string('location')->nullable();
+            $table->decimal('latitude', 10, 8)->nullable();
+            $table->decimal('longitude', 11, 8)->nullable();
+            $table->boolean('deactivated')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

@@ -1,3 +1,14 @@
+/*
+    Astarlove (dnyAstarlove) developed by Daniel Brendel
+
+    (C) 2021 by Daniel Brendel
+
+    Contact: dbrendel1988<at>gmail<dot>com
+    GitHub: https://github.com/danielbrendel/
+
+    Released under the MIT license
+*/
+
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
@@ -13,6 +24,13 @@ body {
     height: 100%;
     background-size: cover;
     padding: 0;
+}
+a {
+    color: rgb(50, 50, 50);
+}
+a:hover {
+    color: rgb(80, 80, 80);
+    text-decoration: underline;
 }
 a.is-underline:hover {
     text-decoration: underline !important;
@@ -44,6 +62,25 @@ a.is-link-grey:hover {
     height: 10px;
     background-color: rgb(0, 200, 0);
     border-radius: 50%;
+}
+.is-stretched {
+    width: 100%;
+}
+.form {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 25px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.is-pointer {
+    cursor: pointer;
+}
+a.is-link-blue {
+    color: rgb(0, 0, 255);
+}
+a.is-link-blue:hover {
+    color: rgb(0, 0, 255);
+    text-decoration: underline;
 }
 
 //Navbar
@@ -175,6 +212,31 @@ a.navbar-item:hover {
 }
 .bottombar-content {
     position: relative;
-    top: 15px;
+    top: 19px;
     text-align: center;
+    font-size: 0.7em;
+}
+
+//Flash messages
+.flash {
+    position: fixed;
+    left: 20%;
+    top: 105px;
+    width: 50%;
+    z-index: 3;
+    word-wrap: break-word;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    display: none;
+}
+.flash p {
+    position: relative;
+    margin: 10px;
+    color: rgb(255, 255, 255);
+}
+.is-flash-error {
+    background-color: rgb(255, 117, 117);
+}
+.is-flash-success {
+    background-color: rgb(50, 202, 50);
 }

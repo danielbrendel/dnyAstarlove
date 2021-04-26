@@ -1,5 +1,16 @@
 <?php
 
+/*
+    Astarlove (dnyAstarlove) developed by Daniel Brendel
+
+    (C) 2021 by Daniel Brendel
+
+    Contact: dbrendel1988<at>gmail<dot>com
+    GitHub: https://github.com/danielbrendel/
+
+    Released under the MIT license
+*/
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,6 +31,10 @@ class CreateAppModelsTable extends Migration
             $table->string('headline')->nullable();
             $table->string('subline')->nullable();
             $table->text('description')->nullable();
+            $table->string('reg_info')->default('');
+            $table->string('cookie_consent', 1024)->default('');
+            $table->text('tos')->nullable();
+            $table->text('imprint')->nullable();
             $table->timestamps();
         });
     }

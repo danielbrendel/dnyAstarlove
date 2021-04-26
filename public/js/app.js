@@ -1840,7 +1840,153 @@ module.exports = {
   \*****************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
+/*
+    Astarlove (dnyAstarlove) developed by Daniel Brendel
+
+    (C) 2021 by Daniel Brendel
+
+    Contact: dbrendel1988<at>gmail<dot>com
+    GitHub: https://github.com/danielbrendel/
+
+    Released under the MIT license
+*/
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+
+window.vue = new Vue({
+  el: '#main',
+  data: {
+    bShowRegister: false,
+    bShowLogin: false,
+    bShowRecover: false,
+    translationTable: {
+      usernameOk: 'The given name is valid and available',
+      invalidUsername: 'The name is invalid. Please use only alphanumeric characters, numbers 0-9 and the characters \'-\' and \'_\'. Also number only identifiers are considered invalid',
+      nonavailableUsername: 'The given name is already in use',
+      passwordMismatching: 'The passwords do not match',
+      passwordMatching: 'The passwords do match'
+    }
+  },
+  methods: {
+    invalidLoginEmail: function invalidLoginEmail() {
+      var el = document.getElementById("loginemail");
+
+      if (el.value.length == 0 || el.value.indexOf('@') == -1 || el.value.indexOf('.') == -1) {
+        el.classList.add('is-danger');
+      } else {
+        el.classList.remove('is-danger');
+      }
+    },
+    invalidRecoverEmail: function invalidRecoverEmail() {
+      var el = document.getElementById("recoveremail");
+
+      if (el.value.length == 0 || el.value.indexOf('@') == -1 || el.value.indexOf('.') == -1) {
+        el.classList.add('is-danger');
+      } else {
+        el.classList.remove('is-danger');
+      }
+    },
+    invalidLoginPassword: function invalidLoginPassword() {
+      var el = document.getElementById("loginpw");
+
+      if (el.value.length == 0) {
+        el.classList.add('is-danger');
+      } else {
+        el.classList.remove('is-danger');
+      }
+    },
+    ajaxRequest: function ajaxRequest(method, url) {
+      var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+      var successfunc = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : function (data) {};
+      var finalfunc = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : function () {};
+      var config = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : {};
+      var func = window.axios.get;
+
+      if (method == 'post') {
+        func = window.axios.post;
+      } else if (method == 'patch') {
+        func = window.axios.patch;
+      } else if (method == 'delete') {
+        func = window.axios["delete"];
+      }
+
+      func(url, data, config).then(function (response) {
+        successfunc(response.data);
+      })["catch"](function (error) {
+        console.log(error);
+      })["finally"](function () {
+        finalfunc();
+      });
+    },
+    initNavbar: function initNavbar() {
+      // Get all "navbar-burger" elements
+      var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0); // Check if there are any navbar burgers
+
+      if ($navbarBurgers.length > 0) {
+        // Add a click event on each of them
+        $navbarBurgers.forEach(function (el) {
+          el.addEventListener('click', function () {
+            // Get the target from the "data-target" attribute
+            var target = el.dataset.target;
+            var $target = document.getElementById(target); // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+
+            el.classList.toggle('is-active');
+            $target.classList.toggle('is-active');
+          });
+        });
+      }
+    },
+    showUsernameValidity: function showUsernameValidity(username, hint) {
+      var currentName = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+      window.vue.ajaxRequest('get', window.location.origin + '/member/name/valid?ident=' + username, {}, function (response) {
+        if (response.code == 200) {
+          if (currentName !== '' && username === currentName) {
+            hint.innerHTML = '';
+          } else if (!response.data.valid) {
+            hint.classList.add('is-danger');
+            hint.classList.remove('is-success');
+            hint.innerHTML = window.vue.translationTable.invalidUsername;
+          } else if (!response.data.available) {
+            hint.classList.add('is-danger');
+            hint.classList.remove('is-success');
+            hint.innerHTML = window.vue.translationTable.nonavailableUsername;
+          } else if (response.data.valid && response.data.available) {
+            hint.classList.remove('is-danger');
+            hint.classList.add('is-success');
+            hint.innerHTML = window.vue.translationTable.usernameOk;
+          }
+        }
+      });
+    },
+    showPasswordMatching: function showPasswordMatching(pw1, pw2, hint) {
+      if (pw1.length > 0 || pw2.length > 0) {
+        if (pw1 !== pw2) {
+          hint.classList.remove('is-success');
+          hint.classList.add('is-danger');
+          hint.innerHTML = window.vue.translationTable.passwordMismatching;
+        } else {
+          hint.classList.add('is-success');
+          hint.classList.remove('is-danger');
+          hint.innerHTML = window.vue.translationTable.passwordMatching;
+        }
+      }
+    },
+    showError: function showError() {
+      document.getElementById('flash-error').style.display = 'inherit';
+      setTimeout(function () {
+        document.getElementById('flash-error').style.display = 'none';
+      }, 3500);
+    },
+    showSuccess: function showSuccess() {
+      document.getElementById('flash-success').style.display = 'inherit';
+      setTimeout(function () {
+        document.getElementById('flash-success').style.display = 'none';
+      }, 3500);
+    }
+  }
+});
+document.addEventListener('DOMContentLoaded', function () {
+  window.vue.initNavbar();
+});
 
 /***/ }),
 

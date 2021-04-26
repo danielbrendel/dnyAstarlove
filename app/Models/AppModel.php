@@ -1,10 +1,26 @@
 <?php
 
+/*
+    Astarlove (dnyAstarlove) developed by Daniel Brendel
+
+    (C) 2021 by Daniel Brendel
+
+    Contact: dbrendel1988<at>gmail<dot>com
+    GitHub: https://github.com/danielbrendel/
+
+    Released under the MIT license
+*/
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class AppModel
+ *
+ * Interface to app specific settings
+ */
 class AppModel extends Model
 {
     use HasFactory;
@@ -50,6 +66,112 @@ class AppModel extends Model
     {
         try {
             return static::getAppSettings()->alphaChannel;
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Get registration info
+     * 
+     * @return string
+     * @throws \Exception
+     */
+    public static function getRegInfo()
+    {
+        try {
+            return static::getAppSettings()->reg_info;
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Get cookie consent text
+     * 
+     * @return string
+     * @throws \Exception
+     */
+    public static function getCookieConsentText()
+    {
+        try {
+            return static::getAppSettings()->cookie_consent;
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Get ToS content
+     * 
+     * @return string
+     * @throws \Exception
+     */
+    public static function getTermsOfService()
+    {
+        try {
+            return static::getAppSettings()->tos;
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Get imprint content
+     * 
+     * @return string
+     * @throws \Exception
+     */
+    public static function getImprint()
+    {
+        try {
+            return static::getAppSettings()->imprint;
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Create a HelpRealm ticket
+     *
+     * @param $name
+     * @param $email
+     * @param $subject
+     * @param $body
+     * @return void
+     * @throws Exception
+     */
+    public static function createTicket($name, $email, $subject, $body)
+    {
+        try {
+            $postFields = [
+                'apitoken' => env('HELPREALM_TOKEN'),
+                'subject' => $subject,
+                'text' => $body,
+                'name' => $name,
+                'email' => $email,
+                'type' => env('HELPREALM_TICKETTYPEID'),
+                'prio' => '1',
+                'attachment' => null
+            ];
+
+            $ch = curl_init("https://helprealm.io/api/" . env('HELPREALM_WORKSPACE') . '/ticket/create');
+
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $postFields);
+
+            $response = curl_exec($ch);
+            if(curl_error($ch)) {
+                throw new Exception(curl_error($ch), curl_errno($ch));
+            }
+
+            curl_close($ch);
+
+            $json = json_decode($response);
+            if ($json->code !== 201) {
+                throw new Exception('Backend returned error ' . ((isset($json->data->invalid_fields)) ? print_r($json->data->invalid_fields, true) : ''), $json->code);
+            }
         } catch (\Exception $e) {
             throw $e;
         }
