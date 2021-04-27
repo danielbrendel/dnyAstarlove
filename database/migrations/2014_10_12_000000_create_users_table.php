@@ -51,6 +51,8 @@ class CreateUsersTable extends Migration
             $table->string('location')->nullable();
             $table->decimal('latitude', 10, 8)->nullable();
             $table->decimal('longitude', 11, 8)->nullable();
+            $table->boolean('mail_on_message')->default(true);
+            $table->boolean('newsletter')->default(true);
             $table->boolean('deactivated')->default(false);
             $table->rememberToken();
             $table->timestamps();

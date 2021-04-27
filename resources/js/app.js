@@ -334,7 +334,7 @@ window.vue = new Vue({
         },
 
         showTabMenu: function(target) {
-            let tabItems = ['tabVisitors', 'tabProfile', 'tabSecurity', 'tabNotifications', 'tabIgnoreList', 'tabMembership'];
+            let tabItems = ['tabVisitors', 'tabProfile', 'tabPhotos', 'tabSecurity', 'tabNotifications', 'tabIgnoreList', 'tabMembership'];
 
             tabItems.forEach(function(elem, index) {
                if (elem !== target) {

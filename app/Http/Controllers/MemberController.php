@@ -314,4 +314,185 @@ class MemberController extends Controller
             return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
         }
     }
+
+    /**
+     * Save profile data
+     * 
+     * @return mixed
+     */
+    public function saveProfile()
+    {
+        try {
+            $this->validateLogin();
+
+            $attr = request()->validate([
+                'username' => 'required',
+                'realname' => 'nullable',
+                'birthday' => 'nullable|date',
+                'gender' => 'nullable|numeric',
+                'height' => 'nullable|numeric',
+                'weight' => 'nullable|numeric',
+                'rel_status' => 'nullable',
+                'location' => 'nullable',
+                'job' => 'nullable',
+                'introduction' => 'nullable',
+                'interests' => 'nullable',
+                'music' => 'nullable'
+            ]);
+
+            if (!isset($attr['realname'])) {
+                $attr['realname'] = null;
+            }
+
+            if (!isset($attr['birthday'])) {
+                $attr['birthday'] = null;
+            }
+
+            if (!isset($attr['gender'])) {
+                $attr['gender'] = null;
+            }
+
+            if (!isset($attr['height'])) {
+                $attr['height'] = null;
+            }
+
+            if (!isset($attr['weight'])) {
+                $attr['weight'] = null;
+            }
+
+            if (!isset($attr['rel_status'])) {
+                $attr['rel_status'] = null;
+            }
+
+            if (!isset($attr['location'])) {
+                $attr['location'] = null;
+            }
+
+            if (!isset($attr['job'])) {
+                $attr['job'] = null;
+            }
+
+            if (!isset($attr['introduction'])) {
+                $attr['introduction'] = null;
+            }
+
+            if (!isset($attr['interests'])) {
+                $attr['interests'] = null;
+            }
+
+            if (!isset($attr['music'])) {
+                $attr['music'] = null;
+            }
+
+            User::saveProfile($attr);
+
+            return back()->with('flash.success', __('app.profile_saved'));
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Save user password
+     * 
+     * @return mixed
+     */
+    public function savePassword()
+    {
+        try {
+            $this->validateLogin();
+
+            $attr = request()->validate([
+                'password' => 'required',
+                'password_confirmation' => 'required'
+            ]);
+
+            User::savePassword($attr['password'], $attr['password_confirmation']);
+
+            return back()->with('flash.success', __('app.password_saved'));
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Save user e-mail
+     * 
+     * @return mixed
+     */
+    public function saveEmail()
+    {
+        try {
+            $this->validateLogin();
+
+            $attr = request()->validate([
+                'email' => 'required|email'
+            ]);
+
+            User::saveEmail($attr['email']);
+
+            return back()->with('flash.success', __('app.email_saved'));
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Save notification settings
+     * 
+     * @return mixed
+     */
+    public function saveNotifications()
+    {
+        try {
+            $this->validateLogin();
+
+            $attr = request()->validate([
+                'mail_on_message' => 'nullable|numeric',
+                'newsletter' => 'nullable|numeric'
+            ]);
+
+            if (!isset($attr['mail_on_message'])) {
+                $attr['mail_on_message'] = false;
+            }
+
+            if (!isset($attr['newsletter'])) {
+                $attr['newsletter'] = false;
+            }
+
+            User::saveNotifications($attr);
+
+            return back()->with('flash.success', __('app.notifications_saved'));
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Delete user account of authenticated user
+     * 
+     * @return mixed
+     */
+    public function deleteAccount()
+    {
+        try {
+            $this->validateLogin();
+
+            $attr = request()->validate([
+                'keyphrase' => 'required'
+            ]);
+
+            if ($attr['keyphrase'] !== env('APP_KEYPHRASE')) {
+                throw new \Exception(__('app.invalid_keyphrase'));
+            }
+
+            User::deleteAccount(auth()->id());
+
+            \Auth::logout();
+
+            return redirect('/')->with('success', __('app.account_deleted'));
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
 }

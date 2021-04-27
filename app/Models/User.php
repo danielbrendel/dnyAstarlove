@@ -18,6 +18,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
+use App\Models\IgnoreModel;
+use App\Models\LikeModel;
+use App\Models\MessageModel;
+use App\Models\PushModel;
+use App\Models\ReportModel;
+use App\Models\VisitorModel;
 
 /**
  * Class User
@@ -456,6 +462,182 @@ class User extends Authenticatable
             $item->latitude = $latitude;
             $item->longitude = $longitude;
             $item->save();
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Save user profile data
+     * 
+     * @param $attr
+     * @return void
+     * @throws \Exception
+     */
+    public static function saveProfile($attr)
+    {
+        try {
+            $user = static::getByAuthId();
+            if ((!$user) || ($user->deactivated)) {
+                throw new \Exception('app.login_required');
+            }
+
+            if (!static::isValidNameIdent($attr['username'])) {
+                throw new \Exception(__('app.invalid_username'));
+            }
+
+            if ($attr['username'] !== $user->name) {
+                if (static::getByName($attr['username'])) {
+                    throw new \Exception(__('app.name_already_in_use'));
+                }
+            }
+
+            $user->name = $attr['username'];
+            $user->realname = $attr['realname'];
+            $user->birthday = $attr['birthday'];
+            $user->gender = $attr['gender'];
+            $user->height = $attr['height'];
+            $user->weight = $attr['weight'];
+            $user->rel_status = $attr['rel_status'];
+            $user->location = $attr['location'];
+            $user->job = $attr['job'];
+            $user->introduction = \Purifier::clean($attr['introduction']);
+            $user->interests = \Purifier::clean($attr['interests']);
+            $user->music = \Purifier::clean($attr['music']);
+
+            $user->save();
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Save user password
+     * 
+     * @param $pw
+     * @param $confirm
+     * @return void
+     * @throws \Exception
+     */
+    public static function savePassword($pw, $confirm)
+    {
+        try {
+            $user = static::getByAuthId();
+            if ((!$user) || ($user->deactivated)) {
+                throw new \Exception('app.login_required');
+            }
+
+            if ($pw !== $confirm) {
+                throw new \Exception(__('app.password_mismatch'));
+            }
+
+            $user->password = password_hash($pw, PASSWORD_BCRYPT);
+            $user->save();
+
+            $html = view('mail.pw_changed', ['name' => $user->name])->render();
+            MailerModel::sendMail($user->email, __('app.password_changed'), $html);
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Save user e-mail address
+     * 
+     * @param $email
+     * @return void
+     * @throws \Exception
+     */
+    public static function saveEmail($email)
+    {
+        try {
+            $user = static::getByAuthId();
+            if ((!$user) || ($user->deactivated)) {
+                throw new \Exception('app.login_required');
+            }
+
+            $oldMail = $user->email;
+
+            $user->email = $email;
+            $user->save();
+
+            $html = view('mail.email_changed', ['name' => $user->name, 'email' => $email])->render();
+            MailerModel::sendMail($user->email, __('app.email_changed'), $html);
+            MailerModel::sendMail($oldMail, __('app.email_changed'), $html);
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Save notification settings
+     * 
+     * @param $attr
+     * @return void
+     * @throws \Exception
+     */
+    public static function saveNotifications($attr)
+    {
+        try {
+            $user = static::getByAuthId();
+            if ((!$user) || ($user->deactivated)) {
+                throw new \Exception('app.login_required');
+            }
+
+            $user->mail_on_message = $attr['mail_on_message'];
+            $user->newsletter = $attr['newsletter'];
+            $user->save();
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Delete user account
+     * 
+     * @param $userId
+     * @return void
+     * @throws \Exception
+     */
+    public static function deleteAccount($userId)
+    {
+        try {
+            $user = User::where('id', '=', $userId)->first();
+            if ((!$user) || ($user->deactivated)) {
+                throw new \Exception('app.user_not_found_or_deactivated');
+            }
+
+            $ignores = IgnoreModel::where('userId', '=', $userId)->orWhere('targetId', '=', $userId)->get();
+            foreach ($ignores as $item) {
+                $item->delete();
+            }
+
+            $likes = LikeModel::where('userId', '=', $userId)->orWhere('likeUserId', '=', $userId)->get();
+            foreach ($likes as $item) {
+                $item->delete();
+            }
+
+            $messages = MessageModel::where('userId', '=', $userId)->orWhere('senderId', '=', $userId)->get();
+            foreach ($messages as $item) {
+                $item->delete();
+            }
+
+            $pushes = PushModel::where('userId', '=', $userId)->get();
+            foreach ($pushes as $item) {
+                $item->delete();
+            }
+
+            $reports = ReportModel::where('reporterId', '=', $userId)->orWhere('targetId', '=', $userId)->get();
+            foreach ($reports as $item) {
+                $item->delete();
+            }
+
+            $visitors = VisitorModel::where('visitorId', '=', $userId)->orWhere('visitedId', '=', $userId)->get();
+            foreach ($visitors as $item) {
+                $item->delete();
+            }
+
+            $user->delete();
         } catch (\Exception $e) {
             throw $e;
         }

@@ -2107,7 +2107,7 @@ window.vue = new Vue({
       return html;
     },
     showTabMenu: function showTabMenu(target) {
-      var tabItems = ['tabVisitors', 'tabProfile', 'tabSecurity', 'tabNotifications', 'tabIgnoreList', 'tabMembership'];
+      var tabItems = ['tabVisitors', 'tabProfile', 'tabPhotos', 'tabSecurity', 'tabNotifications', 'tabIgnoreList', 'tabMembership'];
       tabItems.forEach(function (elem, index) {
         if (elem !== target) {
           document.getElementById(elem).classList.remove('is-active');

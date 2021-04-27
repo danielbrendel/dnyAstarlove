@@ -44,6 +44,11 @@ Route::any('/member/unignore/{id}', [MemberController::class, 'unignoreUser']);
 Route::any('/member/report/{id}', [MemberController::class, 'reportUser']);
 Route::get('/settings', [MemberController::class, 'viewSettings']);
 Route::post('/member/visitors/query', [MemberController::class, 'queryVisitors']);
+Route::post('/member/profile/save', [MemberController::class, 'saveProfile']);
+Route::post('/member/password/save', [MemberController::class, 'savePassword']);
+Route::post('/member/email/save', [MemberController::class, 'saveEmail']);
+Route::post('/member/notifications/save', [MemberController::class, 'saveNotifications']);
+Route::post('/member/account/delete', [MemberController::class, 'deleteAccount']);
 
 Route::get('/messages', [MessageController::class, 'list']);
 Route::get('/messages/list', [MessageController::class, 'fetchList']);

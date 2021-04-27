@@ -87,7 +87,7 @@
             <div class="user-introduction">
                 @if (!$user->ignored)
                     @if (($user->introduction !== null) && (strlen($user->introduction) > 0))
-                        {{ $user->introduction }}
+                        {!! $user->introduction !!}
                     @else
                         {{ __('app.no_introduction_specified') }}
                     @endif
@@ -126,7 +126,7 @@
 
             @if (!$user->ignored)
                 @if (($user->interests !== null) && (strlen($user->interests) > 0))
-                    {{ $user->interests }}
+                    {!! $user->interests !!}
                 @else
                     {{ __('app.no_information_specified') }}
                 @endif
@@ -138,7 +138,7 @@
 
             @if (!$user->ignored)
                 @if (($user->music !== null) && (strlen($user->music) > 0))
-                    {{ $user->music }}
+                    {!! $user->music !!}
                 @else
                     {{ __('app.no_information_specified') }}
                 @endif
