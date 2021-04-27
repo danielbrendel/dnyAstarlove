@@ -16,6 +16,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Models\User;
+use App\Models\LikeModel;
+use App\Models\IgnoreModel;
 
 /**
  * Class MemberController
@@ -129,12 +131,15 @@ class MemberController extends Controller
     public function showUser($name)
     {
         try {
+            $this->validateLogin();
+
             $user = User::getByName($name);
 
-            if ((!$user) || ($user->deactivated)) {
+            if ((!$user) || ($user->deactivated) || (IgnoreModel::hasIgnored($user->id, auth()->id()))) {
                 throw new \Exception(__('app.user_not_found_or_deactivated'));
             }
 
+            $user->ignored = IgnoreModel::hasIgnored(auth()->id(), $user->id);
             $user->age = Carbon::parse($user->birthday)->age;
 
             switch ($user->gender) {
@@ -154,12 +159,111 @@ class MemberController extends Controller
 
             $user->is_online = User::isMemberOnline($user->id);
             $user->last_seen = Carbon::parse($user->last_action)->diffForHumans();
+            $user->is_self = $user->id === auth()->id();
+            $user->self_liked = LikeModel::hasLiked(auth()->id(), $user->id);
+            $user->liked_back = LikeModeL::hasLiked($user->id, auth()->id());
+            $user->both_liked = ($user->self_liked) && ($user->liked_back);
 
             return view('member.profile', [
                 'user' => $user
             ]);
         } catch (\Exception $e) {
             return redirect('/')->with('error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Like a user
+     * 
+     * @param $id
+     * @return mixed
+     */
+    public function likeUser($id)
+    {
+        try {
+            $this->validateLogin();
+
+            LikeModel::add(auth()->id(), $id);
+
+            return back()->with('flash.success', __('app.liked_successfully'));
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Unlike a user
+     * 
+     * @param $id
+     * @return mixed
+     */
+    public function unlikeUser($id)
+    {
+        try {
+            $this->validateLogin();
+
+            LikeModel::remove(auth()->id(), $id);
+
+            return back()->with('flash.success', __('app.unliked_successfully'));
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Ignore a user
+     * 
+     * @param $id
+     * @return mixed
+     */
+    public function ignoreUser($id)
+    {
+        try {
+            $this->validateLogin();
+
+            IgnoreModel::add(auth()->id(), $id);
+
+            return back()->with('flash.success', __('app.ignored_successfully'));
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Un-ignore a user
+     * 
+     * @param $id
+     * @return mixed
+     */
+    public function unignoreUser($id)
+    {
+        try {
+            $this->validateLogin();
+
+            IgnoreModel::remove(auth()->id(), $id);
+
+            return back()->with('flash.success', __('app.unignored_successfully'));
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Report a user
+     * 
+     * @param $id
+     * @return mixed
+     */
+    public function reportUser($id)
+    {
+        try {
+            $this->validateLogin();
+
+            //ReportModel::add(auth()->id(), $id);
+
+            return back()->with('flash.success', __('app.reported_successfully'));
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
         }
     }
 }

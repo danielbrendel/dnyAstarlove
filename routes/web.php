@@ -36,6 +36,11 @@ Route::any('/member/name/valid', [MemberController::class, 'nameValidity']);
 Route::post('/profiles/query', [MemberController::class, 'queryProfiles']);
 Route::any('/member/geo', [MemberController::class, 'saveGeoLocation']);
 Route::get('/user/{name}', [MemberController::class, 'showUser']);
+Route::any('/member/like/{id}', [MemberController::class, 'likeUser']);
+Route::any('/member/unlike/{id}', [MemberController::class, 'unlikeUser']);
+Route::any('/member/ignore/{id}', [MemberController::class, 'ignoreUser']);
+Route::any('/member/unignore/{id}', [MemberController::class, 'unignoreUser']);
+Route::any('/member/report/{id}', [MemberController::class, 'reportUser']);
 
 Route::get('/messages', [MessageController::class, 'list']);
 Route::get('/messages/list', [MessageController::class, 'fetchList']);

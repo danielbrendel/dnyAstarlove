@@ -88,5 +88,16 @@ return [
     'weight' => 'Weight',
     'job' => 'Job',
     'online' => 'online',
-    'last_seen' => 'Last seen: :diff'
+    'last_seen' => 'Last seen: :diff',
+    'user_ignored' => 'The user is ignored by the target user',
+    'already_liked' => 'You have already liked the user',
+    'user_not_yet_liked' => 'The user has not yet been liked',
+    'wait_until_back_liked' => 'Wait until the member has liked you back. Then you can exchange messages.',
+    'like' => 'Like',
+    'liked_successfully' => 'You have successfully liked the member',
+    'unliked_successfully' => 'You have successfully removed your like',
+    'unignore' => 'Un-ignore',
+    'ignored_successfully' => 'Successfully ignored user',
+    'unignored_successfully' => 'Successfully removed from ignore list',
+    'reported_successfully' => 'Successfully reported the member'
 ];
