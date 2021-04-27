@@ -86,4 +86,30 @@ class IgnoreModel extends Model
             throw $e;
         }
     }
+
+    /**
+     * Get ignore list of a user
+     * 
+     * @param $userId
+     * @param $limit
+     * @param $paginate
+     * @return array
+     * @throws \Exception
+     */
+    public static function getIgnorePack($userId, $limit, $paginate = null)
+    {
+        try {
+            $query = static::where('userId', '=', $userId);
+
+            if ($paginate !== null) {
+                $query->where('id', '<', $paginate);
+            }
+
+            $query->orderBy('id', 'desc')->limit($limit);
+
+            return $query->get()->toArray();
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
 }

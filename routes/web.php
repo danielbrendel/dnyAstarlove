@@ -33,6 +33,7 @@ Route::get('/resend/{id}', [MainController::class, 'resend']);
 Route::post('/reset', [MainController::class, 'reset']);
 
 Route::get('/profiles', [MemberController::class, 'profiles']);
+Route::get('/random', [MemberController::class, 'random']);
 Route::any('/member/name/valid', [MemberController::class, 'nameValidity']);
 Route::post('/profiles/query', [MemberController::class, 'queryProfiles']);
 Route::any('/member/geo', [MemberController::class, 'saveGeoLocation']);
@@ -47,7 +48,9 @@ Route::post('/member/visitors/query', [MemberController::class, 'queryVisitors']
 Route::post('/member/profile/save', [MemberController::class, 'saveProfile']);
 Route::post('/member/password/save', [MemberController::class, 'savePassword']);
 Route::post('/member/email/save', [MemberController::class, 'saveEmail']);
+Route::post('/member/photo/save', [MemberController::class, 'savePhoto']);
 Route::post('/member/notifications/save', [MemberController::class, 'saveNotifications']);
+Route::post('/member/ignores/query', [MemberController::class, 'queryIgnoreList']);
 Route::post('/member/account/delete', [MemberController::class, 'deleteAccount']);
 
 Route::get('/messages', [MessageController::class, 'list']);

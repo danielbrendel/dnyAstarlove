@@ -149,6 +149,7 @@
                 @endguest
             </div>
 
+            @include('widgets.cookienotice')
             @include('widgets.bottombar')
         </div>
 
@@ -266,6 +267,8 @@
                 @if (Session::has('flash.success'))
                     setTimeout('window.vue.showSuccess()', 500);
                 @endif
+
+                window.vue.handleCookieConsent();
 
                 @auth
                     setTimeout('fetchNotifications()', 100);

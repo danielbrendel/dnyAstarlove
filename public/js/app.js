@@ -1868,7 +1868,8 @@ window.vue = new Vue({
       status: 'Status',
       location: 'Location',
       gender: 'Gender',
-      isnew: 'New'
+      isnew: 'New',
+      removeIgnore: 'Remove'
     }
   },
   methods: {
@@ -2128,6 +2129,10 @@ window.vue = new Vue({
       var html = "\n            <div class=\"visitor\">\n                <div class=\"visitor-avatar\">\n                    <a href=\"" + window.location.origin + '/user/' + elem.user.name + "\"><img src=\"" + window.location.origin + '/gfx/avatars/' + elem.user.avatar + "\" alt=\"avatar\"></a>\n\n                    " + isnew + "\n                </div>\n        \n                <div class=\"visitor-name\">\n                    <a href=\"" + window.location.origin + '/user/' + elem.user.name + "\">" + elem.user.name + "</a>\n                </div>\n            </div>\n            ";
       return html;
     },
+    renderIgnoreProfile: function renderIgnoreProfile(elem) {
+      var html = "\n            <div class=\"ignore\">\n                <div class=\"ignore-avatar\">\n                    <a href=\"" + window.location.origin + '/user/' + elem.user.name + "\"><img src=\"" + window.location.origin + '/gfx/avatars/default.png' + "\" alt=\"avatar\"></a>\n                </div>\n        \n                <div class=\"ignore-name\">\n                    <a href=\"" + window.location.origin + '/user/' + elem.user.name + "\">" + elem.user.name + "</a>\n                </div>\n\n                <div class=\"ignore-action\">\n                    <button class=\"button is-link\" onclick=\"location.href = '" + window.location.origin + "/member/unignore/" + elem.user.id + "';\">" + this.translationTable.removeIgnore + "</button>\n                </div>\n            </div>\n            ";
+      return html;
+    },
     renderNotification: function renderNotification(elem) {
       var newItem = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
       var icon = 'fas fa-info-circle';
@@ -2167,6 +2172,45 @@ window.vue = new Vue({
           console.log(response.msg);
         }
       });
+    },
+    showImagePreview: function showImagePreview(image, name) {
+      var obj = document.getElementById('imgpreview');
+
+      if (obj) {
+        obj.style.display = 'block';
+      }
+
+      var obj2 = document.getElementById('imgpreview-name');
+
+      if (obj2) {
+        obj2.innerHTML = name;
+      }
+
+      var obj3 = document.getElementById('imgpreview-image');
+
+      if (obj3) {
+        obj3.src = window.location.origin + '/gfx/avatars/' + image;
+      }
+    },
+    handleCookieConsent: function handleCookieConsent() {
+      var cookies = document.cookie.split(';');
+      var foundCookie = false;
+
+      for (var i = 0; i < cookies.length; i++) {
+        if (cookies[i].indexOf('cookieconsent') !== -1) {
+          foundCookie = true;
+          break;
+        }
+      }
+
+      if (foundCookie === false) {
+        document.getElementById('cookie-consent').style.display = 'inline-block';
+      }
+    },
+    clickedCookieConsentButton: function clickedCookieConsentButton() {
+      var expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
+      document.cookie = 'cookieconsent=1; expires=' + expDate.toUTCString() + ';';
+      document.getElementById('cookie-consent').style.display = 'none';
     }
   }
 });

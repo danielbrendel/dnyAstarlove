@@ -247,6 +247,7 @@ class User extends Authenticatable
             $user->email = $attr['email'];
             $user->email_verified_at = date('Y-m-d H:i:s');
             $user->avatar = 'default.png';
+            $user->avatar_large = $user->avatar;
             $user->account_confirm = md5($attr['email'] . $attr['username'] . random_bytes(55));
             $user->save();
 
@@ -564,6 +565,215 @@ class User extends Authenticatable
             $html = view('mail.email_changed', ['name' => $user->name, 'email' => $email])->render();
             MailerModel::sendMail($user->email, __('app.email_changed'), $html);
             MailerModel::sendMail($oldMail, __('app.email_changed'), $html);
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Check if file is a valid image
+     *
+     * @param string $imgFile
+     * @return bool
+     */
+    public static function isValidImage($imgFile)
+    {
+        $imagetypes = array(
+            IMAGETYPE_PNG,
+            IMAGETYPE_JPEG,
+            IMAGETYPE_GIF
+        );
+
+        if (!file_exists($imgFile)) {
+            return false;
+        }
+
+        foreach ($imagetypes as $type) {
+            if (exif_imagetype($imgFile) === $type) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Get image type
+     *
+     * @param $ext
+     * @param $file
+     * @return mixed|null
+     */
+    public static function getImageType($ext, $file)
+    {
+        $imagetypes = array(
+            array('png', IMAGETYPE_PNG),
+            array('jpg', IMAGETYPE_JPEG),
+            array('jpeg', IMAGETYPE_JPEG),
+            array('gif', IMAGETYPE_GIF)
+        );
+
+        for ($i = 0; $i < count($imagetypes); $i++) {
+            if (strtolower($ext) == $imagetypes[$i][0]) {
+                if (exif_imagetype($file . '.' . $ext) == $imagetypes[$i][1])
+                    return $imagetypes[$i][1];
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Correct image rotation of uploaded image
+     *
+     * @param $filename
+     * @param &$image
+     * @return void
+     */
+    private static function correctImageRotation($filename, &$image)
+    {
+        $exif = @exif_read_data($filename);
+
+        if (!isset($exif['Orientation']))
+            return;
+
+        switch($exif['Orientation'])
+        {
+            case 8:
+                $image = imagerotate($image, 90, 0);
+                break;
+            case 3:
+                $image = imagerotate($image, 180, 0);
+                break;
+            case 6:
+                $image = imagerotate($image, 270, 0);
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+     * Create thumb file of image
+     *
+     * @param $srcfile
+     * @param $imgtype
+     * @param $basefile
+     * @param $fileext
+     * @return bool
+     */
+    public static function createThumbFile($srcfile, $imgtype, $basefile, $fileext)
+    {
+        list($width, $height) = getimagesize($srcfile);
+
+        $factor = 1.0;
+
+        if ($width > $height) {
+            if (($width >= 800) and ($width < 1000)) {
+                $factor = 0.5;
+            } else if (($width >= 1000) and ($width < 1250)) {
+                $factor = 0.4;
+            } else if (($width >= 1250) and ($width < 1500)) {
+                $factor = 0.4;
+            } else if (($width >= 1500) and ($width < 2000)) {
+                $factor = 0.3;
+            } else if ($width >= 2000) {
+                $factor = 0.2;
+            }
+        } else {
+            if (($height >= 800) and ($height < 1000)) {
+                $factor = 0.5;
+            } else if (($height >= 1000) and ($height < 1250)) {
+                $factor = 0.4;
+            } else if (($height >= 1250) and ($height < 1500)) {
+                $factor = 0.4;
+            } else if (($height >= 1500) and ($height < 2000)) {
+                $factor = 0.3;
+            } else if ($height >= 2000) {
+                $factor = 0.2;
+            }
+        }
+
+        $newwidth = $factor * $width;
+        $newheight = $factor * $height;
+
+        $dstimg = imagecreatetruecolor($newwidth, $newheight);
+        if (!$dstimg)
+            return false;
+
+        $srcimage = null;
+        switch ($imgtype) {
+            case IMAGETYPE_PNG:
+                $srcimage = imagecreatefrompng($srcfile);
+                imagecopyresampled($dstimg, $srcimage, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+                static::correctImageRotation($srcfile, $dstimg);
+                imagepng($dstimg, $basefile . "_thumb." . $fileext);
+                break;
+            case IMAGETYPE_JPEG:
+                $srcimage = imagecreatefromjpeg($srcfile);
+                imagecopyresampled($dstimg, $srcimage, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+                static::correctImageRotation($srcfile, $dstimg);
+                imagejpeg($dstimg, $basefile . "_thumb." . $fileext);
+                break;
+            case IMAGETYPE_GIF:
+                copy($srcfile, $basefile . "_thumb." . $fileext);
+                break;
+            default:
+                return false;
+                break;
+        }
+
+        return true;
+    }
+
+    /**
+     * Save specific photo
+     * 
+     * @param $which
+     * @return void
+     * @throws \Exception
+     */
+    public static function savePhoto($which)
+    {
+        try {
+            $user = static::getByAuthId();
+            if ((!$user) || ($user->deactivated)) {
+                throw new \Exception('app.login_required');
+            }
+
+            $allowed = array('avatar', 'photo1', 'photo2', 'photo3');
+            if (!in_array($which, $allowed)) {
+                throw new \Exception('Invalid photo type: ' . $which);
+            }
+
+            $image = request()->file('image');
+            if ($image !== null) {
+                if ($image->getSize() > env('APP_MAXUPLOADSIZE')) {
+                    throw new \Exception(__('app.post_upload_size_exceeded'));
+                }
+
+                $fname = uniqid('', true) . md5(random_bytes(55));
+                $fext = $image->getClientOriginalExtension();
+
+                $image->move(public_path() . '/gfx/avatars/', $fname . '.' . $fext);
+
+                $baseFile = public_path() . '/gfx/avatars/' . $fname;
+                $fullFile = $baseFile . '.' . $fext;
+
+                if (!static::isValidImage(public_path() . '/gfx/avatars/' . $fname . '.' . $fext)) {
+                    throw new \Exception('Invalid image uploaded');
+                }
+
+                if (!static::createThumbFile($fullFile, static::getImageType($fext, $baseFile), $baseFile, $fext)) {
+                    throw new \Exception('createThumbFile failed', 500);
+                }
+                
+                $large = $which . '_large';
+
+                $user->$large = $fname . '.' . $fext;
+                $user->$which = $fname . '_thumb.' . $fext;
+                $user->save();
+            }
         } catch (\Exception $e) {
             throw $e;
         }

@@ -124,6 +124,10 @@ class MessageModel extends Model
                 throw new \Exception('Message not found: ' . $msgId);
             }
 
+            if (($msg->userId !== auth()->id()) && ($msg->senderId !== auth()->id())) {
+                throw new \Exception('Access denied');
+            }
+
             $msg->seen = true;
             $msg->save();
 

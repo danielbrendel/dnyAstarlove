@@ -40,14 +40,19 @@ class MessageController extends Controller
      * View message list
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws Exception
      */
     public function list()
     {
-        return view('message.list', [
-            'user' => User::getByAuthId(),
-			'cookie_consent' => AppModel::getCookieConsentText()
-        ]);
+        try {
+            $this->validateLogin();
+
+            return view('message.list', [
+                'user' => User::getByAuthId(),
+                'cookie_consent' => AppModel::getCookieConsentText()
+            ]);
+        } catch (\Exception $e) {
+            return redirect('/')->with('error', $e->getMessage());
+        }
     }
 
     /**
@@ -58,6 +63,8 @@ class MessageController extends Controller
     public function fetchList()
     {
         try {
+            $this->validateLogin();
+
             $paginate = request('paginate', null);
 
             $data = MessageModel::fetch(auth()->id(), env('APP_MESSAGEPACKLIMIT', 10), $paginate)->unique('channel')->values()->all();
@@ -86,6 +93,8 @@ class MessageController extends Controller
     public function show($id)
     {
         try {
+            $this->validateLogin();
+
             $thread = MessageModel::getMessageThread($id);
             if (!$thread) {
                 return back()->with('error', __('app.message_not_found'));
@@ -123,11 +132,17 @@ class MessageController extends Controller
      */
     public function create()
     {
-        return view('message.create', [
-            'user' => User::getByAuthId(),
-            'username' => request('u', ''),
-			'cookie_consent' => AppModel::getCookieConsentText()
-        ]);
+        try {
+            $this->validateLogin();
+
+            return view('message.create', [
+                'user' => User::getByAuthId(),
+                'username' => request('u', ''),
+                'cookie_consent' => AppModel::getCookieConsentText()
+            ]);
+        } catch (\Exception $e) {
+            return redirect('/')->with('error', $e->getMessage());
+        }
     }
 
     /**
@@ -139,6 +154,8 @@ class MessageController extends Controller
     public function send()
     {
         try {
+            $this->validateLogin();
+
             $attr = request()->validate([
                'username' => 'required',
                'subject' => 'required',
@@ -179,6 +196,8 @@ class MessageController extends Controller
     public function unreadCount()
     {
         try {
+            $this->validateLogin();
+
             $count = MessageModel::unreadCount(auth()->id());
 
             return response()->json(array('code' => 200, 'count' => $count));

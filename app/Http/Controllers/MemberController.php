@@ -54,6 +54,51 @@ class MemberController extends Controller
     }
 
     /**
+     * Show random profile
+     * 
+     * @return mixed
+     */
+    public function random()
+    {
+        try {
+            $this->validateLogin();
+
+            $user = User::where('deactivated', '=', false)->where('account_confirm', '=', '_confirmed')->where('id', '<>', auth()->id())->inRandomOrder()->first();
+
+            $user->ignored = IgnoreModel::hasIgnored(auth()->id(), $user->id);
+            $user->age = Carbon::parse($user->birthday)->age;
+
+            switch ($user->gender) {
+                case User::GENDER_MALE:
+                    $user->gender = __('app.gender_male');
+                    break;
+                case User::GENDER_FEMALE:
+                    $user->gender = __('app.gender_female');
+                    break;
+                case User::GENDER_DIVERSE:
+                    $user->gender = __('app.gender_diverse');
+                    break;
+                default:
+                    $user->gender = __('app.gender_unspecified');
+                    break;
+            }
+
+            $user->is_online = User::isMemberOnline($user->id);
+            $user->last_seen = Carbon::parse($user->last_action)->diffForHumans();
+            $user->is_self = $user->id === auth()->id();
+            $user->self_liked = LikeModel::hasLiked(auth()->id(), $user->id);
+            $user->liked_back = LikeModeL::hasLiked($user->id, auth()->id());
+            $user->both_liked = ($user->self_liked) && ($user->liked_back);
+
+            return view('member.random', [
+                'user' => $user
+            ]);
+        } catch (\Exception $e) {
+            return redirect('/')->with('error', $e->getMessage());
+        }
+    }
+
+    /**
      * Check for username availability and identifier validity
      *
      * @return \Illuminate\Http\JsonResponse
@@ -316,6 +361,29 @@ class MemberController extends Controller
     }
 
     /**
+     * Query ignore list
+     * 
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function queryIgnoreList()
+    {
+        try {
+            $this->validateLogin();
+
+            $paginate = request('paginate', null);
+
+            $data = IgnoreModel::getIgnorePack(auth()->id(), env('APP_IGNOREPACK', 10), $paginate);
+            foreach ($data as &$item) {
+                $item['user'] = User::get($item['targetId'])->toArray();
+            }
+
+            return response()->json(array('code' => 200, 'data' => $data));
+        } catch (\Exception $e) {
+            return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
+        }
+    }
+
+    /**
      * Save profile data
      * 
      * @return mixed
@@ -432,6 +500,27 @@ class MemberController extends Controller
             User::saveEmail($attr['email']);
 
             return back()->with('flash.success', __('app.email_saved'));
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Save photo
+     * 
+     * @return mixed
+     */
+    public function savePhoto()
+    {
+        try {
+            $attr = request()->validate([
+                'image' => 'file',
+                'which' => 'required'
+            ]);
+
+            User::savePhoto($attr['which']);
+
+            return back()->with('flash.success', __('app.photo_saved'));
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }

@@ -128,5 +128,11 @@ return [
     'account_deleted' => 'Account has been deleted',
     'mail_on_message' => 'Receive e-mail notification on new private message',
     'newsletter_notice' => 'Send me newsletters',
-    'notifications_saved' => 'Notifications saved successfully'
+    'notifications_saved' => 'Notifications saved successfully',
+    'select_photo' => 'Select photo',
+    'photo_saved' => 'Photo has been saved',
+    'no_more_users' => 'No more users',
+    'cookie_notice' => 'Cookie notice',
+    'cookie_close' => 'Accept and close',
+    'login_failed' => 'Login failed. Please check if your password is correct. Alternatively you can reset your password.'
 ];

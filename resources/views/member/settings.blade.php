@@ -140,7 +140,67 @@
         </div>
 
         <div id="tabPhotos-form" class="tab-content is-hidden">
-        c
+            <form method="POST" action="{{ url('/member/photo/save') }}" enctype="multipart/form-data">
+                @csrf
+
+                <input type="hidden" name="which" value="avatar">
+
+                <div class="field">
+                    <div class="control">
+                        <span class="settings-photo-image"><img src="{{ asset('gfx/avatars/' . $user->avatar) }}" alt="avatar"></span>
+                        <span class="settings-photo-input"><input type="file" data-role="file" data-button-title="{{ __('app.select_photo') }}" name="image"></span>
+                        <span><button class="button is-success" type="submit">{{ __('app.save') }}</button></span>
+                    </div>
+                </div>
+            </form>
+
+            <br/>
+
+            <form method="POST" action="{{ url('/member/photo/save') }}" enctype="multipart/form-data">
+                @csrf
+
+                <input type="hidden" name="which" value="photo1">
+
+                <div class="field">
+                    <div class="control">
+                        <span class="settings-photo-image"><img src="{{ asset('gfx/avatars/' . $user->photo1) }}" alt="photo"></span>
+                        <span class="settings-photo-input"><input type="file" data-role="file" data-button-title="{{ __('app.select_photo') }}" name="image"></span>
+                        <span><button class="button is-success" type="submit">{{ __('app.save') }}</button></span>
+                    </div>
+                </div>
+            </form>
+
+            <br/>
+
+            <form method="POST" action="{{ url('/member/photo/save') }}" enctype="multipart/form-data">
+                @csrf
+
+                <input type="hidden" name="which" value="photo2">
+
+                <div class="field">
+                    <div class="control">
+                        <span class="settings-photo-image"><img src="{{ asset('gfx/avatars/' . $user->photo2) }}" alt="photo"></span>
+                        <span class="settings-photo-input"><input type="file" data-role="file" data-button-title="{{ __('app.select_photo') }}" name="image"></span>
+                        <span><button class="button is-success" type="submit">{{ __('app.save') }}</button></span>
+                    </div>
+                </div>
+            </form>
+
+            <br/>
+
+            <form method="POST" action="{{ url('/member/photo/save') }}" enctype="multipart/form-data">
+                @csrf
+
+                <input type="hidden" name="which" value="photo3">
+
+                <div class="field">
+                    <div class="control">
+                        <span class="settings-photo-image"><img src="{{ asset('gfx/avatars/' . $user->photo3) }}" alt="photo"></span>
+                        <span class="settings-photo-input"><input type="file" data-role="file" data-button-title="{{ __('app.select_photo') }}" name="image"></span>
+                        <span><button class="button is-success" type="submit">{{ __('app.save') }}</button></span>
+                    </div>
+                </div>
+            </form>
         </div>
 
         <div id="tabSecurity-form" class="tab-content is-hidden">
@@ -191,7 +251,7 @@
         <div id="tabNotifications-form" class="tab-content is-hidden">
             <form method="POST" action="{{ url('/member/notifications/save') }}">
                 @csrf
-                
+
                 <div class="field">
                     <div class="control">
                         <input type="checkbox" name="mail_on_message" data-role="checkbox" data-style="2" value="1" data-caption="{{ __('app.mail_on_message') }}" @if ($user->mail_on_message) {{ 'checked' }} @endif>
@@ -213,7 +273,7 @@
         </div>
 
         <div id="tabIgnoreList-form" class="tab-content is-hidden">
-        f
+            <div id="ignore-content"></div>
         </div>
 
         <div id="tabMembership-form" class="tab-content is-hidden">
@@ -244,6 +304,7 @@
 @section('javascript')
     <script>
         window.paginateVisitors = null;
+        window.paginateIgnoreList = null;
 
         var quillIntroduction = new Quill('#text-introduction', {
             theme: 'snow',
@@ -314,8 +375,45 @@
             });
         };
 
+        window.queryIgnoreList = function() {
+            let content = document.getElementById('ignore-content');
+
+            let loadmore = document.getElementById('ignore-loadmore');
+            if (loadmore) {
+                loadmore.remove();
+            }
+
+            content.innerHTML += '<div id="ignore-spinner"><center><i class="fa fa-spinner fa-spin"></i></center></div>';
+
+            window.vue.ajaxRequest('post', '{{ url('/member/ignores/query') }}', { paginate: window.paginateIgnoreList }, function(response){
+                if (response.code == 200) {
+                    let spinner = document.getElementById('ignore-spinner');
+                    if (spinner) {
+                        spinner.remove();
+                    }
+
+                    response.data.forEach(function(elem, index){
+                        let html = window.vue.renderIgnoreProfile(elem);
+
+                        content.innerHTML += html;
+                    });
+
+                    if (response.data.length === 0) {
+                        content.innerHTML += '<div><br/>{{ __('app.no_more_users') }}</div>';
+                    } else {
+                        window.paginateIgnoreList = response.data[response.data.length - 1].id;
+
+                        content.innerHTML += '<div id="ignore-loadmore"><br/><center><i class="fas fa-arrow-down is-pointer" onclick="window.queryIgnoreList();"></i></center></div>';
+                    }
+                } else {
+                    console.error(response);
+                }
+            });
+        };
+
         document.addEventListener('DOMContentLoaded', function() {
             window.queryVisitors();
+            window.queryIgnoreList();
         });
     </script>
 @endsection

@@ -29,7 +29,8 @@ window.vue = new Vue({
             status: 'Status',
             location: 'Location',
             gender: 'Gender',
-            isnew: 'New'
+            isnew: 'New',
+            removeIgnore: 'Remove'
         },
     },
 
@@ -370,6 +371,26 @@ window.vue = new Vue({
             return html;
         },
 
+        renderIgnoreProfile: function(elem) {
+            let html = `
+            <div class="ignore">
+                <div class="ignore-avatar">
+                    <a href="`+ window.location.origin + '/user/' + elem.user.name + `"><img src="`+ window.location.origin + '/gfx/avatars/default.png' + `" alt="avatar"></a>
+                </div>
+        
+                <div class="ignore-name">
+                    <a href="`+ window.location.origin + '/user/' + elem.user.name + `">` + elem.user.name + `</a>
+                </div>
+
+                <div class="ignore-action">
+                    <button class="button is-link" onclick="location.href = '` + window.location.origin + `/member/unignore/` + elem.user.id + `';">` + this.translationTable.removeIgnore + `</button>
+                </div>
+            </div>
+            `;
+
+            return html;
+        },
+
         renderNotification: function(elem, newItem = false) {
             let icon = 'fas fa-info-circle';
             let color = 'is-notification-color-black';
@@ -419,6 +440,45 @@ window.vue = new Vue({
                     console.log(response.msg);
                 }
             });
+        },
+
+        showImagePreview: function(image, name) {
+            let obj = document.getElementById('imgpreview');
+            if (obj) {
+                obj.style.display = 'block';
+            }
+
+            let obj2 = document.getElementById('imgpreview-name');
+            if (obj2) {
+                obj2.innerHTML = name;
+            }
+
+            let obj3 = document.getElementById('imgpreview-image');
+            if (obj3) {
+                obj3.src = window.location.origin + '/gfx/avatars/' + image;
+            }
+        },
+
+        handleCookieConsent: function () {
+            let cookies = document.cookie.split(';');
+            let foundCookie = false;
+            for (let i = 0; i < cookies.length; i++) {
+                if (cookies[i].indexOf('cookieconsent') !== -1) {
+                    foundCookie = true;
+                    break;
+                }
+            }
+
+            if (foundCookie === false) {
+                document.getElementById('cookie-consent').style.display = 'inline-block';
+            }
+        },
+
+        clickedCookieConsentButton: function () {
+            let expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
+            document.cookie = 'cookieconsent=1; expires=' + expDate.toUTCString() + ';';
+
+            document.getElementById('cookie-consent').style.display = 'none';
         },
     }
 });
