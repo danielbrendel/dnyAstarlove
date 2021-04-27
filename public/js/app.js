@@ -1867,7 +1867,8 @@ window.vue = new Vue({
       age: 'Age',
       status: 'Status',
       location: 'Location',
-      gender: 'Gender'
+      gender: 'Gender',
+      isnew: 'New'
     }
   },
   methods: {
@@ -2103,6 +2104,28 @@ window.vue = new Vue({
     },
     renderMessageListItem: function renderMessageListItem(item) {
       var html = "\n                <div class=\"messages-item " + (!item.seen ? 'is-new-message' : '') + "\">\n                    <div class=\"messages-item-avatar\">\n                        <img src=\"" + window.location.origin + "/gfx/avatars/" + item.user.avatar + "\">\n                    </div>\n        \n                    <div class=\"messages-item-name\">\n                        <a href=\"" + window.location.origin + "/u/" + item.user.name + "\">" + item.user.name + "</a>\n                    </div>\n        \n                    <div class=\"messages-item-subject\">\n                        <a href=\"" + window.location.origin + "/messages/show/" + item.id + "\">" + item.subject + "</a>\n                    </div>\n        \n                    <div class=\"messages-item-date\" title=\"" + item.created_at + "\">\n                        " + item.diffForHumans + "\n                    </div>\n                </div>\n            ";
+      return html;
+    },
+    showTabMenu: function showTabMenu(target) {
+      var tabItems = ['tabVisitors', 'tabProfile', 'tabSecurity', 'tabNotifications', 'tabIgnoreList', 'tabMembership'];
+      tabItems.forEach(function (elem, index) {
+        if (elem !== target) {
+          document.getElementById(elem).classList.remove('is-active');
+          document.getElementById(elem + '-form').classList.add('is-hidden');
+        }
+
+        document.getElementById(target).classList.add('is-active');
+        document.getElementById(target + '-form').classList.remove('is-hidden');
+      });
+    },
+    renderVisitorProfile: function renderVisitorProfile(elem) {
+      var isnew = '';
+
+      if (elem["new"]) {
+        isnew = '<span class="visitor-new">' + this.translationTable.isnew + '</span>';
+      }
+
+      var html = "\n            <div class=\"visitor\">\n                <div class=\"visitor-avatar\">\n                    <a href=\"" + window.location.origin + '/user/' + elem.user.name + "\"><img src=\"" + window.location.origin + '/gfx/avatars/' + elem.user.avatar + "\" alt=\"avatar\"></a>\n\n                    " + isnew + "\n                </div>\n        \n                <div class=\"visitor-name\">\n                    <a href=\"" + window.location.origin + '/user/' + elem.user.name + "\">" + elem.user.name + "</a>\n                </div>\n            </div>\n            ";
       return html;
     }
   }

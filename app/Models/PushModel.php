@@ -34,7 +34,7 @@ class PushModel extends Model
     private static function validatePushType($type)
     {
         try {
-            $types = array('PUSH_WELCOME', 'PUSH_VISITED', 'PUSH_MESSAGED');
+            $types = array('PUSH_WELCOME', 'PUSH_VISITED', 'PUSH_LIKED', 'PUSH_MESSAGED');
             if (!in_array($type, $types)) {
                 throw new Exception('Invalid notification type: ' . $type);
             }

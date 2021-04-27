@@ -41,6 +41,8 @@ Route::any('/member/unlike/{id}', [MemberController::class, 'unlikeUser']);
 Route::any('/member/ignore/{id}', [MemberController::class, 'ignoreUser']);
 Route::any('/member/unignore/{id}', [MemberController::class, 'unignoreUser']);
 Route::any('/member/report/{id}', [MemberController::class, 'reportUser']);
+Route::get('/settings', [MemberController::class, 'viewSettings']);
+Route::post('/member/visitors/query', [MemberController::class, 'queryVisitors']);
 
 Route::get('/messages', [MessageController::class, 'list']);
 Route::get('/messages/list', [MessageController::class, 'fetchList']);

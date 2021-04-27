@@ -483,3 +483,41 @@ a.navbar-item:hover {
     border-bottom: 2px solid rgb(150, 150, 150);
     font-style: italic;
 }
+
+//Tabs
+.tab-content {
+    padding: 15px;
+}
+
+//Visitors
+.visitor {
+    position: relative;
+    display: inline-block;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 10px;
+}
+.visitor-avatar img {
+    width: 128px;
+    height: 128px;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+}
+.visitor-name {
+    text-align: center;
+}
+.visitor-name a {
+    color:rgb(0, 0, 0);
+}
+.visitor-new {
+    position: absolute;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 0.6em;
+    padding: 3px;
+    left: 11px;
+    background-color: rgb(255, 117, 117);
+    color: rgb(255, 255, 255);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}

@@ -18,6 +18,7 @@ use Illuminate\Support\Carbon;
 use App\Models\User;
 use App\Models\LikeModel;
 use App\Models\IgnoreModel;
+use App\Models\VisitorModel;
 
 /**
  * Class MemberController
@@ -137,6 +138,10 @@ class MemberController extends Controller
 
             if ((!$user) || ($user->deactivated) || (IgnoreModel::hasIgnored($user->id, auth()->id()))) {
                 throw new \Exception(__('app.user_not_found_or_deactivated'));
+            }
+
+            if ($user->id !== auth()->id()) {
+                VisitorModel::add(auth()->id(), $user->id);
             }
 
             $user->ignored = IgnoreModel::hasIgnored(auth()->id(), $user->id);
@@ -264,6 +269,49 @@ class MemberController extends Controller
             return back()->with('flash.success', __('app.reported_successfully'));
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
+        }
+    }
+
+    /**
+     * View settings page
+     * 
+     * @return mixed
+     */
+    public function viewSettings()
+    {
+        try {
+            $this->validateLogin();
+
+            $user = User::getByAuthId();
+
+            return view('member.settings', [
+                'user' => $user
+            ]);
+        } catch (\Exception $e) {
+            return redirect('/')->with('error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Query visitors
+     * 
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function queryVisitors()
+    {
+        try {
+            $this->validateLogin();
+
+            $paginate = request('paginate', null);
+
+            $data = VisitorModel::getVisitorPack(auth()->id(), env('APP_VISITORPACK', 10), $paginate);
+            foreach ($data as &$item) {
+                $item['user'] = User::get($item['visitorId'])->toArray();
+            }
+
+            return response()->json(array('code' => 200, 'data' => $data));
+        } catch (\Exception $e) {
+            return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
         }
     }
 }

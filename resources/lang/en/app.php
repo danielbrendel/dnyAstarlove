@@ -99,5 +99,14 @@ return [
     'unignore' => 'Un-ignore',
     'ignored_successfully' => 'Successfully ignored user',
     'unignored_successfully' => 'Successfully removed from ignore list',
-    'reported_successfully' => 'Successfully reported the member'
+    'reported_successfully' => 'Successfully reported the member',
+    'message_create' => 'Create a message',
+    'edit_profile' => 'Edit profile',
+    'visitors' => 'Visitors',
+    'security' => 'Security',
+    'membership' => 'Membership',
+    'ignore_list' => 'Ignore List',
+    'user_visited_short' => 'You\'ve got a new visitor',
+    'user_visited_long' => '<a href=":url">@:name</a> has visited your profile',
+    'no_more_visitors' => 'No more visitors'
 ];

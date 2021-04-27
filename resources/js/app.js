@@ -29,6 +29,7 @@ window.vue = new Vue({
             status: 'Status',
             location: 'Location',
             gender: 'Gender',
+            isnew: 'New'
         },
     },
 
@@ -329,6 +330,43 @@ window.vue = new Vue({
                 </div>
             `;
         
+            return html;
+        },
+
+        showTabMenu: function(target) {
+            let tabItems = ['tabVisitors', 'tabProfile', 'tabSecurity', 'tabNotifications', 'tabIgnoreList', 'tabMembership'];
+
+            tabItems.forEach(function(elem, index) {
+               if (elem !== target) {
+                   document.getElementById(elem).classList.remove('is-active');
+                   document.getElementById(elem + '-form').classList.add('is-hidden');
+               }
+
+               document.getElementById(target).classList.add('is-active');
+               document.getElementById(target + '-form').classList.remove('is-hidden');
+            });
+        },
+
+        renderVisitorProfile: function(elem) {
+            let isnew = '';
+            if (elem.new) {
+                isnew = '<span class="visitor-new">' + this.translationTable.isnew + '</span>';
+            }
+
+            let html = `
+            <div class="visitor">
+                <div class="visitor-avatar">
+                    <a href="`+ window.location.origin + '/user/' + elem.user.name + `"><img src="`+ window.location.origin + '/gfx/avatars/' + elem.user.avatar + `" alt="avatar"></a>
+
+                    ` + isnew + `
+                </div>
+        
+                <div class="visitor-name">
+                    <a href="`+ window.location.origin + '/user/' + elem.user.name + `">` + elem.user.name + `</a>
+                </div>
+            </div>
+            `;
+
             return html;
         },
     }

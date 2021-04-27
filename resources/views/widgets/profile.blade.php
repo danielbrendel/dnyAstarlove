@@ -98,10 +98,10 @@
                 @if (!$user->is_self)
                     @if (!$user->ignored)
                         @if ($user->both_liked)
-                            <span><a class="button is-success" href="{{ url('/message/create?u=' . $user->name) }}">{{ __('app.message') }}</a></span>
+                            <span><a class="button is-success" href="{{ url('/messages/create?u=' . $user->name) }}">{{ __('app.message') }}</a></span>
                         @else
                             @if ($user->self_liked)
-                                <span><a class="button is-danger is-outlined" href="javascript:void(0);" onclick="alert('{{ __('app.wait_until_back_liked') }}');">{{ __('app.message') }}</a></span>
+                                <span><a class="button is-outlined" href="javascript:void(0);" onclick="alert('{{ __('app.wait_until_back_liked') }}');">{{ __('app.message') }}</a></span>
                             @else
                                 <span><a class="button is-danger" href="{{ url('/member/like/' . $user->id) }}"><i class="fas fa-heart"></i>&nbsp;{{ __('app.like') }}</a></span>
                             @endif
@@ -113,6 +113,8 @@
                     @else 
                         <span class="float-right"><a href="{{ url('/member/unignore/' . $user->id) }}">{{ __('app.unignore') }}</a></span>
                     @endif
+                @else
+                    <span><a href="{{ url('/settings') }}">{{ __('app.edit_profile') }}</a></span>
                 @endif
             </div>
         </div>
