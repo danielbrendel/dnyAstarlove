@@ -121,6 +121,12 @@ a.navbar-item:hover {
 .navbar-menu.is-active {
     background-color: transparent;
 }
+.navbar-fixed-left {
+    @media screen and (max-width: 1087px) {
+        position: relative;
+        left: -14px;
+    }
+}
 
 //Main
 #main {
