@@ -120,6 +120,17 @@
                 @endif
 
                 <div class="container">
+                    <div class="notifications" id="notifications">
+                        <center><div class="notifications-arrow-up"></div></center>
+
+                        <div>
+                            <div class="is-inline-block"></div>
+                            <div class="is-inline-block float-right notification-close-action is-pointer" onclick="window.vue.toggleNotifications('notifications'); if (window.menuVisible) {document.getElementById('navbarMenu').classList.remove('is-active'); document.getElementById('navbarBurger').classList.remove('is-active'); }">{{ __('app.close') }}</div>
+                        </div>
+
+                        <div class="notifications-content" id="notification-content"></div>
+                    </div>
+
                     <div class="columns">
                         <div class="column is-2"></div>
 
@@ -143,6 +154,8 @@
 
         <script src="{{ asset('js/app.js') }}"></script>
         <script>
+            window.menuVisible = false;
+
             window.transferGeolocation = function(geodata) {
                 let latitude = geodata.coords.latitude;
                 let longitude = geodata.coords.longitude;
@@ -160,6 +173,91 @@
                 }
             };
 
+            window.fetchNotifications = function() {
+                window.vue.ajaxRequest('get', '{{ url('/notifications/list?mark=0') }}', {}, function(response){
+                    if (response.code === 200) {
+                        if (response.data.length > 0) {
+                            let noyet = document.getElementById('no-notifications-yet');
+                            if (noyet) {
+                                noyet.remove();
+                            }
+
+                            let indicator = document.getElementById('navbar-notify-wrapper');
+                            if (indicator) {
+                                indicator.classList.remove('is-hidden');
+
+                                count = document.getElementById('navbar-notify-count');
+                                if (count) {
+                                    count.innerHTML = response.data.length;
+                                }
+                            }
+
+                            let burgerSpan = document.getElementById('burger-notification');
+                            if (burgerSpan) {
+                                burgerSpan.style.display = 'unset';
+                            }
+
+                            response.data.forEach(function(elem, index) {
+                                @if (isset($_GET['clep_push_handler']))
+                                    window['{{ $_GET['clep_push_handler'] }}'](elem.shortMsg, elem.longMsg);
+                                @endif
+
+                                let html = window.vue.renderNotification(elem, true);
+                                document.getElementById('notification-content').innerHTML = html + document.getElementById('notification-content').innerHTML;
+                            });
+                        }
+                    }
+                });
+
+                setTimeout('fetchNotifications()', 50000);
+            };
+
+            window.notificationPagination = null;
+            window.fetchNotificationList = function() {
+                document.getElementById('notification-content').innerHTML += '<center><i id="notification-spinner" class="fas fa-spinner fa-spin"></i></center>';
+
+                let loader = document.getElementById('load-more-notifications');
+                if (loader) {
+                    loader.remove();
+                }
+
+                window.vue.ajaxRequest('get', '{{ url('/notifications/fetch') }}' + ((window.notificationPagination) ? '?paginate=' + window.notificationPagination : ''), {}, function(response) {
+                    if (response.code === 200) {
+                        if (response.data.length > 0) {
+                            let noyet = document.getElementById('no-notifications-yet');
+                            if (noyet) {
+                                noyet.remove();
+                            }
+
+                            response.data.forEach(function(elem, index) {
+                                let html = window.vue.renderNotification(elem);
+
+                                document.getElementById('notification-content').innerHTML += html;
+                            });
+
+                            window.notificationPagination = response.data[response.data.length-1].id;
+
+                            document.getElementById('notification-content').innerHTML += '<center><i id="load-more-notifications" class="fas fa-arrow-down is-pointer" onclick="fetchNotificationList()"></i></center>';
+                            document.getElementById('notification-spinner').remove();
+                        } else {
+                            if (window.notificationPagination === null) {
+                                document.getElementById('notification-content').innerHTML = '<div id="no-notifications-yet"><center><i>{{ __('app.no_notifications_yet') }}</i></center></div>';
+                            }
+
+                            let loader = document.getElementById('load-more-notifications');
+                            if (loader) {
+                                loader.remove();
+                            }
+
+                            let spinner = document.getElementById('notification-spinner');
+                            if (spinner) {
+                                spinner.remove();
+                            }
+                        }
+                    }
+                });
+            };
+
             document.addEventListener('DOMContentLoaded', function() {
                 @if (Session::has('flash.error'))
                     setTimeout('window.vue.showError()', 500);
@@ -170,6 +268,9 @@
                 @endif
 
                 @auth
+                    setTimeout('fetchNotifications()', 100);
+                    setTimeout('fetchNotificationList()', 200);
+
                     window.geoLoopTransmission = function() {
                         window.queryGeoLocation();
 

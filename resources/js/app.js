@@ -369,6 +369,57 @@ window.vue = new Vue({
 
             return html;
         },
+
+        renderNotification: function(elem, newItem = false) {
+            let icon = 'fas fa-info-circle';
+            let color = 'is-notification-color-black';
+            if (elem.type === 'PUSH_WELCOME') {
+                icon = 'fas fa-gift';
+                color = 'is-notification-color-green';
+            } else if (elem.type === 'PUSH_VISITED') {
+                icon = 'far fa-eye';
+                color = 'is-notification-color-blue';
+            } else if (elem.type === 'PUSH_LIKED') {
+                icon = 'far fa-heart';
+                color = 'is-notification-color-red';
+            } else if (elem.type === 'PUSH_MESSAGED') {
+                icon = 'far fa-envelope';
+                color = 'is-notification-color-yellow';
+            }
+
+            let html = `
+                <div class="notification-item ` + ((newItem) ? 'is-new-notification' : '') + `">
+                    <div class="notification-icon">
+                        <div class="notification-item-icon"><i class="` + icon + ` fa-3x ` + color + `"></i></div>
+                    </div>
+                    <div class="notification-info">
+                        <div class="notification-item-message">` + elem.longMsg + `</div>
+                        <div class="notification-item-message is-color-grey is-font-size-small is-margin-top-5">` + elem.diffForHumans + `</div>
+                    </div>
+                </div>
+            `;
+
+            return html;
+        },
+
+        toggleNotifications: function(ident) {
+            let obj = document.getElementById(ident);
+            if (obj) {
+                if (obj.style.display === 'block') {
+                    obj.style.display = 'none';
+                } else {
+                    obj.style.display = 'block';
+                }
+            }
+        },
+
+        markSeen: function() {
+            this.ajaxRequest('get', window.location.origin + '/notifications/seen', {}, function(response) {
+                if (response.code !== 200) {
+                    console.log(response.msg);
+                }
+            });
+        },
     }
 });
 

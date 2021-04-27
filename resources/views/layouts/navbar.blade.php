@@ -15,10 +15,11 @@
         <strong>{{ env('APP_NAME') }}</strong>
     </a>
 
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
+    <a id="navbarBurger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu" onclick="window.menuVisible = !document.getElementById('navbarMenu').classList.contains('is-active');">
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
+      <span id="burger-notification"></span>
     </a>
   </div>
 
@@ -39,8 +40,9 @@
             {{ __('app.messages') }}
         </a>
 
-        <a class="navbar-item" href="javascript:void(0);" onclick="window.vue.bShowNotifications = true;">
-            {{ __('app.notifications') }}
+        <a class="navbar-item notification-badge" href="javascript:void(0);" onclick="window.vue.toggleNotifications('notifications'); document.getElementById('navbar-notify-wrapper').classList.add('is-hidden'); document.getElementById('burger-notification').style.display = 'none'; window.vue.markSeen(); if (window.menuVisible) { document.getElementById('navbarMenu').classList.remove('is-active'); document.getElementById('navbarBurger').classList.remove('is-active'); }">
+            <span>{{ __('app.notifications') }}</span>
+            <span class="notify-badge is-hidden" id="navbar-notify-wrapper"><span class="notify-badge-count" id="navbar-notify-count"></span></span>
         </a>
 
         <a class="navbar-item" href="{{ url('/user/' . \App\Models\User::get(auth()->id())->name) }}">

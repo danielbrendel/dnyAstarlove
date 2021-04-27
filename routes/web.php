@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\NotificationController;
 
 Route::get('/', [MainController::class, 'index']);
 Route::get('/faq', [MainController::class, 'faq']);
@@ -50,3 +51,7 @@ Route::get('/messages/show/{id}', [MessageController::class, 'show']);
 Route::get('/messages/create', [MessageController::class, 'create']);
 Route::post('/messages/send', [MessageController::class, 'send']);
 Route::any('/messages/unread/count', [MessageController::class, 'unreadCount']);
+
+Route::get('/notifications/list', [NotificationController::class, 'list']);
+Route::get('/notifications/fetch', [NotificationController::class, 'fetch']);
+Route::get('/notifications/seen', [NotificationController::class, 'seen']);

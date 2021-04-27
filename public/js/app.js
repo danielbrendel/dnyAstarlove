@@ -2127,6 +2127,46 @@ window.vue = new Vue({
 
       var html = "\n            <div class=\"visitor\">\n                <div class=\"visitor-avatar\">\n                    <a href=\"" + window.location.origin + '/user/' + elem.user.name + "\"><img src=\"" + window.location.origin + '/gfx/avatars/' + elem.user.avatar + "\" alt=\"avatar\"></a>\n\n                    " + isnew + "\n                </div>\n        \n                <div class=\"visitor-name\">\n                    <a href=\"" + window.location.origin + '/user/' + elem.user.name + "\">" + elem.user.name + "</a>\n                </div>\n            </div>\n            ";
       return html;
+    },
+    renderNotification: function renderNotification(elem) {
+      var newItem = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      var icon = 'fas fa-info-circle';
+      var color = 'is-notification-color-black';
+
+      if (elem.type === 'PUSH_WELCOME') {
+        icon = 'fas fa-gift';
+        color = 'is-notification-color-green';
+      } else if (elem.type === 'PUSH_VISITED') {
+        icon = 'far fa-eye';
+        color = 'is-notification-color-blue';
+      } else if (elem.type === 'PUSH_LIKED') {
+        icon = 'far fa-heart';
+        color = 'is-notification-color-red';
+      } else if (elem.type === 'PUSH_MESSAGED') {
+        icon = 'far fa-envelope';
+        color = 'is-notification-color-yellow';
+      }
+
+      var html = "\n                <div class=\"notification-item " + (newItem ? 'is-new-notification' : '') + "\">\n                    <div class=\"notification-icon\">\n                        <div class=\"notification-item-icon\"><i class=\"" + icon + " fa-3x " + color + "\"></i></div>\n                    </div>\n                    <div class=\"notification-info\">\n                        <div class=\"notification-item-message\">" + elem.longMsg + "</div>\n                        <div class=\"notification-item-message is-color-grey is-font-size-small is-margin-top-5\">" + elem.diffForHumans + "</div>\n                    </div>\n                </div>\n            ";
+      return html;
+    },
+    toggleNotifications: function toggleNotifications(ident) {
+      var obj = document.getElementById(ident);
+
+      if (obj) {
+        if (obj.style.display === 'block') {
+          obj.style.display = 'none';
+        } else {
+          obj.style.display = 'block';
+        }
+      }
+    },
+    markSeen: function markSeen() {
+      this.ajaxRequest('get', window.location.origin + '/notifications/seen', {}, function (response) {
+        if (response.code !== 200) {
+          console.log(response.msg);
+        }
+      });
     }
   }
 });

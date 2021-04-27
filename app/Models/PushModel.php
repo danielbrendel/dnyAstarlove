@@ -133,4 +133,24 @@ class PushModel extends Model
             throw $e;
         }
     }
+
+    /**
+     * Mark unseen notifications as seen
+     *
+     * @param $userId
+     * @throws \Exception
+     */
+    public static function markSeen($userId)
+    {
+        try {
+            $items = PushModel::where('userId', '=', $userId)->where('seen', '=', false)->get();
+
+            foreach ($items as $item) {
+                $item->seen = true;
+                $item->save();
+            }
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
 }
