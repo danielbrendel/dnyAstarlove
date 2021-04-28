@@ -1873,7 +1873,8 @@ window.vue = new Vue({
       location: 'Location',
       gender: 'Gender',
       isnew: 'New',
-      removeIgnore: 'Remove'
+      removeIgnore: 'Remove',
+      verifiedProfile: 'Verified profile'
     }
   },
   methods: {
@@ -2104,7 +2105,13 @@ window.vue = new Vue({
         online = '<span class="profile-avatar-online"></span>';
       }
 
-      var html = "\n                <div class=\"profile\">\n                    <div class=\"profile-avatar\">\n                        <a href=\"" + window.location.origin + '/user/' + elem.name + "\"><img src=\"" + window.location.origin + '/gfx/avatars/' + elem.avatar + "\" alt=\"avatar\"></a>\n                        " + online + "\n                    </div>\n\n                    <div class=\"profile-name\"><a href=\"" + window.location.origin + '/user/' + elem.name + "\">" + elem.name + "</a></div>\n\n                    <div class=\"profile-info\">\n                        <div><strong>" + this.translationTable.age + ": </strong>" + elem.age + "</div>\n                        <div><strong>" + this.translationTable.status + ": </strong>" + elem.rel_status + "</div>\n                        <div><strong>" + this.translationTable.location + ": </strong>" + elem.location + "</div>\n                        <div><strong>" + this.translationTable.gender + ": </strong>" + elem.gender + "</div>\n                    </div>\n\n                    <div class=\"profile-introduction\">\n                        " + elem.introduction + "\n                    </div>\n                </div>\n            ";
+      var verified = '';
+
+      if (elem.verified) {
+        verified = '&nbsp;<i class="far fa-check-circle is-color-dark-blue" title="' + this.translationTable.verifiedProfile + '"></i>';
+      }
+
+      var html = "\n                <div class=\"profile\">\n                    <div class=\"profile-avatar\">\n                        <a href=\"" + window.location.origin + '/user/' + elem.name + "\"><img src=\"" + window.location.origin + '/gfx/avatars/' + elem.avatar + "\" alt=\"avatar\"></a>\n                        " + online + "\n                    </div>\n\n                    <div class=\"profile-name\"><a href=\"" + window.location.origin + '/user/' + elem.name + "\">" + elem.name + "</a>" + verified + "</div>\n\n                    <div class=\"profile-info\">\n                        <div><strong>" + this.translationTable.age + ": </strong>" + elem.age + "</div>\n                        <div><strong>" + this.translationTable.status + ": </strong>" + elem.rel_status + "</div>\n                        <div><strong>" + this.translationTable.location + ": </strong>" + elem.location + "</div>\n                        <div><strong>" + this.translationTable.gender + ": </strong>" + elem.gender + "</div>\n                    </div>\n\n                    <div class=\"profile-introduction\">\n                        " + elem.introduction + "\n                    </div>\n                </div>\n            ";
       return html;
     },
     renderMessageListItem: function renderMessageListItem(item) {

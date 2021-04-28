@@ -19,6 +19,7 @@ use App\Models\User;
 use App\Models\LikeModel;
 use App\Models\IgnoreModel;
 use App\Models\VisitorModel;
+use App\Models\VerifyModel;
 
 /**
  * Class MemberController
@@ -172,14 +173,18 @@ class MemberController extends Controller
     /**
      * Show user profile
      * 
+     * @param $ident
      * @return mixed
      */
-    public function showUser($name)
+    public function showUser($ident)
     {
         try {
             $this->validateLogin();
 
-            $user = User::getByName($name);
+            $user = User::getByName($ident);
+            if (!$user) {
+                $user = User::get((int)$ident);
+            }
 
             if ((!$user) || ($user->deactivated) || (IgnoreModel::hasIgnored($user->id, auth()->id()))) {
                 throw new \Exception(__('app.user_not_found_or_deactivated'));
@@ -191,6 +196,7 @@ class MemberController extends Controller
 
             $user->ignored = IgnoreModel::hasIgnored(auth()->id(), $user->id);
             $user->age = Carbon::parse($user->birthday)->age;
+            $user->verified = VerifyModel::getState($user->id) == VerifyModel::STATE_VERIFIED;
 
             switch ($user->gender) {
                 case User::GENDER_MALE:
@@ -333,6 +339,7 @@ class MemberController extends Controller
             $this->validateLogin();
 
             $user = User::getByAuthId();
+            $user->state = VerifyModel::getState($user->id);
 
             return view('member.settings', [
                 'user' => $user
@@ -589,6 +596,30 @@ class MemberController extends Controller
 
             return redirect('/settings?tab=notifications')->with('flash.success', __('app.notifications_saved'));
         } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Apply for account verification
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function verifyAccount()
+    {
+        try {
+            $this->validateLogin();
+
+            $attr = request()->validate([
+                'idcard_front' => 'required|file',
+                'idcard_back' => 'required|file',
+                'confirmation' => 'required|numeric'
+            ]);
+
+            VerifyModel::addVerifyAccount(auth()->id(), $attr);
+
+            return redirect('/settings?tab=membership')->with('success', __('app.verify_account_ok'));
+        } catch (Exception $e) {
             return back()->with('error', $e->getMessage());
         }
     }

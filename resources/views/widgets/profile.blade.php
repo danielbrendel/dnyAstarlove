@@ -54,6 +54,10 @@
         <div class="user-frame-right">
             <div class="user-name">
                 {{ '@' . $user->name }}
+                @if ($user->verified)
+                    &nbsp;
+                    <i class="far fa-check-circle is-color-dark-blue" title="{{ __('app.verified_profile') }}"></i>
+                @endif
             </div>
 
             @if (($user->realname !== null) && (strlen($user->realname) > 0))

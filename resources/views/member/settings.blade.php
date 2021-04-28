@@ -308,26 +308,74 @@
         </div>
 
         <div id="tabMembership-form" class="tab-content is-hidden">
-            <form method="POST" action="{{ url('/member/account/delete') }}">
-                @csrf
+            <div>
+                @if ($user->state === \App\Models\VerifyModel::STATE_INPROGRESS)
+                    <strong>{{ __('app.verification_in_progress') }}</strong>
+                @elseif ($user->state === \App\Models\VerifyModel::STATE_VERIFIED)
+                    <strong>{{ __('app.verification_succeeded') }}</strong>
+                @else
+                    <form method="POST" action="{{ url('/member/account/verify') }}" id="frmVerify" enctype="multipart/form-data">
+                        @csrf
 
-                <p>
-                    {{ __('app.account_removal_hint') }}
-                </p>
+                        <div class="field">
+                            <label class="label">
+                                {{ __('app.verify_account') }}
+                            </label>
+                        </div>
 
-                <div class="field">
-                    <label class="label">{!! __('app.enter_keyphrase', ['phrase' => env('APP_KEYPHRASE')]) !!}</label>
-                    <div class="control">
-                        <input type="text" name="keyphrase">
+                        <div class="field">
+                            <label class="label">{{ __('app.identity_card_front') }}</label>
+                            <div class="control">
+                                <input type="file" name="idcard_front" data-role="file" data-type="2">
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">{{ __('app.identity_card_back') }}</label>
+                            <div class="control">
+                                <input type="file" name="idcard_back" data-role="file" data-type="2">
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <div class="control">
+                                <input type="checkbox" name="confirmation" data-role="checkbox" data-type="2" data-caption="{{ __('app.confirm_verify_permission') }}" value="1" onclick="if (this.checked) { document.getElementById('btnVerify').disabled = false; } else { document.getElementById('btnVerify').disabled = true; }">
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <div class="control">
+                                <input type="button" class="button is-link" id="btnVerify" value="{{ __('app.submit') }}" onclick="if (!this.disabled) { document.getElementById('frmVerify').submit(); }" disabled>
+                            </div>
+                        </div>
+                    </form>
+                @endif
+
+                <hr/>
+            </div>
+
+            <div>
+                <form method="POST" action="{{ url('/member/account/delete') }}">
+                    @csrf
+
+                    <p>
+                        {{ __('app.account_removal_hint') }}
+                    </p>
+
+                    <div class="field">
+                        <label class="label">{!! __('app.enter_keyphrase', ['phrase' => env('APP_KEYPHRASE')]) !!}</label>
+                        <div class="control">
+                            <input type="text" name="keyphrase">
+                        </div>
                     </div>
-                </div>
 
-                <div class="field">
-                    <div class="control">
-                        <button class="button is-danger" type="submit">{{ __('app.delete') }}</button>
+                    <div class="field">
+                        <div class="control">
+                            <button class="button is-danger" type="submit">{{ __('app.delete') }}</button>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 @endsection

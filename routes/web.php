@@ -42,7 +42,7 @@ Route::get('/random', [MemberController::class, 'random']);
 Route::any('/member/name/valid', [MemberController::class, 'nameValidity']);
 Route::post('/profiles/query', [MemberController::class, 'queryProfiles']);
 Route::any('/member/geo', [MemberController::class, 'saveGeoLocation']);
-Route::get('/user/{name}', [MemberController::class, 'showUser']);
+Route::get('/user/{ident}', [MemberController::class, 'showUser']);
 Route::any('/member/like/{id}', [MemberController::class, 'likeUser']);
 Route::any('/member/unlike/{id}', [MemberController::class, 'unlikeUser']);
 Route::any('/member/ignore/{id}', [MemberController::class, 'ignoreUser']);
@@ -58,6 +58,7 @@ Route::post('/member/notifications/save', [MemberController::class, 'saveNotific
 Route::post('/member/ignores/query', [MemberController::class, 'queryIgnoreList']);
 Route::post('/member/account/delete', [MemberController::class, 'deleteAccount']);
 Route::post('/member/geoexclude/save', [MemberController::class, 'saveGeoExclude']);
+Route::post('/member/account/verify', [MemberController::class, 'verifyAccount']);
 
 Route::get('/messages', [MessageController::class, 'list']);
 Route::get('/messages/list', [MessageController::class, 'fetchList']);
@@ -93,6 +94,8 @@ Route::any('/admin/faq/{id}/remove', [AdminController::class, 'removeFaq']);
 Route::any('/admin/user/{id}/lock', [AdminController::class, 'lockUser']);
 Route::any('/admin/user/{id}/safe', [AdminController::class, 'setUserSafe']);
 Route::post('/admin/newsletter', [AdminController::class, 'newsletter']);
+Route::any('/admin/verify/{id}/approve', [AdminController::class, 'approveAccount']);
+Route::any('/admin/verify/{id}/decline', [AdminController::class, 'declineAccount']);
 
 Route::any('/cronjob/newsletter/{password}', [MainController::class, 'cronjob_newsletter']);
 

@@ -34,7 +34,8 @@ window.vue = new Vue({
             location: 'Location',
             gender: 'Gender',
             isnew: 'New',
-            removeIgnore: 'Remove'
+            removeIgnore: 'Remove',
+            verifiedProfile: 'Verified profile'
         },
     },
 
@@ -289,6 +290,11 @@ window.vue = new Vue({
                 online = '<span class="profile-avatar-online"></span>';
             }
 
+            let verified = '';
+            if (elem.verified) {
+                verified = '&nbsp;<i class="far fa-check-circle is-color-dark-blue" title="' + this.translationTable.verifiedProfile + '"></i>';
+            }
+
             let html = `
                 <div class="profile">
                     <div class="profile-avatar">
@@ -296,7 +302,7 @@ window.vue = new Vue({
                         ` + online + `
                     </div>
 
-                    <div class="profile-name"><a href="` + window.location.origin + '/user/' + elem.name + `">` + elem.name + `</a></div>
+                    <div class="profile-name"><a href="` + window.location.origin + '/user/' + elem.name + `">` + elem.name + `</a>` + verified + `</div>
 
                     <div class="profile-info">
                         <div><strong>` + this.translationTable.age + `: </strong>` + elem.age + `</div>

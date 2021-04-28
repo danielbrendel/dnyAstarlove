@@ -20,6 +20,7 @@ use App\Models\FaqModel;
 use App\Models\FeatureItemModel;
 use App\Models\ReportModel;
 use App\Models\VerifyModel;
+use App\Models\MailerModel;
 
 /**
  * Class AdminController

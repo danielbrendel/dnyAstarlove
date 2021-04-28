@@ -24,6 +24,7 @@ use App\Models\MessageModel;
 use App\Models\PushModel;
 use App\Models\ReportModel;
 use App\Models\VisitorModel;
+use App\Models\VerifyModel;
 
 /**
  * Class User
@@ -436,8 +437,8 @@ class User extends Authenticatable
                 }
 
                 $item->age = Carbon::parse($user->birthday)->age;
-
                 $item->is_online = static::isMemberOnline($item->id);
+                $item->verified = VerifyModel::getState($item->id) == VerifyModel::STATE_VERIFIED;
             }
 
             return $items->toArray();

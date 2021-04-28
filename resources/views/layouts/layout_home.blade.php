@@ -254,6 +254,7 @@
                 window.vue.translationTable.gender = '{{ __('app.gender') }}';
                 window.vue.translationTable.isnew = '{{ __('app.isnew') }}';
                 window.vue.translationTable.removeIgnore = '{{ __('app.removeIgnore') }}';
+                window.vue.translationTable.verifiedProfile = '{{ __('app.verified_profile') }}';
 
                 @if (Session::has('flash.error'))
                     setTimeout('window.vue.showError()', 500);
