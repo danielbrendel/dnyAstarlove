@@ -63,6 +63,7 @@ Route::post('/member/account/verify', [MemberController::class, 'verifyAccount']
 Route::get('/messages', [MessageController::class, 'list']);
 Route::get('/messages/list', [MessageController::class, 'fetchList']);
 Route::get('/messages/show/{id}', [MessageController::class, 'show']);
+Route::post('/messages/query', [MessageController::class, 'query']);
 Route::get('/messages/create', [MessageController::class, 'create']);
 Route::post('/messages/send', [MessageController::class, 'send']);
 Route::any('/messages/unread/count', [MessageController::class, 'unreadCount']);

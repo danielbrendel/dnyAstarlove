@@ -297,5 +297,8 @@ return [
     'mail_acc_verify_body' => 'The result of your account verification is: :state - Reason: :reason',
     'account_verified' => 'The account verification has been approved',
     'account_verification_declined' => 'The account verification has been declined',
-    'verified_profile' => 'Verified profile'
+    'verified_profile' => 'Verified profile',
+    'new_message_short' => ':name has sent you a message',
+    'new_message' => ':name has sent you a message: :subject',
+    'message_received' => 'Message received'
 ];

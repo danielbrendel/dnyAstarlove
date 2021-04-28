@@ -15,6 +15,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use App\Models\PushModel;
 use App\Models\MailerModel;
 
@@ -113,7 +114,7 @@ class MessageModel extends Model
      * Get message thread
      *
      * @param $msgId
-     * @return array
+     * @return mixed
      * @throws \Exception
      */
     public static function getMessageThread($msgId)
@@ -128,7 +129,7 @@ class MessageModel extends Model
                 throw new \Exception('Access denied');
             }
 
-            $msg->seen = true;
+            /*$msg->seen = true;
             $msg->save();
 
             $previous = static::where(function($query) use ($msg) {
@@ -149,7 +150,49 @@ class MessageModel extends Model
             return array(
               'msg' => $msg,
               'previous' => $previous
-            );
+            );*/
+
+            return $msg;
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Get thread pack
+     * 
+     * @param $ident
+     * @param $limit
+     * @param $paginate
+     * @return array
+     * @throws \Exception
+     */
+    public static function queryThreadPack($ident, $limit, $paginate = null)
+    {
+        try {
+            $query = static::where('channel', '=', $ident)->where(function($query){
+                $query->where('userId', '=', auth()->id())->orWhere('senderId', '=', auth()->id());
+            });
+
+            if ($paginate !== null) {
+                $query->where('id', '<', $paginate);
+            }
+
+            $items = $query->orderBy('id', 'desc')->limit($limit)->get();
+            foreach ($items as &$item) {
+                $item->seen = true;
+                $item->save();
+            }
+
+            $items = $items->toArray();
+
+            foreach ($items as &$item) {
+                $item['sender'] = User::get($item['senderId'])->toArray();
+                $item['receiver'] = User::get($item['userId'])->toArray();
+                $item['diffForHumans'] = Carbon::parse($item['created_at'])->diffForHumans();
+            }
+
+            return $items;
         } catch (\Exception $e) {
             throw $e;
         }

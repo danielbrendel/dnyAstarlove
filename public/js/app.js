@@ -2115,7 +2115,25 @@ window.vue = new Vue({
       return html;
     },
     renderMessageListItem: function renderMessageListItem(item) {
-      var html = "\n                <div class=\"messages-item " + (!item.seen ? 'is-new-message' : '') + "\">\n                    <div class=\"messages-item-avatar\">\n                        <img src=\"" + window.location.origin + "/gfx/avatars/" + item.user.avatar + "\">\n                    </div>\n        \n                    <div class=\"messages-item-name\">\n                        <a href=\"" + window.location.origin + "/u/" + item.user.name + "\">" + item.user.name + "</a>\n                    </div>\n        \n                    <div class=\"messages-item-subject\">\n                        <a href=\"" + window.location.origin + "/messages/show/" + item.id + "\">" + item.subject + "</a>\n                    </div>\n        \n                    <div class=\"messages-item-date\" title=\"" + item.created_at + "\">\n                        " + item.diffForHumans + "\n                    </div>\n                </div>\n            ";
+      var message = item.message;
+
+      if (message.length > 20) {
+        message = message.substr(0, 20) + '...';
+      }
+
+      var html = "\n                <div class=\"messages-item " + (!item.seen ? 'is-new-message' : '') + "\">\n                    <div class=\"messages-item-avatar\">\n                        <img src=\"" + window.location.origin + "/gfx/avatars/" + item.user.avatar + "\">\n                    </div>\n        \n                    <div class=\"messages-item-name\">\n                        <a href=\"" + window.location.origin + "/u/" + item.user.name + "\">" + item.user.name + "</a>\n                    </div>\n        \n                    <div class=\"messages-item-subject\">\n                        <a href=\"" + window.location.origin + "/messages/show/" + item.id + "\">" + item.subject + "</a>\n                    </div>\n\n                    <div class=\"message-item-lastmsg\">\n                        <a href=\"" + window.location.origin + "/messages/show/" + item.id + "\">" + item.sender.name + ": " + message + "</a>\n                    </div>\n        \n                    <div class=\"messages-item-date\" title=\"" + item.created_at + "\">\n                        " + item.diffForHumans + "\n                    </div>\n                </div>\n            ";
+      return html;
+    },
+    renderMessageItem: function renderMessageItem(elem, self) {
+      var align = '';
+
+      if (elem.senderId === self) {
+        align = 'message-align-right';
+      } else {
+        align = 'message-align-left';
+      }
+
+      var html = "\n                <div class=\"message-thread " + align + "\">\n                    <div class=\"message-thread-header\">\n                        <div class=\"message-thread-header-avatar\">\n                            <a href=\"" + window.location.origin + '/user/' + elem.sender.name + "\"><img src=\"" + window.location.origin + '/gfx/avatars/' + elem.sender.avatar + "\"></a>\n                        </div>\n\n                        <div class=\"message-thread-header-userinfo\">\n                            <div><a href=\"" + window.location.origin + '/user/' + elem.sender.name + "\">" + elem.sender.name + "</a></div>\n                            <div class=\"is-message-label-small\" title=\"" + elem.created_at + "\">" + elem.diffForHumans + "</div>\n                        </div>\n\n                        <div class=\"message-thread-header-subject\">" + elem.subject + "</div>\n                    </div>\n\n                    <div class=\"message-thread-text\">" + elem.message + "</div>\n                </div>\n            ";
       return html;
     },
     showTabMenu: function showTabMenu(target) {

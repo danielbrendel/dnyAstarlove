@@ -321,6 +321,11 @@ window.vue = new Vue({
         },
 
         renderMessageListItem: function(item) {
+            let message = item.message;
+            if (message.length > 20) {
+                message = message.substr(0, 20) + '...';
+            }
+
             let html = `
                 <div class="messages-item ` + ((!item.seen) ? 'is-new-message' : '') + `">
                     <div class="messages-item-avatar">
@@ -334,6 +339,10 @@ window.vue = new Vue({
                     <div class="messages-item-subject">
                         <a href="` + window.location.origin + `/messages/show/` + item.id + `">` + item.subject + `</a>
                     </div>
+
+                    <div class="message-item-lastmsg">
+                        <a href="` + window.location.origin + `/messages/show/` + item.id + `">` + item.sender.name + `: ` + message + `</a>
+                    </div>
         
                     <div class="messages-item-date" title="` + item.created_at + `">
                         ` + item.diffForHumans + `
@@ -341,6 +350,36 @@ window.vue = new Vue({
                 </div>
             `;
         
+            return html;
+        },
+
+        renderMessageItem: function(elem, self) {
+            let align = '';
+            if (elem.senderId === self) {
+                align = 'message-align-right';
+            } else {
+                align = 'message-align-left';
+            }
+
+            let html = `
+                <div class="message-thread ` + align + `">
+                    <div class="message-thread-header">
+                        <div class="message-thread-header-avatar">
+                            <a href="` + window.location.origin + '/user/' + elem.sender.name + `"><img src="` + window.location.origin + '/gfx/avatars/' + elem.sender.avatar + `"></a>
+                        </div>
+
+                        <div class="message-thread-header-userinfo">
+                            <div><a href="` + window.location.origin + '/user/' + elem.sender.name + `">` + elem.sender.name + `</a></div>
+                            <div class="is-message-label-small" title="` + elem.created_at + `">` + elem.diffForHumans + `</div>
+                        </div>
+
+                        <div class="message-thread-header-subject">` + elem.subject + `</div>
+                    </div>
+
+                    <div class="message-thread-text">` + elem.message + `</div>
+                </div>
+            `;
+
             return html;
         },
 

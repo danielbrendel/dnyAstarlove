@@ -14,6 +14,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use App\Models\User;
 use App\Models\AppModel;
 use App\Models\MessageModel;
@@ -68,13 +69,15 @@ class MessageController extends Controller
 
             $paginate = request('paginate', null);
 
-            $data = MessageModel::fetch(auth()->id(), env('APP_MESSAGEPACKLIMIT', 10), $paginate)->unique('channel')->values()->all();
+            $data = MessageModel::fetch(auth()->id(), env('APP_MESSAGEPACKLIMIT', 30), $paginate)->unique('channel')->values()->all();
             foreach ($data as &$item) {
                 if ($item->senderId === auth()->id()) {
                     $item->user = User::get($item->userId);
                 } else {
                     $item->user = User::get($item->senderId);
                 }
+
+                $item->sender = User::get($item->senderId);
 
                 $item->diffForHumans = $item->created_at->diffForHumans();
             }
@@ -96,32 +99,45 @@ class MessageController extends Controller
         try {
             $this->validateLogin();
 
-            $thread = MessageModel::getMessageThread($id);
-            if (!$thread) {
+            $msg = MessageModel::getMessageThread($id);
+            if (!$msg) {
                 return back()->with('error', __('app.message_not_found'));
             }
 
-            $thread['msg']->user = User::get($thread['msg']->userId);
-            $thread['msg']->sender = User::get($thread['msg']->senderId);
+            $msg->user = User::get($msg->userId);
+            $msg->sender = User::get($msg->senderId);
 
-            foreach($thread['previous'] as &$item) {
-                $item->user = User::get($item->userId);
-                $item->sender = User::get($item->senderId);
-            }
-
-            if ($thread['msg']->senderId == auth()->id()) {
-                $thread['message_partner'] = $thread['msg']->user->name;
+            if ($msg->senderId == auth()->id()) {
+                $msg->message_partner = $msg->user->name;
             } else {
-                $thread['message_partner'] = $thread['msg']->sender->name;
+                $msg->message_partner = $msg->sender->name;
             }
 
             return view('message.show', [
                 'user' => User::getByAuthId(),
-                'thread' => $thread,
-				'cookie_consent' => AppModel::getCookieConsentText()
+                'msg' => $msg
             ]);
         } catch (Exception $e) {
             return back()->with('error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Query message pack
+     * 
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function query()
+    {
+        try {
+            $ident = request('id');
+            $paginate = request('paginate');
+
+            $data = MessageModel::queryThreadPack($ident, env('APP_MESSAGETHREADPACK', 30), $paginate);
+
+            return response()->json(array('code' => 200, 'data' => $data));
+        } catch (\Exception $e) {
+            return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
         }
     }
 
