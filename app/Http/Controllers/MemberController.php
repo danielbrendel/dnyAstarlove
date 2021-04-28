@@ -233,9 +233,14 @@ class MemberController extends Controller
         try {
             $this->validateLogin();
 
+            $user = User::get($id);
+            if ((!$user) || ($user->deactivated)) {
+                throw new \Exception(__('app.user_not_found_or_deactivated'));
+            }
+
             LikeModel::add(auth()->id(), $id);
 
-            return back()->with('flash.success', __('app.liked_successfully'));
+            return redirect('/user/' . $user->name)->with('flash.success', __('app.liked_successfully'));
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }

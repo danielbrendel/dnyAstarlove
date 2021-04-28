@@ -16,5 +16,10 @@
 @section('content')
     <div class="form">
         @include('widgets.profile', ['user' => $user])
+
+        <div>
+            <br/><br/>
+            <a href="{{ url('/random') }}" class="button is-link">{{ __('app.next_profile') }}</a>
+        </div>
     </div>
 @endsection

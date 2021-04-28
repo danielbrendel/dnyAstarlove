@@ -18,6 +18,7 @@ use App\Models\User;
 use App\Models\AppModel;
 use App\Models\MessageModel;
 use App\Models\IgnoreModel;
+use App\Models\LikeModel;
 
 /**
  * Class MessageController
@@ -179,11 +180,15 @@ class MessageController extends Controller
             if (IgnoreModel::hasIgnored($receiver->id, $sender->id)) {
                 throw new \Exception(__('app.user_not_receiving_messages'));
             }
+
+            if (!LikeModel::bothLiked($receiver->id, $sender->id)) {
+                throw new \Exception(__('app.both_not_liked'));
+            }
             
             $id = MessageModel::add($receiver->id, $sender->id, $attr['subject'], $attr['text']);
             
             return redirect('/messages/show/' . $id)->with('flash.success', __('app.message_sent'));
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }
     }

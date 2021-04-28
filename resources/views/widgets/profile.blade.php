@@ -99,11 +99,17 @@
                     @if (!$user->ignored)
                         @if ($user->both_liked)
                             <span><a class="button is-success" href="{{ url('/messages/create?u=' . $user->name) }}">{{ __('app.message') }}</a></span>
+                            <span><a class="button is-danger is-outlined" href="{{ url('/member/unlike/' . $user->id) }}"><i class="fas fa-heart-broken"></i>&nbsp;{{ __('app.unlike') }}</a></span>
                         @else
                             @if ($user->self_liked)
                                 <span><a class="button is-outlined" href="javascript:void(0);" onclick="alert('{{ __('app.wait_until_back_liked') }}');">{{ __('app.message') }}</a></span>
+                                <span><a class="button is-danger is-outlined" href="{{ url('/member/unlike/' . $user->id) }}"><i class="fas fa-heart-broken"></i>&nbsp;{{ __('app.unlike') }}</a></span>
                             @else
-                                <span><a class="button is-danger" href="{{ url('/member/like/' . $user->id) }}"><i class="fas fa-heart"></i>&nbsp;{{ __('app.like') }}</a></span>
+                                @if ($user->liked_back)
+                                    <span><a class="button is-danger" href="{{ url('/member/like/' . $user->id) }}"><i class="fas fa-heart"></i>&nbsp;{{ __('app.like_back') }}</a></span>
+                                @else
+                                    <span><a class="button is-danger" href="{{ url('/member/like/' . $user->id) }}"><i class="fas fa-heart"></i>&nbsp;{{ __('app.like') }}</a></span>
+                                @endif
                             @endif
                         @endif
 
