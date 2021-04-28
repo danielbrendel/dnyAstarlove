@@ -17,6 +17,7 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\InstallerController;
 
 Route::get('/', [MainController::class, 'index']);
 Route::get('/faq', [MainController::class, 'faq']);
@@ -93,3 +94,6 @@ Route::any('/admin/user/{id}/safe', [AdminController::class, 'setUserSafe']);
 Route::post('/admin/newsletter', [AdminController::class, 'newsletter']);
 
 Route::any('/cronjob/newsletter/{password}', [MainController::class, 'cronjob_newsletter']);
+
+Route::get('/install', [InstallerController::class, 'viewInstall']);
+Route::post('/install', [InstallerController::class, 'install']);

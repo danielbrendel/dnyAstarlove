@@ -1020,3 +1020,19 @@ a.navbar-item:hover {
 .clep-continue-without-account {
   margin-top: 40px;
 }
+
+.install-bottombar {
+  width: 100%;
+  color: #7f8a9d;
+  font-size: 0.9em;
+  margin-top: 15px;
+}
+@media screen and (max-width: 768px) {
+  .install-bottombar {
+    margin-bottom: 23px;
+  }
+}
+
+.install-bottombar a {
+  color: #20507d;
+}

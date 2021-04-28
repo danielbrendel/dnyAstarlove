@@ -268,5 +268,6 @@ return [
     'isnew' => 'New',
     'removeIgnore' => 'Remove',
     'status' => 'Status',
-    'logout_successful' => 'You have been successfully logged out'
+    'logout_successful' => 'You have been successfully logged out',
+    'product_installed' => 'The product has been installed. You can login with your e-mail address and the password ":password".'
 ];

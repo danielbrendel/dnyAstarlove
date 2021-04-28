@@ -347,4 +347,28 @@ class AppModel extends Model
             throw $e;
         }
     }
+
+    /**
+     * Generate a random password
+     *
+     * @param $length
+     * @return string
+     * @throws \Exception
+     */
+    public static function getRandomPassword($length)
+    {
+        try {
+            $chars = 'abcdefghijklmnopqrstuvwxyz1234567890%$!';
+
+            $result = '';
+
+            for ($i = 0; $i < $length; $i++) {
+                $result .= $chars[rand(0, strlen($chars) - 1)];
+            }
+
+            return $result;
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
 }
