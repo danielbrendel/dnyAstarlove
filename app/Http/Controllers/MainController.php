@@ -18,6 +18,7 @@ use App\Models\AppModel;
 use App\Models\FeatureItemModel;
 use App\Models\FaqModel;
 use App\Models\User;
+use App\Models\CaptchaModel;
 
 /**
  * Class MainController
@@ -321,7 +322,7 @@ class MainController extends Controller
             AppModel::createTicket($attr['name'], $attr['email'], $attr['subject'], $attr['body']);
 
             return back()->with('success', __('app.contact_success'));
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return back()->with('error', $e->getMessage())->withInput();
         }
     }

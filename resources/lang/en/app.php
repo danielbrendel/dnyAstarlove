@@ -269,5 +269,12 @@ return [
     'removeIgnore' => 'Remove',
     'status' => 'Status',
     'logout_successful' => 'You have been successfully logged out',
-    'product_installed' => 'The product has been installed. You can login with your e-mail address and the password ":password".'
+    'product_installed' => 'The product has been installed. You can login with your e-mail address and the password ":password".',
+    'contact_feature_disabled' => 'Contact feature has been disabled',
+    'contact_name' => 'Your name',
+    'contact_email' => 'Your E-Mail address',
+    'contact_subject' => 'Subject of request',
+    'contact_body' => 'Content',
+    'submit' => 'Submit',
+    'go_back' => 'Go back'
 ];

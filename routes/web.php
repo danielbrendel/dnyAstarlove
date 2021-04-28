@@ -25,6 +25,7 @@ Route::get('/tos', [MainController::class, 'tos']);
 Route::get('/news', [MainController::class, 'news']);
 Route::get('/imprint', [MainController::class, 'imprint']);
 Route::get('/contact', [MainController::class, 'viewContact']);
+Route::post('/contact', [MainController::class, 'contact']);
 Route::post('/register', [MainController::class, 'register']);
 Route::post('/login', [MainController::class, 'login']);
 Route::any('/logout', [MainController::class, 'logout']);

@@ -264,6 +264,10 @@ class AppModel extends Model
     public static function createTicket($name, $email, $subject, $body)
     {
         try {
+            if (!env('HELPREALM_ENABLE')) {
+                throw new \Exception(__('app.contact_feature_disabled'));
+            }
+
             $postFields = [
                 'apitoken' => env('HELPREALM_TOKEN'),
                 'subject' => $subject,
@@ -290,7 +294,7 @@ class AppModel extends Model
 
             $json = json_decode($response);
             if ($json->code !== 201) {
-                throw new Exception('Backend returned error ' . ((isset($json->data->invalid_fields)) ? print_r($json->data->invalid_fields, true) : ''), $json->code);
+                throw new \Exception('Backend returned error ' . ((isset($json->data->invalid_fields)) ? print_r($json->data->invalid_fields, true) : ''), $json->code);
             }
         } catch (\Exception $e) {
             throw $e;
