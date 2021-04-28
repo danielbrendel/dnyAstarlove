@@ -50,7 +50,7 @@ class VisitorModel extends Model
             }
 
             $userData = User::get($visitorId);
-            PushModel::addNotification(__('app.user_visited_short'), __('app.user_visited_long', ['name' => $userData->name, 'url' => url('/user/' . $userData->name)]), 'PUSH_VISITED', $visitedId);
+            PushModel::addNotification(__('app.user_visited_short'), __('app.user_visited_long', ['name' => $userData->name, 'url' => url('/user/' . $userData->name), 'visitors' => url('/settings?tab=visitors')]), 'PUSH_VISITED', $visitedId);
         } catch (\Exception $e) {
             throw $e;
         }

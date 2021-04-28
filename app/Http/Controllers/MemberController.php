@@ -464,7 +464,7 @@ class MemberController extends Controller
 
             User::saveProfile($attr);
 
-            return back()->with('flash.success', __('app.profile_saved'));
+            return redirect('/settings?tab=profile')->with('flash.success', __('app.profile_saved'));
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -487,7 +487,7 @@ class MemberController extends Controller
 
             User::savePassword($attr['password'], $attr['password_confirmation']);
 
-            return back()->with('flash.success', __('app.password_saved'));
+            return redirect('/settings?tab=security')->with('flash.success', __('app.password_saved'));
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -509,7 +509,7 @@ class MemberController extends Controller
 
             User::saveEmail($attr['email']);
 
-            return back()->with('flash.success', __('app.email_saved'));
+            return redirect('/settings?tab=security')->with('flash.success', __('app.email_saved'));
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -535,7 +535,7 @@ class MemberController extends Controller
 
             User::saveGeoExclude($attr['geoexclude']);
 
-            return back()->with('flash.success', __('app.data_saved'));
+            return redirect('/settings?tab=security')->with('flash.success', __('app.data_saved'));
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -556,7 +556,7 @@ class MemberController extends Controller
 
             User::savePhoto($attr['which']);
 
-            return back()->with('flash.success', __('app.photo_saved'));
+            return redirect('/settings?tab=photos')->with('flash.success', __('app.photo_saved'));
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -587,7 +587,7 @@ class MemberController extends Controller
 
             User::saveNotifications($attr);
 
-            return back()->with('flash.success', __('app.notifications_saved'));
+            return redirect('/settings?tab=notifications')->with('flash.success', __('app.notifications_saved'));
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }

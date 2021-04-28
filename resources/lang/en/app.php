@@ -107,7 +107,7 @@ return [
     'membership' => 'Membership',
     'ignore_list' => 'Ignore List',
     'user_visited_short' => 'You\'ve got a new visitor',
-    'user_visited_long' => '<a href=":url">@:name</a> has visited your profile',
+    'user_visited_long' => '<a href=":url">@:name</a> has visited your profile. <a href=":visitors">View more</a>',
     'no_more_visitors' => 'No more visitors',
     'close' => 'Close',
     'realname' => 'Real name',

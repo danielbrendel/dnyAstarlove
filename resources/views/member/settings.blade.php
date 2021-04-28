@@ -445,6 +445,24 @@
         document.addEventListener('DOMContentLoaded', function() {
             window.queryVisitors();
             window.queryIgnoreList();
+
+            @if (isset($_GET['tab']))
+                @if ($_GET['tab'] === 'visitors')
+                    window.vue.showTabMenu('tabVisitors');
+                @elseif ($_GET['tab'] === 'profile')
+                    window.vue.showTabMenu('tabProfile');
+                @elseif ($_GET['tab'] === 'photos')
+                    window.vue.showTabMenu('tabPhotos');
+                @elseif ($_GET['tab'] === 'security')
+                    window.vue.showTabMenu('tabSecurity');
+                @elseif ($_GET['tab'] === 'notifications')
+                    window.vue.showTabMenu('tabNotifications');
+                @elseif ($_GET['tab'] === 'ignorelist')
+                    window.vue.showTabMenu('tabIgnoreList');
+                @elseif ($_GET['tab'] === 'membership')
+                    window.vue.showTabMenu('tabMembership');
+                @endif
+            @endif
         });
     </script>
 @endsection
