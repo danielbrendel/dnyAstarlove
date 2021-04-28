@@ -57,6 +57,7 @@ class CreateUsersTable extends Migration
             $table->decimal('longitude', 11, 8)->nullable();
             $table->boolean('mail_on_message')->default(true);
             $table->boolean('newsletter')->default(true);
+            $table->string('newsletter_token')->default('');
             $table->boolean('deactivated')->default(false);
             $table->rememberToken();
             $table->timestamps();

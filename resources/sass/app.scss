@@ -97,6 +97,13 @@ a.is-link-blue:hover {
 .is-margin-top-5 {
     margin-top: 5px;
 }
+.is-fixed-admin-icon {
+    position: relative;
+    top: 15px;
+}
+.is-fixed-admin-icon i {
+    color: rgb(255, 255, 255);
+}
 
 //Navbar
 .navbar {

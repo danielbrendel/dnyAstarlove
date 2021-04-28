@@ -82,6 +82,25 @@ class Controller extends BaseController
     }
 
     /**
+     * Validate if user is an admin
+     * 
+     * @throws \Exception
+     */
+    protected function validateAdmin()
+    {
+        try {
+            $this->validateLogin();
+
+            $user = User::getByAuthId();
+            if (!$user->admin) {
+                throw new \Exception(__('app.insufficient_permissions'));
+            }
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
      * Generate captcha
      * 
      * @return array

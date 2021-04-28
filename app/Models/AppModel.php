@@ -166,6 +166,92 @@ class AppModel extends Model
     }
 
     /**
+     * Get list of available languages
+     *
+     * @return array
+     * @throws \Exception
+     */
+    public static function getLanguageList()
+    {
+        try {
+            $result = array();
+            $files = scandir(base_path() . '/resources/lang');
+            foreach ($files as $file) {
+                if (($file[0] !== '.') && (is_dir(base_path() . '/resources/lang/' . $file))) {
+                    $result[] = $file;
+                }
+            }
+
+            return $result;
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Save about data
+     * 
+     * @param $attr
+     * @return void
+     * @throws \Exception
+     */
+    public static function saveAbout($attr)
+    {
+        try {
+            $settings = static::getAppSettings();
+            $settings->headline = $attr['headline'];
+            $settings->subline = $attr['subline'];
+            $settings->description = $attr['description'];
+            $settings->save();
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Save specific setting
+     * 
+     * @param $ident
+     * @param $value
+     * @return void
+     * @throws \Exception
+     */
+    public static function saveSetting($ident, $value)
+    {
+        try {
+            $settings = static::getAppSettings();
+            $settings->$ident = $value;
+            $settings->save();
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Get image type of file
+     *
+     * @param $file
+     * @return mixed|null
+     */
+    public static function getImageType($file)
+    {
+        $imagetypes = array(
+            array('png', IMAGETYPE_PNG),
+            array('jpg', IMAGETYPE_JPEG),
+            array('jpeg', IMAGETYPE_JPEG)
+        );
+
+        for ($i = 0; $i < count($imagetypes); $i++) {
+            if (strtolower(pathinfo($file, PATHINFO_EXTENSION)) == $imagetypes[$i][0]) {
+                if (exif_imagetype($file) == $imagetypes[$i][1])
+                    return $imagetypes[$i][1];
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Create a HelpRealm ticket
      *
      * @param $name
@@ -207,6 +293,57 @@ class AppModel extends Model
                 throw new Exception('Backend returned error ' . ((isset($json->data->invalid_fields)) ? print_r($json->data->invalid_fields, true) : ''), $json->code);
             }
         } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Initialize newsletter sending
+     *
+     * @param $subject
+     * @param $content
+     * @return void
+     * @throws Exception
+     */
+    public static function initNewsletter($subject, $content)
+    {
+        try {
+            $token = md5($subject . $content . random_bytes(55));
+
+            static::saveSetting('newsletter_token', $token);
+            static::saveSetting('newsletter_subject', $subject);
+            static::saveSetting('newsletter_content', $content);
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Process newsletter job
+     *
+     * @return array
+     * @throws Exception
+     */
+    public static function newsletterJob()
+    {
+        try {
+            $result = array();
+
+            $settings = static::getAppSettings();
+            if ($settings->newsletter_token !== null) {
+                $users = User::where('deactivated', '=', false)->where('account_confirm', '=', '_confirmed')->where('newsletter', '=', true)->where('newsletter_token', '<>', $settings->newsletter_token)->limit(env('APP_NEWSLETTER_UCOUNT'))->get();
+                foreach ($users as $user) {
+                    $user->newsletter_token = $settings->newsletter_token;
+                    $user->save();
+
+                    MailerModel::sendMail($user->email, $settings->newsletter_subject, $settings->newsletter_content);
+
+                    $result[] = array('username' => $user->name, 'email' => $user->email, 'sent_date' => date('Y-m-d H:i:s'));
+                }
+            }
+
+            return $result;
+        } catch (Exception $e) {
             throw $e;
         }
     }

@@ -37,6 +37,9 @@ class CreateAppModelsTable extends Migration
             $table->text('imprint')->nullable();
             $table->text('head_code')->nullable();
             $table->text('ad_code')->nullable();
+            $table->string('newsletter_token')->nullable();
+            $table->string('newsletter_subject')->nullable();
+            $table->text('newsletter_content')->nullable();
             $table->timestamps();
         });
     }

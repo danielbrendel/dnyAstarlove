@@ -822,7 +822,7 @@ class User extends Authenticatable
                 $item->delete();
             }
 
-            $likes = LikeModel::where('userId', '=', $userId)->orWhere('likeUserId', '=', $userId)->get();
+            $likes = LikeModel::where('userId', '=', $userId)->orWhere('likedUserId', '=', $userId)->get();
             foreach ($likes as $item) {
                 $item->delete();
             }

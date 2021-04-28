@@ -15,6 +15,12 @@
         <strong>{{ env('APP_NAME') }}</strong>
     </a>
 
+    @auth
+        @if (\App\Models\User::isAdmin(auth()->id()))
+            <div class="is-fixed-admin-icon" title="{{ __('app.admin_area') }}" onclick="location.href = '{{ url('/admin') }}';">&nbsp;<i class="fas fa-cog is-pointer"></i></div>
+        @endif
+    @endauth
+
     <a id="navbarBurger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu" onclick="window.menuVisible = !document.getElementById('navbarMenu').classList.contains('is-active');">
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>

@@ -116,6 +116,15 @@ a.is-link-blue:hover {
   margin-top: 5px;
 }
 
+.is-fixed-admin-icon {
+  position: relative;
+  top: 15px;
+}
+
+.is-fixed-admin-icon i {
+  color: white;
+}
+
 .navbar {
   background-color: transparent;
 }

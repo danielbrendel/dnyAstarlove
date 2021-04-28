@@ -26,6 +26,8 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('css/quill.snow.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
 
+        <link rel="icon" type="image/png" href="{{ asset('logo.png') }}">
+
         @if (env('APP_ENV') === 'production')
             <script src="{{ asset('js/vue.js') }}"></script>
         @else

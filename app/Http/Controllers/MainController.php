@@ -323,4 +323,25 @@ class MainController extends Controller
             return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
         }
     }
+
+    /**
+     * Perform newsletter cronjob
+     *
+     * @param $password
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function cronjob_newsletter($password)
+    {
+        try {
+            if ($password !== env('APP_CRONPW')) {
+                return response()->json(array('code' => 403));
+            }
+
+            $data = AppModel::newsletterJob();
+
+            return response()->json(array('code' => 200, 'data' => $data));
+        } catch (Exception $e) {
+            return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
+        }
+    }
 }

@@ -18,6 +18,10 @@ window.vue = new Vue({
         bShowRegister: false,
         bShowLogin: false,
         bShowRecover: false,
+        bShowCreateFeature: false,
+        bShowEditFeature: false,
+        bShowCreateFaq: false,
+        bShowEditFaq: false,
 
         translationTable: {
             usernameOk: 'The given name is valid and available',
