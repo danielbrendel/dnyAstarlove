@@ -267,5 +267,6 @@ return [
     'passwordMatching' => 'The passwords do match',
     'isnew' => 'New',
     'removeIgnore' => 'Remove',
-    'status' => 'Status'
+    'status' => 'Status',
+    'logout_successful' => 'You have been successfully logged out'
 ];

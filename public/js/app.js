@@ -2243,6 +2243,10 @@ window.vue = new Vue({
           }
         });
       }
+    },
+    setClepFlag: function setClepFlag() {
+      var expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
+      document.cookie = 'clep=1; expires=' + expDate.toUTCString() + '; path=/;';
     }
   }
 });

@@ -33,6 +33,7 @@ Route::post('/recover', [MainController::class, 'recover']);
 Route::get('/resend/{id}', [MainController::class, 'resend']);
 Route::post('/reset', [MainController::class, 'reset']);
 Route::get('/ads/code', [MainController::class, 'adCode']);
+Route::get('/clep/index', [MainController::class, 'clepIndex']);
 
 Route::get('/profiles', [MemberController::class, 'profiles']);
 Route::get('/random', [MemberController::class, 'random']);

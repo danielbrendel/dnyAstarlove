@@ -44,6 +44,22 @@ a.is-hover-black:hover {
   color: white !important;
 }
 
+.is-color-white strong {
+  color: #c8c8c8 !important;
+}
+
+.is-color-white label {
+  color: #c8c8c8 !important;
+}
+
+.is-color-blue {
+  color: lightskyblue !important;
+}
+
+input.is-background-white-transparent {
+  background-color: rgba(255, 255, 255, 0.5) !important;
+}
+
 .is-centered {
   text-align: center;
 }
@@ -949,4 +965,58 @@ a.navbar-item:hover {
   .adform {
     margin-top: 55px;
   }
+}
+
+#clep {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.clep-outer {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0 auto;
+}
+
+.clep-content {
+  margin: 0;
+  position: absolute;
+  width: 90%;
+  height: 80%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.clep-headline {
+  font-size: 2em;
+  margin-bottom: 45px;
+  font-family: "Dancing Script", "Nunito", sans-serif;
+}
+
+.clep-recover-top {
+  position: relative;
+  top: 8px;
+}
+
+.clep-notice-content {
+  font-size: 0.7em;
+  margin-bottom: 22px;
+  font-family: "Nunito", "sans-serif";
+}
+
+.clep-border {
+  border-top: 1px solid #ccc;
+  margin-top: 18px;
+  padding-top: 12px;
+}
+
+.clep-signup {
+  font-size: 1.4em;
+}
+
+.clep-continue-without-account {
+  margin-top: 40px;
 }

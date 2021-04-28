@@ -55,6 +55,24 @@ class MainController extends Controller
     }
 
     /**
+     * Show client endpoint index page
+     * 
+     * @return mixed
+     */
+    public function clepIndex()
+    {
+        if ((\Auth::guest()) || (!isset($_COOKIE['clep']))) {
+            return view('guest.clep', [
+                'captchadata' => $this->generateCaptcha()
+            ]);
+        } else {
+            session()->reflash();
+
+            return redirect('/' . ((isset($_GET['clep_push_handler'])) ? '?clep_push_handler=' . $_GET['clep_push_handler'] : ''));
+        }
+    }
+
+    /**
      * View faq page
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
