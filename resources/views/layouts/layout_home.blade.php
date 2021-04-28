@@ -34,6 +34,8 @@
         <script src="{{ asset('js/fontawesome.js') }}"></script>
         <script src="{{ asset('js/metro.min.js') }}"></script>
         <script src="{{ asset('js/quill.min.js') }}"></script>
+
+        {!! \App\Models\AppModel::getHeadCode() !!}
     </head>
 
     <body style="background-image: url('{{ asset('gfx/backgrounds/' . \App\Models\AppModel::getBackground()) }}');">
@@ -131,15 +133,19 @@
                         <div class="notifications-content" id="notification-content"></div>
                     </div>
 
-                    <div class="columns">
-                        <div class="column is-2"></div>
+                    @if (env('APP_ENABLEADS'))
+                        @include('widgets.bannerad')
+                    @else 
+                        <div class="columns">
+                            <div class="column is-2"></div>
 
-                        <div class="column is-8">
-                            @yield('content')
+                            <div class="column is-8">
+                                @yield('content')
+                            </div>
+
+                            <div class="column is-2"></div>
                         </div>
-
-                        <div class="column is-2"></div>
-                    </div>
+                    @endif
                 </div>
 
                 @guest
@@ -284,6 +290,10 @@
                         setTimeout('window.geoLoopTransmission()', 2500);
                     @endif
                 @endauth
+
+                @if (env('APP_ENABLEADS'))
+                    window.vue.loadAd(document.getElementById('adform'));
+                @endif
             });
         </script>
         @yield('javascript')

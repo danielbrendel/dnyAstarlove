@@ -61,7 +61,7 @@ class MainController extends Controller
      */
     public function faq()
     {
-        return view('home.faq', ['captchadata' => $this->generateCaptcha(), 'cookie_consent' => $this->cookie_consent, 'faqs' => FaqModel::getAll()]);
+        return view('home.faq', ['captchadata' => $this->generateCaptcha(), 'faqs' => FaqModel::getAll()]);
     }
 
     /**
@@ -71,7 +71,7 @@ class MainController extends Controller
      */
     public function imprint()
     {
-        return view('home.imprint', ['captchadata' => $this->generateCaptcha(), 'cookie_consent' => $this->cookie_consent, 'imprint_content' => AppModel::getImprint()]);
+        return view('home.imprint', ['captchadata' => $this->generateCaptcha(), 'imprint_content' => AppModel::getImprint()]);
     }
 
     /**
@@ -81,7 +81,7 @@ class MainController extends Controller
      */
     public function news()
     {
-        return view('home.news', ['captchadata' => $this->generateCaptcha(), 'cookie_consent' => $this->cookie_consent]);
+        return view('home.news', ['captchadata' => $this->generateCaptcha()]);
     }
 
     /**
@@ -91,7 +91,7 @@ class MainController extends Controller
      */
     public function tos()
     {
-        return view('home.tos', ['captchadata' => $this->generateCaptcha(), 'cookie_consent' => $this->cookie_consent, 'tos_content' => AppModel::getTermsOfService()]);
+        return view('home.tos', ['captchadata' => $this->generateCaptcha(), 'tos_content' => AppModel::getTermsOfService()]);
     }
 
     /**
@@ -101,7 +101,7 @@ class MainController extends Controller
      */
     public function viewContact()
     {
-        return view('home.contact', ['captchadata' => $this->generateCaptcha(), 'cookie_consent' => $this->cookie_consent]);
+        return view('home.contact', ['captchadata' => $this->generateCaptcha()]);
     }
 
     /**
@@ -137,8 +137,7 @@ class MainController extends Controller
     {
         return view('home.pwreset', [
             'hash' => request('hash', ''),
-            'captchadata' => $this->generateCaptcha(),
-            'cookie_consent' => $this->cookie_consent
+            'captchadata' => $this->generateCaptcha()
         ]);
     }
 
@@ -306,6 +305,22 @@ class MainController extends Controller
             return back()->with('success', __('app.contact_success'));
         } catch (Exception $e) {
             return back()->with('error', $e->getMessage())->withInput();
+        }
+    }
+
+    /**
+     * Return ad code
+     * 
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function adCode()
+    {
+        try {
+            $adcode = AppModel::getAdCode();
+
+            return response()->json(array('code' => 200, 'adcode' => $adcode));
+        } catch (\Exception $e) {
+            return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
         }
     }
 }

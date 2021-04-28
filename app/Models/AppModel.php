@@ -132,6 +132,40 @@ class AppModel extends Model
     }
 
     /**
+     * Get head code content
+     * 
+     * @return string
+     * @throws \Exception
+     */
+    public static function getHeadCode()
+    {
+        try {
+            $headCode = static::getAppSettings()->head_code;
+
+            return ($headCode !== null) ? $headCode : '';
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Get ad code content
+     * 
+     * @return string
+     * @throws \Exception
+     */
+    public static function getAdCode()
+    {
+        try {
+            $adCode = static::getAppSettings()->ad_code;
+
+            return ($adCode !== null) ? $adCode : '';
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
      * Create a HelpRealm ticket
      *
      * @param $name

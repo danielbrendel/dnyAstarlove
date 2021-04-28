@@ -924,3 +924,20 @@ a.navbar-item:hover {
   color: #bebebe;
   text-decoration: underline;
 }
+
+.adform {
+  width: 100%;
+  height: 100px;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+}
+@media screen and (max-width: 1089px) {
+  .adform {
+    margin-bottom: 15px;
+  }
+}
+@media screen and (min-width: 769px) {
+  .adform {
+    margin-top: 55px;
+  }
+}

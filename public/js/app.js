@@ -2211,6 +2211,34 @@ window.vue = new Vue({
       var expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
       document.cookie = 'cookieconsent=1; expires=' + expDate.toUTCString() + ';';
       document.getElementById('cookie-consent').style.display = 'none';
+    },
+    loadAd: function loadAd(target) {
+      if (target !== null) {
+        this.ajaxRequest('get', window.location.origin + '/ads/code', {}, function (response) {
+          if (response.code == 200) {
+            target.innerHTML = response.adcode;
+            var tagElems = [];
+            var childNodes = target.childNodes;
+
+            for (var i = 0; i < childNodes.length; i++) {
+              if (typeof childNodes[i].tagName !== 'undefined') {
+                var childTag = document.createElement(childNodes[i].tagName);
+                var tagCode = document.createTextNode(childNodes[i].innerHTML);
+                childTag.appendChild(tagCode);
+                tagElems.push(childTag);
+              }
+            }
+
+            target.innerHTML = '';
+
+            for (var _i = 0; _i < tagElems.length; _i++) {
+              target.appendChild(tagElems[_i]);
+            }
+          } else {
+            console.error(response);
+          }
+        });
+      }
     }
   }
 });

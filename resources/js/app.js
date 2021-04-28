@@ -480,6 +480,37 @@ window.vue = new Vue({
 
             document.getElementById('cookie-consent').style.display = 'none';
         },
+
+        loadAd: function(target) {
+            if (target !== null) {
+                this.ajaxRequest('get', window.location.origin + '/ads/code', {}, function(response) {
+                    if (response.code == 200) {
+                        target.innerHTML = response.adcode;
+
+                        let tagElems = [];
+                        let childNodes = target.childNodes;
+
+                        for (let i = 0; i < childNodes.length; i++) {
+                            if (typeof childNodes[i].tagName !== 'undefined') {
+                                let childTag = document.createElement(childNodes[i].tagName);
+                                let tagCode = document.createTextNode(childNodes[i].innerHTML);
+                                childTag.appendChild(tagCode);
+                                tagElems.push(childTag);
+                            }
+                        }
+
+                        target.innerHTML = '';
+
+                        for (let i = 0; i < tagElems.length; i++) {
+                            target.appendChild(tagElems[i]);
+                        }
+                        
+                    } else {
+                        console.error(response);
+                    }
+                });
+            }
+        },
     }
 });
 

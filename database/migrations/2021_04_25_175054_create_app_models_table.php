@@ -35,6 +35,8 @@ class CreateAppModelsTable extends Migration
             $table->string('cookie_consent', 1024)->default('');
             $table->text('tos')->nullable();
             $table->text('imprint')->nullable();
+            $table->text('head_code')->nullable();
+            $table->text('ad_code')->nullable();
             $table->timestamps();
         });
     }
