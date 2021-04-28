@@ -54,6 +54,7 @@ Route::post('/member/photo/save', [MemberController::class, 'savePhoto']);
 Route::post('/member/notifications/save', [MemberController::class, 'saveNotifications']);
 Route::post('/member/ignores/query', [MemberController::class, 'queryIgnoreList']);
 Route::post('/member/account/delete', [MemberController::class, 'deleteAccount']);
+Route::post('/member/geoexclude/save', [MemberController::class, 'saveGeoExclude']);
 
 Route::get('/messages', [MessageController::class, 'list']);
 Route::get('/messages/list', [MessageController::class, 'fetchList']);

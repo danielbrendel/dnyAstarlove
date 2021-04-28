@@ -256,5 +256,16 @@ return [
     'mail_password_reset_subject' => 'Password reset',
     'password_changed' => 'Password changed',
     'email_changed' => 'E-Mail address changed',
-    'message_received' => 'Message received'
+    'message_received' => 'Message received',
+    'mail_footer' => 'Kind regards',
+    'language' => 'Language',
+    'geoexclude_notice' => 'Exclude my profile from geo search',
+    'usernameOk' => 'The given name is valid and available',
+    'invalidUsername' => 'The name is invalid. Please use only alphanumeric characters, numbers 0-9 and the characters \'-\' and \'_\'. Also number only identifiers are considered invalid',
+    'nonavailableUsername' => 'The given name is already in use',
+    'passwordMismatching' => 'The passwords do not match',
+    'passwordMatching' => 'The passwords do match',
+    'isnew' => 'New',
+    'removeIgnore' => 'Remove',
+    'status' => 'Status'
 ];

@@ -249,6 +249,7 @@ class User extends Authenticatable
             $user->avatar = 'default.png';
             $user->avatar_large = $user->avatar;
             $user->account_confirm = md5($attr['email'] . $attr['username'] . random_bytes(55));
+            $user->language = env('APP_LANG', 'en');
             $user->save();
 
             $html = view('mail.registered', ['username' => $user->name, 'hash' => $user->account_confirm])->render();
@@ -378,6 +379,7 @@ class User extends Authenticatable
                 ->where('deactivated', '=', false)
                 ->where('account_confirm', '=', '_confirmed')
                 ->where('id', '<>', $user->id)
+                ->where('geo_exclude', '=', false)
                 ->havingRaw('distance <= ?', [$range]);
 
             $gender = array();
@@ -505,6 +507,7 @@ class User extends Authenticatable
             $user->introduction = \Purifier::clean($attr['introduction']);
             $user->interests = \Purifier::clean($attr['interests']);
             $user->music = \Purifier::clean($attr['music']);
+            $user->language = $attr['language'];
 
             $user->save();
         } catch (\Exception $e) {
@@ -554,7 +557,7 @@ class User extends Authenticatable
         try {
             $user = static::getByAuthId();
             if ((!$user) || ($user->deactivated)) {
-                throw new \Exception('app.login_required');
+                throw new \Exception(__('app.login_required'));
             }
 
             $oldMail = $user->email;
@@ -565,6 +568,32 @@ class User extends Authenticatable
             $html = view('mail.email_changed', ['name' => $user->name, 'email' => $email])->render();
             MailerModel::sendMail($user->email, __('app.email_changed'), $html);
             MailerModel::sendMail($oldMail, __('app.email_changed'), $html);
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Save geo exclude flag
+     * 
+     * @param $value
+     * @return void
+     * @throws \Exception
+     */
+    public static function saveGeoExclude($value)
+    {
+        try {
+            $user = static::getByAuthId();
+            if ((!$user) || ($user->deactivated)) {
+                throw new \Exception('app.login_required');
+            }
+
+            if (!$user->admin) {
+                throw new \Exception(__('app.insufficient_permissions'));
+            }
+
+            $user->geo_exclude = $value;
+            $user->save();
         } catch (\Exception $e) {
             throw $e;
         }

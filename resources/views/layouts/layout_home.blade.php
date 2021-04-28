@@ -268,6 +268,18 @@
             };
 
             document.addEventListener('DOMContentLoaded', function() {
+                window.vue.translationTable.usernameOk = '{{ __('app.usernameOk') }}';
+                window.vue.translationTable.invalidUsername = '{{ __('app.invalidUsername') }}';
+                window.vue.translationTable.nonavailableUsername = '{{ __('app.nonavailableUsername') }}';
+                window.vue.translationTable.passwordMismatching = '{{ __('app.passwordMismatching') }}';
+                window.vue.translationTable.passwordMatching = '{{ __('app.passwordMatching') }}';
+                window.vue.translationTable.age = '{{ __('app.age') }}';
+                window.vue.translationTable.status = '{{ __('app.status') }}';
+                window.vue.translationTable.location = '{{ __('app.location') }}';
+                window.vue.translationTable.gender = '{{ __('app.gender') }}';
+                window.vue.translationTable.isnew = '{{ __('app.isnew') }}';
+                window.vue.translationTable.removeIgnore = '{{ __('app.removeIgnore') }}';
+
                 @if (Session::has('flash.error'))
                     setTimeout('window.vue.showError()', 500);
                 @endif

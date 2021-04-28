@@ -410,7 +410,8 @@ class MemberController extends Controller
                 'job' => 'nullable',
                 'introduction' => 'nullable',
                 'interests' => 'nullable',
-                'music' => 'nullable'
+                'music' => 'nullable',
+                'language' => 'nullable'
             ]);
 
             if (!isset($attr['realname'])) {
@@ -455,6 +456,10 @@ class MemberController extends Controller
 
             if (!isset($attr['music'])) {
                 $attr['music'] = null;
+            }
+
+            if (!isset($attr['language'])) {
+                $attr['language'] = env('APP_LANG', 'en');
             }
 
             User::saveProfile($attr);
@@ -505,6 +510,32 @@ class MemberController extends Controller
             User::saveEmail($attr['email']);
 
             return back()->with('flash.success', __('app.email_saved'));
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Save geo exclude flag
+     * 
+     * @return mixed
+     */
+    public function saveGeoExclude()
+    {
+        try {
+            $this->validateAdmin();
+
+            $attr = request()->validate([
+                'geoexclude' => 'numeric|nullable'
+            ]);
+
+            if (!isset($attr['geoexclude'])) {
+                $attr['geoexclude'] = false;
+            }
+
+            User::saveGeoExclude($attr['geoexclude']);
+
+            return back()->with('flash.success', __('app.data_saved'));
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }

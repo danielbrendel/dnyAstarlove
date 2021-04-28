@@ -130,6 +130,17 @@
                     </div>
                 </div>
 
+                <div class="field form">
+                    <label class="label">{{ __('app.language') }}</label>
+                    <div class="control">
+                        <select name="language">
+                            @foreach (\App\Models\AppModel::getLanguageList() as $language)
+                                <option value="{{ $language }}" @if ($user->language == $language) {{ 'selected' }} @endif>{{ $language }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
                 <div class="field">
                     <div class="control">
                         <br/>
@@ -246,6 +257,26 @@
                     </div>
                 </div>
             </form>
+
+            @if ($user->admin)
+                <hr/>
+
+                <form method="POST" action="{{ url('member/geoexclude/save') }}">
+                    @csrf
+
+                    <div class="field">
+                        <div class="control">
+                            <input type="checkbox" name="geoexclude" data-role="checkbox" data-style="2" value="1" data-caption="{{ __('app.geoexclude_notice') }}" @if ($user->geo_exclude) {{ 'checked' }} @endif>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <button class="button is-success" type="submit">{{ __('app.save') }}</button>
+                        </div>
+                    </div>
+                </form>
+            @endif
         </div>
 
         <div id="tabNotifications-form" class="tab-content is-hidden">

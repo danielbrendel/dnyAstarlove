@@ -34,6 +34,7 @@ class CreateUsersTable extends Migration
             $table->string('password_reset')->nullable();
             $table->dateTime('last_action')->useCurrent(); //Use to determine online status
             $table->boolean('admin')->default(false);
+            $table->string('language')->nullable();
             $table->string('avatar');
             $table->string('avatar_large');
             $table->string('photo1')->nullable();
@@ -58,6 +59,7 @@ class CreateUsersTable extends Migration
             $table->boolean('mail_on_message')->default(true);
             $table->boolean('newsletter')->default(true);
             $table->string('newsletter_token')->default('');
+            $table->boolean('geo_exclude')->default(false);
             $table->boolean('deactivated')->default(false);
             $table->rememberToken();
             $table->timestamps();

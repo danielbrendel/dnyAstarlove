@@ -48,10 +48,14 @@ class Controller extends BaseController
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
+            \App::setLocale(env('APP_LANG', 'en'));
+
             if (!\Auth::guest()) {
                 $user = User::where('id', '=', auth()->id())->first();
                 $user->last_action = date('Y-m-d H:i:s');
                 $user->save();
+
+                \App::setLocale($user->language);
             }
 
             return $next($request);
