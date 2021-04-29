@@ -14,11 +14,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use App\Models\AppModel;
 use App\Models\FeatureItemModel;
 use App\Models\FaqModel;
 use App\Models\User;
 use App\Models\CaptchaModel;
+use App\Models\MessageModel;
+use App\Models\VerifyModel;
 
 /**
  * Class MainController
@@ -51,7 +54,15 @@ class MainController extends Controller
                 'captchadata' => $this->generateCaptcha()
             ]);
         } else {
-            return view('member.home');
+            $user = User::getByAuthId();
+
+            $user->verify_state = VerifyModel::getState($user->id);
+            $user->message_count = MessageModel::unreadCount($user->id);
+            $user->promode_count = env('STRIPE_EXPIRE_DAY_COUNT') - (Carbon::parse($user->last_payed)->diffInDays(Carbon::now()));
+
+            return view('member.home', [
+                'user' => $user
+            ]);
         }
     }
 

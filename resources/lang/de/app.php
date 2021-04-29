@@ -28,7 +28,7 @@ return [
     'contact' => 'Kontakt',
     'news' => 'News',
     'faq' => 'FAQ',
-    'last_members' => 'Letzte Anmeldungen',
+    'last_members' => 'Neuste Mitglieder',
     'not_logged_in' => 'Du bist nicht eingeloggt',
     'pw_recovery_ok' => 'Eine E-Mail mit weiteren Details wurde an die angegebene E-Mail Adresse gesendet.',
     'password_reset_ok' => 'Das Passwort wurde erfolgreich zurückgesetzt. Du kannst dich jetzt mit deinem neuen Passwort anmelden.',
@@ -311,5 +311,14 @@ return [
     'buy_pro_mode_title' => 'Pro-Modus kaufen',
     'buy_pro_mode_info' => 'Hier kannst du Pro-Modus kaufen. Dies führt zu Folgendem:<br/><ul><li>Dir wird keine Werbung mehr angezeigt</li><li>Du unterstützt den Betrieb des Dienstes</li></ul><br/>Es kostet dich nur <strong>:costs</strong> und der Modus wird für :days Tage aktiviert bleiben.',
     'credit_or_debit_card' => 'Kredit- oder Debit-Karte',
-    'submit_payment' => 'Zahlung durchführen'
+    'submit_payment' => 'Zahlung durchführen',
+    'welcome_dashboard' => 'Hallo :name',
+    'dashboard_find_members' => 'Finde jetzt <a href=":url"><strong>Mitglieder</strong></a> in deiner Nähe.',
+    'dashboard_new_messages' => 'Du hast <a href=":url"><strong>:count</strong></a> ungelesene Nachrichten.',
+    'dashboard_verified' => 'Super! Du hast ein verifiziertes Profil!',
+    'dashboard_not_verified' => 'Du hast noch kein verifiziertes Profil. Du kannst es <a href=":url"><strong>hier</strong></a> verifizieren.',
+    'dashboard_verification_inprogress' => 'Die Verifizierung deines Profiles wird bearbeitet.',
+    'dashboard_declined' => 'Die Verifizierung deines Profiles wurde abgelehnt. Du kannst die Verifizierung <a href=":url"><strong>hier</strong></a> erneut beantragen.',
+    'dashboard_promode_active' => 'Pro-Modus ist aktiv! Dein Pro-Modus ist noch :days Tage aktiv.',
+    'dashboard_promode_not_active' => 'Pro-Modus ist nicht aktiv! Du kannst ihn <a href=":url"><strong>hier</strong></a> kaufen!'
 ];

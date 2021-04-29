@@ -311,5 +311,14 @@ return [
     'buy_pro_mode_title' => 'Purchase pro mode',
     'buy_pro_mode_info' => 'Here you can buy pro mode. This will result in the following actions:<br/><ul><li>Ads won\'t be shown to you</li><li>You support our service</li></ul><br/>It will cost you only <strong>:costs</strong> and pro mode will be enabled for :days days.',
     'credit_or_debit_card' => 'Credit or debit card',
-    'submit_payment' => 'Submit payment'
+    'submit_payment' => 'Submit payment',
+    'welcome_dashboard' => 'Hello :name',
+    'dashboard_find_members' => 'Find now <a href=":url"><strong>profiles</strong></a> nearby.',
+    'dashboard_new_messages' => 'You have <a href=":url"><strong>:count</strong></a> unread messages.',
+    'dashboard_verified' => 'Great! You have a verified profile!',
+    'dashboard_not_verified' => 'You don\'t have a verified profile. You can <a href=":url"><strong>verify</strong></a> it now.',
+    'dashboard_verification_inprogress' => 'Your profile verification is still in progress.',
+    'dashboard_declined' => 'Your profile verification has been declined. You can re-apply <a href=":url"><strong>here</strong></a>.',
+    'dashboard_promode_active' => 'Pro-Mode is active! Days until expiration: :days',
+    'dashboard_promode_not_active' => 'Pro-Mode is not active! You can <a href=":url"><strong>purchase</strong></a> it now!'
 ];
