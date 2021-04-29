@@ -375,4 +375,36 @@ class AppModel extends Model
             throw $e;
         }
     }
+
+    /**
+     * Save env content
+     *
+     * @return void
+     * @throws \Exception
+     */
+    public static function saveEnvironmentConfig()
+    {
+        try {
+            $content = '# ' . env('APP_NAME') . ' environment configuration' . PHP_EOL;
+
+            foreach ($_ENV as $key => $value) {
+                $type = gettype($value);
+                if ($type === 'string') {
+                    $content .= $key . '="' . $value . '"' . PHP_EOL;
+                } else {
+                    if ($type === 'bool') {
+                        $content .= $key = '=' . (($value) ? 'true' : 'false') . '' . PHP_EOL;
+                    } else {
+                        $content .= $key = '=' . $value . '' . PHP_EOL;
+                    }
+                }
+            }
+
+            $entire = file_get_contents(base_path() . '/.env') . PHP_EOL . $content;
+
+            file_put_contents(base_path() . '/.env', $entire);
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
 }
