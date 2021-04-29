@@ -300,5 +300,16 @@ return [
     'verified_profile' => 'Verifiziertes Profil',
     'new_message_short' => ':name hat dir eine Nachricht geschickt',
     'new_message' => ':name hat dir eine Nachricht geschickt: :subject',
-    'message_received' => 'Nachricht erhalten'
+    'message_received' => 'Nachricht erhalten',
+    'project_stripe_currency' => 'Währung',
+    'payment_service_deactivated' => 'Zahlungsfunktion ist momentan deaktiviert',
+    'user_not_found_or_locked_or_already_pro' => 'Benutzer nicht gefunden, deaktiviert oder hat bereits Pro-Modus aktiviert',
+    'payment_failed' => 'Die Zahlung ist fehlgeschlagen',
+    'payment_succeeded' => 'Die Zahlung war erfolgreich. Pro-Mode ist jetzt aktiviert',
+    'promode_still_active' => 'Dein Pro-Modus ist noch für :days Tage aktiviert.',
+    'purchase_pro_mode' => 'Pro-Modus kaufen',
+    'buy_pro_mode_title' => 'Pro-Modus kaufen',
+    'buy_pro_mode_info' => 'Hier kannst du Pro-Modus kaufen. Dies führt zu Folgendem:<br/><ul><li>Dir wird keine Werbung mehr angezeigt</li><li>Du unterstützt den Betrieb des Dienstes</li></ul><br/>Es kostet dich nur <strong>:costs</strong> und der Modus wird für :days Tage aktiviert bleiben.',
+    'credit_or_debit_card' => 'Kredit- oder Debit-Karte',
+    'submit_payment' => 'Zahlung durchführen'
 ];

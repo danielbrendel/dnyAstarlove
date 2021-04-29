@@ -33,5 +33,10 @@
 <script src="{{ asset('js/fontawesome.js') }}"></script>
 <script src="{{ asset('js/metro.min.js') }}"></script>
 <script src="{{ asset('js/quill.min.js') }}"></script>
+@auth
+    @if (env('STRIPE_ENABLE'))
+        <script src="https://js.stripe.com/v3/"></script>
+    @endif
+@endauth
 
 {!! \App\Models\AppModel::getHeadCode() !!}

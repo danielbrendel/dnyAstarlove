@@ -256,6 +256,12 @@
                 window.vue.translationTable.removeIgnore = '{{ __('app.removeIgnore') }}';
                 window.vue.translationTable.verifiedProfile = '{{ __('app.verified_profile') }}';
 
+                @auth
+                    window.userProMode = {{ (\App\Models\User::promodeExpired(\App\Models\User::get(auth()->id()))) ? 'false' : 'true' }};
+                @elseguest
+                    window.userProMode = false;
+                @endauth
+
                 @if (Session::has('flash.error'))
                     setTimeout('window.vue.showError()', 500);
                 @endif
@@ -282,7 +288,14 @@
                 @endauth
 
                 @if (env('APP_ENABLEADS'))
-                    window.vue.loadAd(document.getElementById('adform'));
+                    if (!window.userProMode) {
+                        window.vue.loadAd(document.getElementById('adform'));
+                    } else {
+                        let obj = document.getElementById('adform');
+                        if (obj) {
+                            obj.remove();
+                        }
+                    }
                 @endif
             });
         </script>

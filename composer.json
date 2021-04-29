@@ -12,7 +12,8 @@
         "laravel/framework": "^8.12",
         "laravel/tinker": "^2.5",
         "mews/purifier": "^3.3",
-        "phpmailer/phpmailer": "^6.4"
+        "phpmailer/phpmailer": "^6.4",
+        "stripe/stripe-php": "^7.53"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

@@ -60,6 +60,7 @@ class CreateUsersTable extends Migration
             $table->boolean('newsletter')->default(true);
             $table->string('newsletter_token')->default('');
             $table->boolean('geo_exclude')->default(false);
+            $table->dateTime('last_payed')->nullable();
             $table->boolean('deactivated')->default(false);
             $table->rememberToken();
             $table->timestamps();

@@ -18,6 +18,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\InstallerController;
+use App\Http\Controllers\PaymentController;
 
 Route::get('/', [MainController::class, 'index']);
 Route::get('/faq', [MainController::class, 'faq']);
@@ -99,6 +100,8 @@ Route::any('/admin/verify/{id}/approve', [AdminController::class, 'approveAccoun
 Route::any('/admin/verify/{id}/decline', [AdminController::class, 'declineAccount']);
 
 Route::any('/cronjob/newsletter/{password}', [MainController::class, 'cronjob_newsletter']);
+
+Route::post('/payment/charge', [PaymentController::class, 'charge']);
 
 Route::get('/install', [InstallerController::class, 'viewInstall']);
 Route::post('/install', [InstallerController::class, 'install']);

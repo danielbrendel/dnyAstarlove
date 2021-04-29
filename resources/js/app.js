@@ -22,6 +22,7 @@ window.vue = new Vue({
         bShowEditFeature: false,
         bShowCreateFaq: false,
         bShowEditFaq: false,
+        bShowBuyProMode: false,
 
         translationTable: {
             usernameOk: 'The given name is valid and available',

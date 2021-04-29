@@ -345,6 +345,13 @@
                     </div>
 
                     <div class="field">
+                        <label class="label">{{ __('app.project_stripe_currency') }}</label>
+                        <div class="control">
+                            <input type="text" name="ENV_STRIPE_CURRENCY" value="{{ env('STRIPE_CURRENCY') }}">
+                        </div>
+                    </div>
+
+                    <div class="field">
                         <label class="label">{{ __('app.project_stripe_costs_label') }}</label>
                         <div class="control">
                             <input type="text" name="ENV_STRIPE_COSTS_LABEL" value="{{ env('STRIPE_COSTS_LABEL') }}">

@@ -339,7 +339,7 @@
 
                         <div class="field">
                             <div class="control">
-                                <input type="checkbox" name="confirmation" data-role="checkbox" data-type="2" data-caption="{{ __('app.confirm_verify_permission') }}" value="1" onclick="if (this.checked) { document.getElementById('btnVerify').disabled = false; } else { document.getElementById('btnVerify').disabled = true; }">
+                                <input type="checkbox" name="confirmation" data-role="checkbox" data-style="2" data-caption="{{ __('app.confirm_verify_permission') }}" value="1" onclick="if (this.checked) { document.getElementById('btnVerify').disabled = false; } else { document.getElementById('btnVerify').disabled = true; }">
                             </div>
                         </div>
 
@@ -352,6 +352,22 @@
                 @endif
 
                 <hr/>
+            </div>
+
+            <div>
+                @if (env('STRIPE_ENABLE'))
+                    @if (\App\Models\User::promodeExpired($user))   
+                        <div class="field">
+                            <div class="control">
+                                <a href="javascript:void(0)" onclick="window.vue.bShowBuyProMode = true; window.vue.bShowEditProfile = false;" class="button is-success">{{ __('app.purchase_pro_mode') }}</a>
+                            </div>
+                        </div> 
+                    @else
+                        <strong>{{ __('app.promode_still_active', ['days' => env('STRIPE_EXPIRE_DAY_COUNT') - (\Illuminate\Support\Carbon::parse($user->last_payed)->diffInDays(\Illuminate\Support\Carbon::now()))]) }}</strong>
+                    @endif
+
+                    <hr/>
+                @endif
             </div>
 
             <div>
@@ -378,6 +394,43 @@
             </div>
         </div>
     </div>
+
+    @if (env('STRIPE_ENABLE') == true)
+    <div class="modal" :class="{'is-active': bShowBuyProMode}">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head is-stretched">
+                <p class="modal-card-title">{{ __('app.buy_pro_mode_title') }}</p>
+                <button class="delete" aria-label="close" onclick="vue.bShowBuyProMode = false;"></button>
+            </header>
+            <section class="modal-card-body is-stretched">
+                <div class="field">
+                    {!! __('app.buy_pro_mode_info', ['costs' => env('STRIPE_COSTS_LABEL'), 'days' => env('STRIPE_EXPIRE_DAY_COUNT')]) !!}
+                </div>
+
+                <form action="{{ url('/payment/charge') }}" method="post" id="payment-form" class="stripe">
+                    @csrf
+
+                    <div class="form-row">
+                        <label for="card-element">
+                            {{ __('app.credit_or_debit_card') }}
+                        </label>
+                        <div id="card-element"></div>
+
+                        <div id="card-errors" role="alert"></div>
+                    </div>
+
+                    <br/>
+
+                    <button class="button is-link">{{ __('app.submit_payment') }}</button>
+                </form>
+            </section>
+            <footer class="modal-card-foot is-stretched">
+                <button class="button" onclick="vue.bShowBuyProMode = false;">{{ __('app.close') }}</button>
+            </footer>
+        </div>
+    </div>
+    @endif
 @endsection
 
 @section('javascript')
@@ -490,6 +543,16 @@
             });
         };
 
+        const stripeTokenHandler = (token) => {
+            const form = document.getElementById('payment-form');
+            const hiddenInput = document.createElement('input');
+            hiddenInput.setAttribute('type', 'hidden');
+            hiddenInput.setAttribute('name', 'stripeToken');
+            hiddenInput.setAttribute('value', token.id);
+            form.appendChild(hiddenInput);
+            form.submit();
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             window.queryVisitors();
             window.queryIgnoreList();
@@ -511,6 +574,35 @@
                     window.vue.showTabMenu('tabMembership');
                 @endif
             @endif
+
+            @if (env('STRIPE_ENABLE') == true)
+				var stripe = Stripe('{{ env('STRIPE_TOKEN_PUBLIC') }}');
+				var elements = stripe.elements();
+
+				const style = {
+					base: {
+						fontSize: '16px',
+						color: '#32325d',
+					},
+				};
+
+				const card = elements.create('card', {style});
+				card.mount('#card-element');
+
+				const form = document.getElementById('payment-form');
+				form.addEventListener('submit', async (event) => {
+					event.preventDefault();
+
+					const {token, error} = await stripe.createToken(card);
+
+					if (error) {
+						const errorElement = document.getElementById('card-errors');
+						errorElement.textContent = error.message;
+					} else {
+						stripeTokenHandler(token);
+					}
+				});
+			@endif
         });
     </script>
 @endsection

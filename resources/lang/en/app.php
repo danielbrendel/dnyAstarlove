@@ -300,5 +300,16 @@ return [
     'verified_profile' => 'Verified profile',
     'new_message_short' => ':name has sent you a message',
     'new_message' => ':name has sent you a message: :subject',
-    'message_received' => 'Message received'
+    'message_received' => 'Message received',
+    'project_stripe_currency' => 'Currency',
+    'payment_service_deactivated' => 'Payment is currently deactivated',
+    'user_not_found_or_locked_or_already_pro' => 'User not found, locked or already payed for pro mode',
+    'payment_failed' => 'Payment has failed',
+    'payment_succeeded' => 'Payment successful. Your pro mode is now active',
+    'promode_still_active' => 'Your pro mode is still active. Days until expiration: :days',
+    'purchase_pro_mode' => 'Purchase pro mode',
+    'buy_pro_mode_title' => 'Purchase pro mode',
+    'buy_pro_mode_info' => 'Here you can buy pro mode. This will result in the following actions:<br/><ul><li>Ads won\'t be shown to you</li><li>You support our service</li></ul><br/>It will cost you only <strong>:costs</strong> and pro mode will be enabled for :days days.',
+    'credit_or_debit_card' => 'Credit or debit card',
+    'submit_payment' => 'Submit payment'
 ];

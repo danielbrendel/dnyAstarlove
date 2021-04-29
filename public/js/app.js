@@ -1862,6 +1862,7 @@ window.vue = new Vue({
     bShowEditFeature: false,
     bShowCreateFaq: false,
     bShowEditFaq: false,
+    bShowBuyProMode: false,
     translationTable: {
       usernameOk: 'The given name is valid and available',
       invalidUsername: 'The name is invalid. Please use only alphanumeric characters, numbers 0-9 and the characters \'-\' and \'_\'. Also number only identifiers are considered invalid',

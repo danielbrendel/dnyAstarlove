@@ -833,6 +833,26 @@ class User extends Authenticatable
     }
 
     /**
+     * Check if pro mode has expired of given user
+     * 
+     * @param $user
+     * @return bool
+     * @throws \Exception
+     */
+    public static function promodeExpired($user)
+    {
+        try {
+            if ($user->last_payed === null) {
+                return true;
+            }
+
+            return Carbon::parse($user->last_payed)->diffInDays(Carbon::now()) > env('STRIPE_EXPIRE_DAY_COUNT', 90);
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
      * Delete user account
      * 
      * @param $userId
