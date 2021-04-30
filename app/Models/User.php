@@ -383,6 +383,8 @@ class User extends Authenticatable
                 ->where('account_confirm', '=', '_confirmed')
                 ->where('id', '<>', $user->id)
                 ->where('geo_exclude', '=', false)
+                ->whereNotNull('latitude')
+                ->whereNotNull('longitude')
                 ->havingRaw('distance <= ?', [$range]);
 
             $gender = array();
