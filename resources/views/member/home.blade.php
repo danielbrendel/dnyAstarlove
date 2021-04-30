@@ -22,6 +22,10 @@
         </p>
 
         <p>
+            {!! __('app.dashboard_new_visitors', ['count' => $user->visitor_count, 'url' => url('/settings?tab=visitors')]) !!}
+        </p>
+
+        <p>
             {!! __('app.dashboard_new_messages', ['count' => $user->message_count, 'url' => url('/messages')]) !!}
         </p>
 

@@ -314,6 +314,7 @@ return [
     'submit_payment' => 'Zahlung durchführen',
     'welcome_dashboard' => 'Hallo :name',
     'dashboard_find_members' => 'Finde jetzt <a href=":url"><strong>Mitglieder</strong></a> in deiner Nähe.',
+    'dashboard_new_visitors' => 'Du hast <a href=":url"><strong>:count</strong></a> neue Profilbesucher.',
     'dashboard_new_messages' => 'Du hast <a href=":url"><strong>:count</strong></a> ungelesene Nachrichten.',
     'dashboard_verified' => 'Super! Du hast ein verifiziertes Profil!',
     'dashboard_not_verified' => 'Du hast noch kein verifiziertes Profil. Du kannst es <a href=":url"><strong>hier</strong></a> verifizieren.',

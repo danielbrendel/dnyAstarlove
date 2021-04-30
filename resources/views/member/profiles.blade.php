@@ -15,7 +15,7 @@
 
 @section('content')
     <div class="form">
-        <h2>{{ __('app.profiles_title') }}</h2>
+        <h2>{{ __('app.profiles_title') }}<span>&nbsp;<i class="fas fa-sync-alt is-pointer" onclick="document.getElementById('profiles-content').innerHTML = ''; window.paginate = null; window.queryProfiles();"></i></span></h2>
         <br/>
 
         <div class="profiles-filter">

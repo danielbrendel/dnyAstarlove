@@ -113,4 +113,20 @@ class VisitorModel extends Model
             throw $e;
         }
     }
+
+    /**
+     * Get unseen visitor count
+     * 
+     * @param $userId
+     * @return int
+     * @throws \Exception
+     */
+    public static function getUnseenCount($userId)
+    {
+        try {
+            return static::where('visitedId', '=', $userId)->where('seen', '=', false)->count();
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
 }
