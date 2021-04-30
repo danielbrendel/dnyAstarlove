@@ -320,5 +320,7 @@ return [
     'dashboard_verification_inprogress' => 'Your profile verification is still in progress.',
     'dashboard_declined' => 'Your profile verification has been declined. You can re-apply <a href=":url"><strong>here</strong></a>.',
     'dashboard_promode_active' => 'Pro-Mode is active! Days until expiration: :days',
-    'dashboard_promode_not_active' => 'Pro-Mode is not active! You can <a href=":url"><strong>purchase</strong></a> it now!'
+    'dashboard_promode_not_active' => 'Pro-Mode is not active! You can <a href=":url"><strong>purchase</strong></a> it now!',
+    'register_welcome_short' => 'Welcome to ' . env('APP_NAME') . '!',
+    'register_welcome_long' => 'Welcome to ' . env('APP_NAME') . '. Be sure to <a href=":url">update your profile information</a> to let other users know more about you. Have fun!'
 ];

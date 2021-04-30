@@ -140,6 +140,18 @@
         <script>
             window.menuVisible = false;
 
+            window.pushClientNotification = function(msg) {
+                Push.create('{{ env('APP_NAME') }}', {
+                    body: msg,
+                    icon: '{{ asset('logo.png') }}',
+                    timeout: 4000,
+                    onClick: function () {
+                        window.focus();
+                        this.close();
+                    }
+                });
+            };
+
             window.transferGeolocation = function(geodata) {
                 let latitude = geodata.coords.latitude;
                 let longitude = geodata.coords.longitude;
@@ -184,6 +196,8 @@
                             response.data.forEach(function(elem, index) {
                                 @if (isset($_GET['clep_push_handler']))
                                     window['{{ $_GET['clep_push_handler'] }}'](elem.shortMsg, elem.longMsg);
+                                @else
+                                    window.pushClientNotification(elem.shortMsg);
                                 @endif
 
                                 let html = window.vue.renderNotification(elem, true);

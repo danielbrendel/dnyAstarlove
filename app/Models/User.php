@@ -256,6 +256,8 @@ class User extends Authenticatable
             $html = view('mail.registered', ['username' => $user->name, 'hash' => $user->account_confirm])->render();
             MailerModel::sendMail($user->email, __('app.mail_subject_register'), $html);
 
+            PushModel::addNotification(__('app.register_welcome_short'), __('app.register_welcome_long', ['url' => url('/settings?tab=tabProfile')]), 'PUSH_WELCOME', $user->id);
+
             return $user->id;
         } catch (\Exception $e) {
             throw $e;

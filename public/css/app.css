@@ -800,6 +800,15 @@ a.navbar-item:hover {
   }
 }
 
+.notification-item-message a {
+  color: #646464;
+  font-weight: bold;
+}
+
+.notification-item-message a:hover {
+  text-decoration: underline;
+}
+
 .is-new-notification {
   background-color: #80ff80;
 }
