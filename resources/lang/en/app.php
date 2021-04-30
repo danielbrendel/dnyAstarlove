@@ -323,5 +323,6 @@ return [
     'dashboard_promode_active' => 'Pro-Mode is active! Days until expiration: :days',
     'dashboard_promode_not_active' => 'Pro-Mode is not active! You can <a href=":url"><strong>purchase</strong></a> it now!',
     'register_welcome_short' => 'Welcome to ' . env('APP_NAME') . '!',
-    'register_welcome_long' => 'Welcome to ' . env('APP_NAME') . '. Be sure to <a href=":url">update your profile information</a> to let other users know more about you. Have fun!'
+    'register_welcome_long' => 'Welcome to ' . env('APP_NAME') . '. Be sure to <a href=":url">update your profile information</a> to let other users know more about you. Have fun!',
+    'no_notifications_yet' => 'No notifications yet'
 ];

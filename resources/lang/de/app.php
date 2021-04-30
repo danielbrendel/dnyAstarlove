@@ -323,5 +323,6 @@ return [
     'dashboard_promode_active' => 'Pro-Modus ist aktiv! Dein Pro-Modus ist noch :days Tage aktiv.',
     'dashboard_promode_not_active' => 'Pro-Modus ist nicht aktiv! Du kannst ihn <a href=":url"><strong>hier</strong></a> kaufen!',
     'register_welcome_short' => 'Willkommen bei ' . env('APP_NAME') . '!',
-    'register_welcome_long' => 'Willkommen bei ' . env('APP_NAME') . '. Bitte aktualisiere noch <a href=":url">deine Profilinformationen</a>, damit andere mehr über dich erfahren können. Viel Spaß!'
+    'register_welcome_long' => 'Willkommen bei ' . env('APP_NAME') . '. Bitte aktualisiere noch <a href=":url">deine Profilinformationen</a>, damit andere mehr über dich erfahren können. Viel Spaß!',
+    'no_notifications_yet' => 'Noch keine Benachrichtigungen'
 ];

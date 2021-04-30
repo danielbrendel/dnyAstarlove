@@ -306,7 +306,7 @@ class MainController extends Controller
         try {
             \Auth::logout();
 
-            return redirect('/')->with('flash.success', __('logout_successful'));
+            return redirect('/')->with('flash.success', __('app.logout_successful'));
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }
