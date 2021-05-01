@@ -324,5 +324,11 @@ return [
     'dashboard_promode_not_active' => 'Pro-Mode is not active! You can <a href=":url"><strong>purchase</strong></a> it now!',
     'register_welcome_short' => 'Welcome to ' . env('APP_NAME') . '!',
     'register_welcome_long' => 'Welcome to ' . env('APP_NAME') . '. Be sure to <a href=":url">update your profile information</a> to let other users know more about you. Have fun!',
-    'no_notifications_yet' => 'No notifications yet'
+    'no_notifications_yet' => 'No notifications yet',
+    'likes' => 'Likes',
+    'received_likes' => 'Received',
+    'given_likes' => 'Given',
+    'like_received_short' => 'You have received a like',
+    'like_received_long' => '<a href=":url_profile">@:name</a> has sent you a like. <a href=":url_settings">View all</a>',
+    'view_profile' => 'View profile'
 ];

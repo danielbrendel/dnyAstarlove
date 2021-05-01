@@ -36,7 +36,8 @@ window.vue = new Vue({
             gender: 'Gender',
             isnew: 'New',
             removeIgnore: 'Remove',
-            verifiedProfile: 'Verified profile'
+            verifiedProfile: 'Verified profile',
+            viewProfile: 'View profile'
         },
     },
 
@@ -385,7 +386,7 @@ window.vue = new Vue({
         },
 
         showTabMenu: function(target) {
-            let tabItems = ['tabVisitors', 'tabProfile', 'tabPhotos', 'tabSecurity', 'tabNotifications', 'tabIgnoreList', 'tabMembership'];
+            let tabItems = ['tabVisitors', 'tabLikes', 'tabProfile', 'tabPhotos', 'tabSecurity', 'tabNotifications', 'tabIgnoreList', 'tabMembership'];
 
             tabItems.forEach(function(elem, index) {
                if (elem !== target) {
@@ -396,6 +397,25 @@ window.vue = new Vue({
                document.getElementById(target).classList.add('is-active');
                document.getElementById(target + '-form').classList.remove('is-hidden');
             });
+        },
+
+        showLikeTab: function(which) {
+            let received = document.getElementById('tabLikes-Received');
+            let given = document.getElementById('tabLikes-Given');
+            let received_form = document.getElementById('tabLikes-Received-form');
+            let given_form = document.getElementById('tabLikes-Given-form');
+
+            if (which === 'received') {
+                given.classList.remove('is-active');
+                received.classList.add('is-active');
+                given_form.classList.add('is-hidden');
+                received_form.classList.remove('is-hidden');
+            } else if (which === 'given') {
+                received.classList.remove('is-active');
+                given.classList.add('is-active');
+                received_form.classList.add('is-hidden');
+                given_form.classList.remove('is-hidden');
+            }
         },
 
         renderVisitorProfile: function(elem) {
@@ -416,6 +436,26 @@ window.vue = new Vue({
                     <a href="`+ window.location.origin + '/user/' + elem.user.name + `">` + elem.user.name + `</a>
                 </div>
             </div>
+            `;
+
+            return html;
+        },
+
+        renderLikedProfile: function(elem) {
+            let html = `
+                <div class="liked">
+                    <div class="liked-avatar">
+                        <a href="`+ window.location.origin + '/user/' + elem.user.name + `"><img src="`+ window.location.origin + '/gfx/avatars/default.png' + `" alt="avatar"></a>
+                    </div>
+            
+                    <div class="liked-name">
+                        <a href="`+ window.location.origin + '/user/' + elem.user.name + `">` + elem.user.name + `</a>
+                    </div>
+
+                    <div class="liked-action">
+                        <button class="button is-link" onclick="location.href = '` + window.location.origin + `/user/` + elem.user.name + `';">` + this.translationTable.viewProfile + `</button>
+                    </div>
+                </div>
             `;
 
             return html;

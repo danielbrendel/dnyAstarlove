@@ -45,10 +45,19 @@ class LikeModel extends Model
                 throw new \Exception(__('app.already_liked'));
             }
 
+            $exists = static::where('userId', '=', $userId)->where('likedUserId', '=', $likedUserId)->first();
+            if ($exists) {
+                return;
+            }
+
             $item = new self();
             $item->userId = $userId;
             $item->likedUserId = $likedUserId;
             $item->save();
+
+            $user = User::get($userId);
+
+            PushModel::addNotification(__('app.like_received_short'), __('app.like_received_long', ['name' => $user->name, 'url_profile' => url('/user/' . $user->name), 'url_settings' => url('/settings?tab=likes')]), 'PUSH_LIKED', $likedUserId);
         } catch (\Exception $e) {
             throw $e;
         }
@@ -107,6 +116,54 @@ class LikeModel extends Model
     {
         try {
             return (static::hasLiked($userId1, $userId2)) && (static::hasLiked($userId2, $userId1));
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Query received like list
+     * 
+     * @param $userId
+     * @param $limit
+     * @param $paginate
+     * @return array
+     * @throws \Exception
+     */
+    public static function queryReceivedLikes($userId, $limit, $paginate = null)
+    {
+        try {
+            $query = static::where('likedUserId', '=', $userId);
+
+            if ($paginate !== null) {
+                $query->where('id', '<', $paginate);
+            }
+
+            return $query->orderBy('id', 'desc')->limit($limit)->get()->toArray();
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Query given like list
+     * 
+     * @param $userId
+     * @param $limit
+     * @param $paginate
+     * @return array
+     * @throws \Exception
+     */
+    public static function queryGivenLikes($userId, $limit, $paginate = null)
+    {
+        try {
+            $query = static::where('userId', '=', $userId);
+
+            if ($paginate !== null) {
+                $query->where('id', '<', $paginate);
+            }
+
+            return $query->orderBy('id', 'desc')->limit($limit)->get()->toArray();
         } catch (\Exception $e) {
             throw $e;
         }

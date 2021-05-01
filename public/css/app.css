@@ -670,6 +670,34 @@ a.navbar-item:hover {
   border-radius: 5px;
 }
 
+.liked {
+  position: relative;
+  display: inline-block;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 10px;
+}
+
+.liked-avatar img {
+  width: 128px;
+  height: 128px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+}
+
+.liked-name {
+  text-align: center;
+}
+
+.liked-name a {
+  color: black;
+}
+
+.liked-action {
+  text-align: center;
+  margin-top: 10px;
+}
+
 .ignore {
   position: relative;
   display: inline-block;

@@ -59,7 +59,7 @@ return [
     'from' => 'Von',
     'till' => 'Bis',
     'genders' => 'Geschlechter',
-    'only_online_profiles' => 'Nutz Nutzer anzeigen, die online sind',
+    'only_online_profiles' => 'Nur Nutzer anzeigen, die online sind',
     'search' => 'Suchen',
     'no_more_profiles' => 'Keine weiteren Profile gefunden',
     'create' => 'Erstellen',
@@ -324,5 +324,11 @@ return [
     'dashboard_promode_not_active' => 'Pro-Modus ist nicht aktiv! Du kannst ihn <a href=":url"><strong>hier</strong></a> kaufen!',
     'register_welcome_short' => 'Willkommen bei ' . env('APP_NAME') . '!',
     'register_welcome_long' => 'Willkommen bei ' . env('APP_NAME') . '. Bitte aktualisiere noch <a href=":url">deine Profilinformationen</a>, damit andere mehr über dich erfahren können. Viel Spaß!',
-    'no_notifications_yet' => 'Noch keine Benachrichtigungen'
+    'no_notifications_yet' => 'Noch keine Benachrichtigungen',
+    'likes' => 'Likes',
+    'received_likes' => 'Erhalten',
+    'given_likes' => 'Gegeben',
+    'like_received_short' => 'Du hast einen Like erhalten',
+    'like_received_long' => '<a href=":url_profile">@:name</a> hat dir einen Like dagelassen. <a href=":url_settings">Alle anzeigen</a>',
+    'view_profile' => 'Profil anzeigen'
 ];

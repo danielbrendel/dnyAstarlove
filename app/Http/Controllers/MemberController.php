@@ -361,9 +361,55 @@ class MemberController extends Controller
 
             $paginate = request('paginate', null);
 
-            $data = VisitorModel::getVisitorPack(auth()->id(), env('APP_VISITORPACK', 10), $paginate);
+            $data = VisitorModel::getVisitorPack(auth()->id(), env('APP_VISITORPACK', 20), $paginate);
             foreach ($data as &$item) {
                 $item['user'] = User::get($item['visitorId'])->toArray();
+            }
+
+            return response()->json(array('code' => 200, 'data' => $data));
+        } catch (\Exception $e) {
+            return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
+        }
+    }
+
+    /**
+     * Query received like list
+     * 
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function queryReceivedLikes()
+    {
+        try {
+            $this->validateLogin();
+
+            $paginate = request('paginate', null);
+
+            $data = LikeModel::queryReceivedLikes(auth()->id(), env('APP_LIKEPACK', 20), $paginate);
+            foreach ($data as &$item) {
+                $item['user'] = User::get($item['userId'])->toArray();
+            }
+
+            return response()->json(array('code' => 200, 'data' => $data));
+        } catch (\Exception $e) {
+            return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
+        }
+    }
+
+    /**
+     * Query given like list
+     * 
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function queryGivenLikes()
+    {
+        try {
+            $this->validateLogin();
+
+            $paginate = request('paginate', null);
+
+            $data = LikeModel::queryGivenLikes(auth()->id(), env('APP_LIKEPACK', 20), $paginate);
+            foreach ($data as &$item) {
+                $item['user'] = User::get($item['likedUserId'])->toArray();
             }
 
             return response()->json(array('code' => 200, 'data' => $data));

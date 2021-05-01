@@ -38,17 +38,25 @@ class VisitorModel extends Model
     public static function add($visitorId, $visitedId)
     {
         try {
+            $item = null;
+
             $exists = static::where('visitorId', '=', $visitorId)->where('visitedId', '=', $visitedId)->first();
             if ($exists) {
-                $exists->touch();
+                if (!$exists->seen) {
+                    $exists->touch();
+                    return;
+                }
+                
+                $item = $exists;
             } else {
                 $item = new self();
                 $item->visitorId = $visitorId;
                 $item->visitedId = $visitedId;
-                $item->seen = false;
-                $item->save();
             }
 
+            $item->seen = false;
+            $item->save();
+            
             $userData = User::get($visitorId);
             PushModel::addNotification(__('app.user_visited_short'), __('app.user_visited_long', ['name' => $userData->name, 'url' => url('/user/' . $userData->name), 'visitors' => url('/settings?tab=visitors')]), 'PUSH_VISITED', $visitedId);
         } catch (\Exception $e) {

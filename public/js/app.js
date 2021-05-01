@@ -1875,7 +1875,8 @@ window.vue = new Vue({
       gender: 'Gender',
       isnew: 'New',
       removeIgnore: 'Remove',
-      verifiedProfile: 'Verified profile'
+      verifiedProfile: 'Verified profile',
+      viewProfile: 'View profile'
     }
   },
   methods: {
@@ -2138,7 +2139,7 @@ window.vue = new Vue({
       return html;
     },
     showTabMenu: function showTabMenu(target) {
-      var tabItems = ['tabVisitors', 'tabProfile', 'tabPhotos', 'tabSecurity', 'tabNotifications', 'tabIgnoreList', 'tabMembership'];
+      var tabItems = ['tabVisitors', 'tabLikes', 'tabProfile', 'tabPhotos', 'tabSecurity', 'tabNotifications', 'tabIgnoreList', 'tabMembership'];
       tabItems.forEach(function (elem, index) {
         if (elem !== target) {
           document.getElementById(elem).classList.remove('is-active');
@@ -2149,6 +2150,24 @@ window.vue = new Vue({
         document.getElementById(target + '-form').classList.remove('is-hidden');
       });
     },
+    showLikeTab: function showLikeTab(which) {
+      var received = document.getElementById('tabLikes-Received');
+      var given = document.getElementById('tabLikes-Given');
+      var received_form = document.getElementById('tabLikes-Received-form');
+      var given_form = document.getElementById('tabLikes-Given-form');
+
+      if (which === 'received') {
+        given.classList.remove('is-active');
+        received.classList.add('is-active');
+        given_form.classList.add('is-hidden');
+        received_form.classList.remove('is-hidden');
+      } else if (which === 'given') {
+        received.classList.remove('is-active');
+        given.classList.add('is-active');
+        received_form.classList.add('is-hidden');
+        given_form.classList.remove('is-hidden');
+      }
+    },
     renderVisitorProfile: function renderVisitorProfile(elem) {
       var isnew = '';
 
@@ -2157,6 +2176,10 @@ window.vue = new Vue({
       }
 
       var html = "\n            <div class=\"visitor\">\n                <div class=\"visitor-avatar\">\n                    <a href=\"" + window.location.origin + '/user/' + elem.user.name + "\"><img src=\"" + window.location.origin + '/gfx/avatars/' + elem.user.avatar + "\" alt=\"avatar\"></a>\n\n                    " + isnew + "\n                </div>\n        \n                <div class=\"visitor-name\">\n                    <a href=\"" + window.location.origin + '/user/' + elem.user.name + "\">" + elem.user.name + "</a>\n                </div>\n            </div>\n            ";
+      return html;
+    },
+    renderLikedProfile: function renderLikedProfile(elem) {
+      var html = "\n                <div class=\"liked\">\n                    <div class=\"liked-avatar\">\n                        <a href=\"" + window.location.origin + '/user/' + elem.user.name + "\"><img src=\"" + window.location.origin + '/gfx/avatars/default.png' + "\" alt=\"avatar\"></a>\n                    </div>\n            \n                    <div class=\"liked-name\">\n                        <a href=\"" + window.location.origin + '/user/' + elem.user.name + "\">" + elem.user.name + "</a>\n                    </div>\n\n                    <div class=\"liked-action\">\n                        <button class=\"button is-link\" onclick=\"location.href = '" + window.location.origin + "/user/" + elem.user.name + "';\">" + this.translationTable.viewProfile + "</button>\n                    </div>\n                </div>\n            ";
       return html;
     },
     renderIgnoreProfile: function renderIgnoreProfile(elem) {

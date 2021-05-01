@@ -81,7 +81,7 @@
                     <span><i class="fas fa-birthday-cake" title="{{ __('app.age') }}"></i>&nbsp;{{ $user->age }}&nbsp;&nbsp;</span>
                     <span><i class="fas fa-transgender-alt" title="{{ __('app.gender') }}"></i>&nbsp;{{ $user->gender }}&nbsp;&nbsp;</span>
                     <span><i class="fas fa-map-marker-alt" title="{{ __('app.location') }}"></i>&nbsp;@if ($user->location !== null) {{ $user->location }} @else {{ 'n/a' }} @endif&nbsp;&nbsp;</span>
-                    <span><i class="fas fa-heart" title="{{ __('app.relationship_status') }}"></i>&nbsp;{{ $user->rel_status }}&nbsp;&nbsp;</span>
+                    <span><i class="fas fa-heart" title="{{ __('app.relationship_status') }}"></i>&nbsp;@if ($user->rel_status !== null) {{ $user->rel_status }} @else {{ 'n/a' }} @endif&nbsp;&nbsp;</span>
                     <span><i class="fas fa-arrows-alt-v" title="{{ __('app.height') }}"></i>&nbsp;@if ($user->height !== null) {{ $user->height }} @else {{ 'n/a' }} @endif&nbsp;&nbsp;</span>
                     <span><i class="fas fa-weight" title="{{ __('app.weight') }}"></i>&nbsp;@if ($user->weight !== null) {{ $user->weight }} @else {{ 'n/a' }} @endif&nbsp;&nbsp;</span>
                     <span><i class="fas fa-user-tie" title="{{ __('app.job') }}"></i>&nbsp;@if ($user->job !== null) {{ $user->job }} @else {{ 'n/a' }} @endif&nbsp;&nbsp;</span>
@@ -124,7 +124,7 @@
                         <span class="float-right"><a href="{{ url('/member/unignore/' . $user->id) }}">{{ __('app.unignore') }}</a></span>
                     @endif
                 @else
-                    <span><a href="{{ url('/settings') }}">{{ __('app.edit_profile') }}</a></span>
+                    <span><a href="{{ url('/settings?tab=profile') }}">{{ __('app.edit_profile') }}</a></span>
                 @endif
             </div>
         </div>

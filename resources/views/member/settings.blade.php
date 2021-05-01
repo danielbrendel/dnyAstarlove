@@ -21,6 +21,7 @@
         <div class="tabs">
             <ul>
                 <li id="tabVisitors" class="is-active"><a href="javascript:void(0);" onclick="window.vue.showTabMenu('tabVisitors');">{{ __('app.visitors') }}</a></li>
+                <li id="tabLikes"><a href="javascript:void(0);" onclick="window.vue.showTabMenu('tabLikes'); document.getElementById('link-received-likes').click();">{{ __('app.likes') }}</a></li>
                 <li id="tabProfile"><a href="javascript:void(0);" onclick="window.vue.showTabMenu('tabProfile');">{{ __('app.profile') }}</a></li>
                 <li id="tabPhotos"><a href="javascript:void(0);" onclick="window.vue.showTabMenu('tabPhotos');">{{ __('app.photos') }}</a></li>
                 <li id="tabSecurity"><a href="javascript:void(0);" onclick="window.vue.showTabMenu('tabSecurity');">{{ __('app.security') }}</a></li>
@@ -32,6 +33,23 @@
 
         <div id="tabVisitors-form" class="tab-content">
             <div id="visitor-content"></div>
+        </div>
+
+        <div id="tabLikes-form" class="tab-content">
+            <div class="tabs">
+                <ul>
+                    <li id="tabLikes-Received" class="is-active"><a id="link-received-likes" href="javascript:void(0);" onclick="window.vue.showLikeTab('received'); document.getElementById('received-content').innerHTML = ''; document.getElementById('given-content').innerHTML = ''; window.paginateReceivedLikes = null; window.queryReceivedLikeList();">{{ __('app.received_likes') }}</a></li>
+                    <li id="tabLikes-Given" class="is-active"><a href="javascript:void(0);" onclick="window.vue.showLikeTab('given'); document.getElementById('given-content').innerHTML = ''; document.getElementById('given-content').innerHTML = ''; window.paginateGivenLikes = null; window.queryGivenLikeList();">{{ __('app.given_likes') }}</a></li>
+                </ul>
+            </div>
+
+            <div class="tab-content" id="tabLikes-Received-form">
+                <div id="received-content"></div>
+            </div>
+
+            <div class="tab-content" id="tabLikes-Given-form">
+                <div id="given-content"></div>
+            </div>
         </div>
 
         <div id="tabProfile-form" class="tab-content is-hidden">
@@ -437,6 +455,8 @@
     <script>
         window.paginateVisitors = null;
         window.paginateIgnoreList = null;
+        window.paginateReceivedLikes = null;
+        window.paginateGivenLikes = null;
 
         var quillIntroduction = new Quill('#text-introduction', {
             theme: 'snow',
@@ -507,6 +527,78 @@
             });
         };
 
+        window.queryReceivedLikeList = function() {
+            let content = document.getElementById('received-content');
+
+            let loadmore = document.getElementById('received-loadmore');
+            if (loadmore) {
+                loadmore.remove();
+            }
+
+            content.innerHTML += '<div id="received-spinner"><center><i class="fa fa-spinner fa-spin"></i></center></div>';
+
+            window.vue.ajaxRequest('post', '{{ url('/member/likes/received/query') }}', { paginate: window.paginateReceivedLikes }, function(response){
+                if (response.code == 200) {
+                    let spinner = document.getElementById('received-spinner');
+                    if (spinner) {
+                        spinner.remove();
+                    }
+
+                    response.data.forEach(function(elem, index){
+                        let html = window.vue.renderLikedProfile(elem);
+
+                        content.innerHTML += html;
+                    });
+
+                    if (response.data.length === 0) {
+                        content.innerHTML += '<div><br/>{{ __('app.no_more_users') }}</div>';
+                    } else {
+                        window.paginateReceivedLikes = response.data[response.data.length - 1].id;
+
+                        content.innerHTML += '<div id="received-loadmore"><br/><center><i class="fas fa-arrow-down is-pointer" onclick="window.queryReceivedLikeList();"></i></center></div>';
+                    }
+                } else {
+                    console.error(response);
+                }
+            });
+        };
+
+        window.queryGivenLikeList = function() {
+            let content = document.getElementById('given-content');
+
+            let loadmore = document.getElementById('given-loadmore');
+            if (loadmore) {
+                loadmore.remove();
+            }
+
+            content.innerHTML += '<div id="given-spinner"><center><i class="fa fa-spinner fa-spin"></i></center></div>';
+
+            window.vue.ajaxRequest('post', '{{ url('/member/likes/given/query') }}', { paginate: window.paginateGivenLikes }, function(response){
+                if (response.code == 200) {
+                    let spinner = document.getElementById('given-spinner');
+                    if (spinner) {
+                        spinner.remove();
+                    }
+
+                    response.data.forEach(function(elem, index){
+                        let html = window.vue.renderLikedProfile(elem);
+
+                        content.innerHTML += html;
+                    });
+
+                    if (response.data.length === 0) {
+                        content.innerHTML += '<div><br/>{{ __('app.no_more_users') }}</div>';
+                    } else {
+                        window.paginateGivenLikes = response.data[response.data.length - 1].id;
+
+                        content.innerHTML += '<div id="given-loadmore"><br/><center><i class="fas fa-arrow-down is-pointer" onclick="window.queryGivenLikeList();"></i></center></div>';
+                    }
+                } else {
+                    console.error(response);
+                }
+            });
+        };
+
         window.queryIgnoreList = function() {
             let content = document.getElementById('ignore-content');
 
@@ -560,6 +652,9 @@
             @if (isset($_GET['tab']))
                 @if ($_GET['tab'] === 'visitors')
                     window.vue.showTabMenu('tabVisitors');
+                @elseif ($_GET['tab'] === 'likes')
+                    window.vue.showTabMenu('tabLikes');
+                    document.getElementById('link-received-likes').click();
                 @elseif ($_GET['tab'] === 'profile')
                     window.vue.showTabMenu('tabProfile');
                 @elseif ($_GET['tab'] === 'photos')

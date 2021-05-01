@@ -269,6 +269,7 @@
                 window.vue.translationTable.isnew = '{{ __('app.isnew') }}';
                 window.vue.translationTable.removeIgnore = '{{ __('app.removeIgnore') }}';
                 window.vue.translationTable.verifiedProfile = '{{ __('app.verified_profile') }}';
+                window.vue.translationTable.viewProfile = '{{ __('app.view_profile') }}';
 
                 @auth
                     window.userProMode = {{ (\App\Models\User::promodeExpired(\App\Models\User::get(auth()->id()))) ? 'false' : 'true' }};
