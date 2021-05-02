@@ -330,5 +330,7 @@ return [
     'given_likes' => 'Gegeben',
     'like_received_short' => 'Du hast einen Like erhalten',
     'like_received_long' => '<a href=":url_profile">@:name</a> hat dir einen Like dagelassen. <a href=":url_settings">Alle anzeigen</a>',
-    'view_profile' => 'Profil anzeigen'
+    'view_profile' => 'Profil anzeigen',
+    'delete_photo' => 'Löschen',
+    'photo_deleted' => 'Das Foto wurde gelöscht'
 ];

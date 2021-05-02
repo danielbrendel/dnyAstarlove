@@ -75,6 +75,13 @@ class User extends Authenticatable
     ];
 
     /**
+     * Allowed photo attributes
+     * 
+     * @var array
+     */
+    protected static $allowed_photo_attributes = array('avatar', 'photo1', 'photo2', 'photo3');
+
+    /**
      * Get last registered members
      * 
      * @param $count
@@ -775,7 +782,7 @@ class User extends Authenticatable
                 throw new \Exception('app.login_required');
             }
 
-            $allowed = array('avatar', 'photo1', 'photo2', 'photo3');
+            $allowed = static::$allowed_photo_attributes;
             if (!in_array($which, $allowed)) {
                 throw new \Exception('Invalid photo type: ' . $which);
             }
@@ -808,6 +815,44 @@ class User extends Authenticatable
                 $user->$which = $fname . '_thumb.' . $fext;
                 $user->save();
             }
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Delete photo
+     * 
+     * @param $which
+     * @return void
+     * @throws \Exception
+     */
+    public static function deletePhoto($which)
+    {
+        try {
+            $user = static::getByAuthId();
+            if ((!$user) || ($user->deactivated)) {
+                throw new \Exception('app.login_required');
+            }
+
+            $allowed = static::$allowed_photo_attributes;
+            if (!in_array($which, $allowed)) {
+                throw new \Exception('Invalid photo type: ' . $which);
+            }
+
+            if ($user->$which !== 'default.png') {
+                unlink(public_path() . '/gfx/avatars/' . $user->$which);
+            }
+
+            $large = $which . '_large';
+            if ($user->$large !== 'default.png') {
+                unlink(public_path() . '/gfx/avatars/' . $user->$large);
+            }
+
+            $user->$which = 'default.png';
+            $user->$large = 'default.png';
+
+            $user->save();
         } catch (\Exception $e) {
             throw $e;
         }

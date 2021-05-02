@@ -330,5 +330,7 @@ return [
     'given_likes' => 'Given',
     'like_received_short' => 'You have received a like',
     'like_received_long' => '<a href=":url_profile">@:name</a> has sent you a like. <a href=":url_settings">View all</a>',
-    'view_profile' => 'View profile'
+    'view_profile' => 'View profile',
+    'delete_photo' => 'Delete',
+    'photo_deleted' => 'Photo has been deleted'
 ];

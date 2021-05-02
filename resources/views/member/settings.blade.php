@@ -179,6 +179,7 @@
                         <span class="settings-photo-image"><img src="{{ asset('gfx/avatars/' . $user->avatar) }}" alt="avatar"></span>
                         <span class="settings-photo-input"><input type="file" data-role="file" data-button-title="{{ __('app.select_photo') }}" name="image"></span>
                         <span><button class="button is-success" type="submit">{{ __('app.save') }}</button></span>
+                        <span><a href="{{ url('/member/photo/avatar/delete') }}">{{ __('app.delete_photo') }}</a></span>
                     </div>
                 </div>
             </form>
@@ -195,6 +196,7 @@
                         <span class="settings-photo-image"><img src="{{ asset('gfx/avatars/' . $user->photo1) }}" alt="photo"></span>
                         <span class="settings-photo-input"><input type="file" data-role="file" data-button-title="{{ __('app.select_photo') }}" name="image"></span>
                         <span><button class="button is-success" type="submit">{{ __('app.save') }}</button></span>
+                        <span><a href="{{ url('/member/photo/photo1/delete') }}">{{ __('app.delete_photo') }}</a></span>
                     </div>
                 </div>
             </form>
@@ -211,6 +213,7 @@
                         <span class="settings-photo-image"><img src="{{ asset('gfx/avatars/' . $user->photo2) }}" alt="photo"></span>
                         <span class="settings-photo-input"><input type="file" data-role="file" data-button-title="{{ __('app.select_photo') }}" name="image"></span>
                         <span><button class="button is-success" type="submit">{{ __('app.save') }}</button></span>
+                        <span><a href="{{ url('/member/photo/photo2/delete') }}">{{ __('app.delete_photo') }}</a></span>
                     </div>
                 </div>
             </form>
@@ -227,6 +230,7 @@
                         <span class="settings-photo-image"><img src="{{ asset('gfx/avatars/' . $user->photo3) }}" alt="photo"></span>
                         <span class="settings-photo-input"><input type="file" data-role="file" data-button-title="{{ __('app.select_photo') }}" name="image"></span>
                         <span><button class="button is-success" type="submit">{{ __('app.save') }}</button></span>
+                        <span><a href="{{ url('/member/photo/photo3/delete') }}">{{ __('app.delete_photo') }}</a></span>
                     </div>
                 </div>
             </form>

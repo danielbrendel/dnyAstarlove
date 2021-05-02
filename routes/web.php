@@ -55,6 +55,7 @@ Route::post('/member/profile/save', [MemberController::class, 'saveProfile']);
 Route::post('/member/password/save', [MemberController::class, 'savePassword']);
 Route::post('/member/email/save', [MemberController::class, 'saveEmail']);
 Route::post('/member/photo/save', [MemberController::class, 'savePhoto']);
+Route::any('/member/photo/{which}/delete', [MemberController::class, 'deletePhoto']);
 Route::post('/member/notifications/save', [MemberController::class, 'saveNotifications']);
 Route::post('/member/ignores/query', [MemberController::class, 'queryIgnoreList']);
 Route::post('/member/account/delete', [MemberController::class, 'deleteAccount']);

@@ -616,6 +616,23 @@ class MemberController extends Controller
     }
 
     /**
+     * Delete photo
+     * 
+     * @param $which
+     * @return mixed
+     */
+    public function deletePhoto($which)
+    {
+        try {
+            User::deletePhoto($which);
+
+            return redirect('/settings?tab=photos')->with('flash.success', __('app.photo_deleted'));
+        } catch (\Exception $e) {
+            return redirect('/settings?tab=photos')->with('error', $e->getMessage());
+        }
+    }
+
+    /**
      * Save notification settings
      * 
      * @return mixed
