@@ -386,6 +386,9 @@ a.navbar-item:hover {
     display: inline-block;
     color: rgb(150, 150, 150);
 }
+.message-item-lastmsg p {
+	display: inline-block;
+}
 .messages-item-date {
     display: inline-block;
     color: rgb(150, 150, 150);
@@ -451,7 +454,7 @@ a.navbar-item:hover {
 }
 .message-align-right {
     margin-left: auto;
-    background-color: rgba(120, 120, 120, 0.5);
+    background-color: rgba(50, 120, 0, 0.5);
 }
 .is-message-label-small {
     font-size: 0.7em;
