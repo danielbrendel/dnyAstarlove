@@ -341,6 +341,7 @@ class MemberController extends Controller
 
             $user = User::getByAuthId();
             $user->state = VerifyModel::getState($user->id);
+            $user->birthday = Carbon::parse($user->birthday)->format('Y-m-d');
 
             return view('member.settings', [
                 'user' => $user
