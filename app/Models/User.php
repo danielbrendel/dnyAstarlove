@@ -25,6 +25,7 @@ use App\Models\PushModel;
 use App\Models\ReportModel;
 use App\Models\VisitorModel;
 use App\Models\VerifyModel;
+use App\Models\FavoritesModel;
 
 /**
  * Class User
@@ -952,6 +953,11 @@ class User extends Authenticatable
 
             $visitors = VisitorModel::where('visitorId', '=', $userId)->orWhere('visitedId', '=', $userId)->get();
             foreach ($visitors as $item) {
+                $item->delete();
+            }
+
+            $favorites = FavoritesModel::where('userId', '=', $userId)->orWhere('favoriteId', '=', $userId)->get();
+            foreach ($favorites as $item) {
                 $item->delete();
             }
 
