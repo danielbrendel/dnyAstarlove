@@ -199,6 +199,31 @@ class MessageModel extends Model
     }
 
     /**
+     * Get chat with partner
+     * 
+     * @param $self
+     * @param $partner
+     * @return mixed
+     * @throws \Exception
+     */
+    public static function getChatWithUser($self, $partner)
+    {
+        try {
+            $query = static::where(function($query) use($self, $partner) {
+                $query->where('userId', '=', $self)
+                    ->where('senderId', '=', $partner);
+            })->orWhere(function($query) use ($self, $partner) {
+                $query->where('userId', '=', $partner)
+                    ->where('senderId', '=', $self);
+            });
+
+            return $query->orderBy('id', 'desc')->first();
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
      * Get amount of unread messages
      *
      * @param $userId

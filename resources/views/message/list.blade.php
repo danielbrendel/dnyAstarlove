@@ -20,9 +20,9 @@
                 <h1>{{ __('app.messages') }}</h1>
             </div>
 
-			<div>
+			<!--div>
 				<button type="button" class="button" onclick="location.href = '{{ url('/messages/create') }}';">{{ __('app.create') }}</button><br/><br/>
-			</div>
+			</div-->
 
             <div class="messages">
                 <div class="messages-list" id="messages-list">
@@ -34,7 +34,7 @@
                 <div class="messages-footer-count" id="msg-count"></div>
 
                 <div class="messages-footer-nav">
-                    <span><i id="browse-left" class="fas fa-arrow-left is-pointer" onclick="if (window.paginateList < window.maxMsgId) window.paginateList = window.previousMsgId+1; window.msgListCounter -= {{ env('APP_MESSAGEPACKLIMIT') }}; fetchMessageList()"></i></span>
+                    <span><i id="browse-left" class="fas fa-arrow-left is-pointer" onclick="if (window.msgListCounter >= 2) { if (window.paginateList < window.maxMsgId) window.paginateList = window.previousMsgId+1; window.msgListCounter -= {{ env('APP_MESSAGEPACKLIMIT') }}; fetchMessageList(); }"></i></span>
                     <span><i id="browse-right" class="fas fa-arrow-right is-pointer" onclick="if (window.paginateList > window.minMsgId) fetchMessageList(); window.msgListCounter += {{ env('APP_MESSAGEPACKLIMIT') }};"></i></span>
                 </div>
             </div>
@@ -70,6 +70,7 @@
 
                  window.minMsgId = response.min;
                  window.maxMsgId = response.max;
+                 window.msgCount = response.count;
 
                  window.previousMsgId = window.paginateList;
                  if (response.data.length > 0) {
@@ -85,7 +86,7 @@
                      document.getElementById('browse-left').classList.add('is-color-grey');
                  }
 
-                 document.getElementById('msg-count').innerHTML = window.msgListCounter + ' to ' + (window.msgListCounter + {{ env('APP_MESSAGEPACKLIMIT', 10) }}) + ' of total ' + response.max;
+                 document.getElementById('msg-count').innerHTML = window.msgListCounter + ' to ' + response.count;
              }
           });
         };

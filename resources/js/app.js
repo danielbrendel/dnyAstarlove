@@ -352,7 +352,7 @@ window.vue = new Vue({
                     </div>
         
                     <div class="messages-item-name">
-                        <a href="` + window.location.origin + `/u/` + item.user.name + `">` + item.user.name + `</a>
+                        <a href="` + window.location.origin + `/user/` + item.user.name + `">` + item.user.name + `</a>
                     </div>
         
                     <div class="messages-item-subject">

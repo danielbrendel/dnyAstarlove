@@ -95,7 +95,7 @@ class User extends Authenticatable
     public static function getLastRegisteredMembers($count)
     {
         try {
-            return static::orderBy('id', 'desc')->limit($count)->get();
+            return static::where('deactivated', '=', false)->where('account_confirm', '=', '_confirmed')->orderBy('id', 'desc')->limit($count)->get();
         } catch (\Exception $e) {
             throw $e;
         }

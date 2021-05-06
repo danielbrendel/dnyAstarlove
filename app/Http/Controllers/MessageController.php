@@ -82,7 +82,7 @@ class MessageController extends Controller
                 $item->diffForHumans = $item->created_at->diffForHumans();
             }
 
-            return response()->json(array('code' => 200, 'data' => $data, 'min' => MessageModel::where('userId', '=', auth()->id())->orWhere('senderId', '=', auth()->id())->min('id'), 'max' => MessageModel::where('userId', '=', auth()->id())->orWhere('senderId', '=', auth()->id())->max('id')));
+            return response()->json(array('code' => 200, 'data' => $data, 'min' => MessageModel::where('userId', '=', auth()->id())->orWhere('senderId', '=', auth()->id())->min('id'), 'max' => MessageModel::where('userId', '=', auth()->id())->orWhere('senderId', '=', auth()->id())->max('id'), 'count' =>  count($data)));
         } catch (Exception $e) {
             return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
         }
@@ -151,6 +151,16 @@ class MessageController extends Controller
     {
         try {
             $this->validateLogin();
+
+            $username = request('u', '');
+            if ((is_string($username)) && (strlen($username > 0))) {
+                $user = User::getByName($username);
+                if ($user) {
+                    $chat = MessageModel::getChatWithUser(auth()->id(), $user->id);
+
+                    return redirect('/messages/show/' . $chat->id);
+                }
+            }
 
             return view('message.create', [
                 'user' => User::getByAuthId(),

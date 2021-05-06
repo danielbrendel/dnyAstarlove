@@ -336,5 +336,6 @@ return [
     'orientation' => 'Sexual orientation',
     'orientation_hetero' => 'Heterosexual',
     'orientation_bi' => 'Bisexual',
-    'orientation_homo' => 'Homosexual'
+    'orientation_homo' => 'Homosexual',
+    'gender_unspecified' => 'Unspecified'
 ];
