@@ -99,15 +99,26 @@
                 @endif
 
                 <div class="container">
-                    <div class="notifications" id="notifications">
-                        <center><div class="notifications-arrow-up"></div></center>
+                    <div class="app-overlay" id="notifications">
+                        <center><div class="overlay-arrow-up"></div></center>
 
                         <div>
                             <div class="is-inline-block"></div>
-                            <div class="is-inline-block float-right notification-close-action is-pointer" onclick="window.vue.toggleNotifications('notifications'); if (window.menuVisible) {document.getElementById('navbarMenu').classList.remove('is-active'); document.getElementById('navbarBurger').classList.remove('is-active'); }">{{ __('app.close') }}</div>
+                            <div class="is-inline-block float-right overlay-close-action is-pointer" onclick="window.vue.toggleOverlay('notifications'); if (window.menuVisible) { document.getElementById('navbarMenu').classList.remove('is-active'); document.getElementById('navbarBurger').classList.remove('is-active'); }">{{ __('app.close') }}</div>
                         </div>
 
-                        <div class="notifications-content" id="notification-content"></div>
+                        <div class="overlay-content" id="notification-content"></div>
+                    </div>
+
+                    <div class="app-overlay is-right-favorites" id="favorites">
+                        <center><div class="overlay-arrow-up"></div></center>
+
+                        <div>
+                            <div class="is-inline-block"></div>
+                            <div class="is-inline-block float-right overlay-close-action is-pointer" onclick="window.vue.toggleOverlay('favorites'); if (window.menuVisible) { document.getElementById('navbarMenu').classList.remove('is-active'); document.getElementById('navbarBurger').classList.remove('is-active'); }">{{ __('app.close') }}</div>
+                        </div>
+
+                        <div class="overlay-content" id="favorites-content"></div>
                     </div>
 
                     @if (env('APP_ENABLEADS'))
@@ -256,6 +267,41 @@
                 });
             };
 
+            window.favoritesPagination = null;
+            window.fetchFavorites = function() {
+                document.getElementById('favorites-content').innerHTML += '<div id="favorites-spinner"><br/><center><i class="fas fa-spinner fa-spin"></i></center></div>';
+
+                if (document.getElementById('favorites-loadmore') !== null) {
+                    document.getElementById('favorites-loadmore').remove();
+                }
+                
+                window.vue.ajaxRequest('post', '{{ url('/member/favorites/query') }}', { paginate: window.favoritesPagination }, function(response) {
+                    if (response.code == 200) {
+                        if (document.getElementById('favorites-spinner') !== null) {
+                            document.getElementById('favorites-spinner').remove();
+                        }
+
+                        response.data.forEach(function(elem, index) {
+                            let html = window.vue.renderFavoriteItem(elem);
+
+                            document.getElementById('favorites-content').innerHTML += html;
+                        });
+
+                        if (response.data.length > 0) {
+                            window.favoritesPagination = response.data[response.data.length - 1].id;
+
+                            document.getElementById('favorites-content').innerHTML += '<div id="favorites-loadmore" class="is-pointer" onclick="window.fetchFavorites();"><br/><center><i class="fas fa-arrow-down"></i></center></div>';
+                        } else {
+                            if (window.favoritesPagination === null) {
+                                document.getElementById('favorites-content').innerHTML = '<div><br/><center>{{ __('app.no_favorites_yet') }}</center></div>';
+                            }
+                        }
+                    } else {
+                        console.error(response);
+                    }
+                });
+            };
+
             document.addEventListener('DOMContentLoaded', function() {
                 window.vue.translationTable.usernameOk = '{{ __('app.usernameOk') }}';
                 window.vue.translationTable.invalidUsername = '{{ __('app.invalidUsername') }}';
@@ -270,6 +316,8 @@
                 window.vue.translationTable.removeIgnore = '{{ __('app.removeIgnore') }}';
                 window.vue.translationTable.verifiedProfile = '{{ __('app.verified_profile') }}';
                 window.vue.translationTable.viewProfile = '{{ __('app.view_profile') }}';
+                window.vue.translationTable.online = '{{ __('app.online') }}';
+                window.vue.translationTable.message = '{{ __('app.message') }}';
 
                 @auth
                     window.userProMode = {{ (\App\Models\User::promodeExpired(\App\Models\User::get(auth()->id()))) ? 'false' : 'true' }};
@@ -290,6 +338,7 @@
                 @auth
                     setTimeout('fetchNotifications()', 100);
                     setTimeout('fetchNotificationList()', 200);
+                    setTimeout('fetchFavorites()', 300);
 
                     window.geoLoopTransmission = function() {
                         window.queryGeoLocation();

@@ -103,6 +103,13 @@
                     @if (!$user->ignored)
                         @if ($user->both_liked)
                             <span><a class="button is-success" href="{{ url('/messages/create?u=' . $user->name) }}">{{ __('app.message') }}</a></span>
+
+                            @if ($user->favorited)
+                                <span><a class="button is-info is-outlined" href="{{ url('/member/favorites/' . $user->id . '/remove') }}">{{ __('app.remove_favorite') }}</a></span>
+                            @else
+                                <span><a class="button is-info" href="{{ url('/member/favorites/' . $user->id . '/add') }}">{{ __('app.add_favorite') }}</a></span>
+                            @endif
+
                             <span><a class="button is-danger is-outlined" href="{{ url('/member/unlike/' . $user->id) }}"><i class="fas fa-heart-broken"></i>&nbsp;{{ __('app.unlike') }}</a></span>
                         @else
                             @if ($user->self_liked)

@@ -23,6 +23,7 @@ detailed first impressions of each other.
 + Captcha system
 + Visitor system
 + Notification system
++ Favorites system
 + E-Mail system
 + Reporting system
 + Ignore system

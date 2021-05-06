@@ -104,7 +104,7 @@ a.is-link-blue:hover {
     color: rgb(150, 150, 150);
 }
 .is-color-green {
-    color: rgb(34, 198, 91);
+    color: rgb(34, 198, 91) !important;
 }
 .is-font-size-small {
     font-size: 0.8em;
@@ -629,8 +629,8 @@ a.navbar-item:hover {
     margin-top: 10px;
 }
 
-//Notification area
-.notifications {
+//Overlay, notifications and favorites area
+.app-overlay {
     position: absolute;
     top: 31px;
     @media screen and (min-width: 769px) {
@@ -657,7 +657,7 @@ a.navbar-item:hover {
     display: none;
     border: 1px solid #ccc;
 }
-.notifications-arrow-up {
+.overlay-arrow-up {
     top: -15px;
     width: 0;
     height: 0;
@@ -668,11 +668,11 @@ a.navbar-item:hover {
         display: none;
     }
 }
-.notification-close-action {
+.overlay-close-action {
     margin-top: 22px;
     margin-right: 32px;
 }
-.notifications-content {
+.overlay-content {
     margin: 25px;
     height: 78%;
     @media screen and (max-width: 480px) {
@@ -773,6 +773,45 @@ a.navbar-item:hover {
 }
 .is-notification-color-black {
     color: rgb(50, 50, 48);
+}
+.is-right-favorites {
+    @media screen and (min-width: 769px) {
+        right: 167px !important;
+    }
+}
+.favorites-item {
+    position: relative;
+    width: auto;
+    margin-top: 20px;
+}
+.favorites-avatar {
+    width: 64px;
+    height: 64px;
+    display: inline-block;
+}
+.favorites-avatar img {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+}
+.favorites-info {
+    display: inline-block;
+    margin-left: 15px;
+    top: 10px;
+}
+.favorites-name {
+    color: rgb(50, 50, 50);
+    font-size: 1.2em;
+}
+.favorites-status {
+    color: rgb(150, 150, 150);
+    font-size: 0.8em;
+}
+.favorites-action {
+    display: inline-block;
+    float: right;
+    margin-right: 10px;
+    top: 19px;
 }
 
 //Settings

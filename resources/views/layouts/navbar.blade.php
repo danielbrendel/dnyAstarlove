@@ -42,11 +42,15 @@
             {{ __('app.random') }}
         </a>
 
+        <a class="navbar-item" href="javascript:void(0);" onclick="window.vue.toggleOverlay('favorites'); if (window.menuVisible) { document.getElementById('navbarMenu').classList.remove('is-active'); document.getElementById('navbarBurger').classList.remove('is-active'); }">
+            {{ __('app.favorites') }}
+        </a>
+
         <a class="navbar-item" href="{{ url('/messages') }}">
             {{ __('app.messages') }}
         </a>
 
-        <a class="navbar-item notification-badge" href="javascript:void(0);" onclick="window.vue.toggleNotifications('notifications'); document.getElementById('navbar-notify-wrapper').classList.add('is-hidden'); document.getElementById('burger-notification').style.display = 'none'; window.vue.markSeen(); if (window.menuVisible) { document.getElementById('navbarMenu').classList.remove('is-active'); document.getElementById('navbarBurger').classList.remove('is-active'); }">
+        <a class="navbar-item notification-badge" href="javascript:void(0);" onclick="window.vue.toggleOverlay('notifications'); document.getElementById('navbar-notify-wrapper').classList.add('is-hidden'); document.getElementById('burger-notification').style.display = 'none'; window.vue.markSeen(); if (window.menuVisible) { document.getElementById('navbarMenu').classList.remove('is-active'); document.getElementById('navbarBurger').classList.remove('is-active'); }">
             <span class="navbar-fixed-left">{{ __('app.notifications') }}</span>
             <span class="notify-badge is-hidden" id="navbar-notify-wrapper"><span class="notify-badge-count" id="navbar-notify-count"></span></span>
         </a>

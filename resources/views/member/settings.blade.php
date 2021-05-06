@@ -683,6 +683,8 @@
                 @elseif ($_GET['tab'] === 'membership')
                     window.vue.showTabMenu('tabMembership');
                 @endif
+            @else
+                window.vue.showTabMenu('tabVisitors');
             @endif
 
             @if (env('STRIPE_ENABLE') == true)

@@ -37,7 +37,9 @@ window.vue = new Vue({
             isnew: 'New',
             removeIgnore: 'Remove',
             verifiedProfile: 'Verified profile',
-            viewProfile: 'View profile'
+            viewProfile: 'View profile',
+            online: 'online',
+            message: 'Message'
         },
     },
 
@@ -530,7 +532,35 @@ window.vue = new Vue({
             return html;
         },
 
-        toggleNotifications: function(ident) {
+        renderFavoriteItem: function(elem) {
+            let status = '';
+            if (elem.user.is_online) {
+                status = '<div class="favorites-status is-color-green">' + this.translationTable.online + '</div>';
+            } else {
+                status = '<div class="favorites-status">' + elem.user.last_seen + '</div>';;
+            }
+
+            let html = `
+                <div class="favorites-item">
+                    <div class="favorites-avatar">
+                        <img src="` + window.location.origin + '/gfx/avatars/' + elem.user.avatar + `" alt="avatar">
+                    </div>
+
+                    <div class="favorites-info">
+                        <div class="favorites-name"><a href="` + window.location.origin + '/user/' + elem.user.name + `">` + elem.user.name + `</a></div>
+                        ` + status + `
+                    </div>
+
+                    <div class="favorites-action">
+                        <a class="button is-success" href="` + window.location.origin + '/messages/create?u=' + elem.user.name + `">` + this.translationTable.message + `</a>
+                    </div>
+                </div>
+            `;
+
+            return html;
+        },
+
+        toggleOverlay: function(ident) {
             let obj = document.getElementById(ident);
             if (obj) {
                 if (obj.style.display === 'block') {

@@ -1876,7 +1876,9 @@ window.vue = new Vue({
       isnew: 'New',
       removeIgnore: 'Remove',
       verifiedProfile: 'Verified profile',
-      viewProfile: 'View profile'
+      viewProfile: 'View profile',
+      online: 'online',
+      message: 'Message'
     }
   },
   methods: {
@@ -2223,7 +2225,20 @@ window.vue = new Vue({
       var html = "\n                <div class=\"notification-item " + (newItem ? 'is-new-notification' : '') + "\">\n                    <div class=\"notification-icon\">\n                        <div class=\"notification-item-icon\"><i class=\"" + icon + " fa-3x " + color + "\"></i></div>\n                    </div>\n                    <div class=\"notification-info\">\n                        <div class=\"notification-item-message\">" + elem.longMsg + "</div>\n                        <div class=\"notification-item-message is-color-grey is-font-size-small is-margin-top-5\">" + elem.diffForHumans + "</div>\n                    </div>\n                </div>\n            ";
       return html;
     },
-    toggleNotifications: function toggleNotifications(ident) {
+    renderFavoriteItem: function renderFavoriteItem(elem) {
+      var status = '';
+
+      if (elem.user.is_online) {
+        status = '<div class="favorites-status is-color-green">' + this.translationTable.online + '</div>';
+      } else {
+        status = '<div class="favorites-status">' + elem.user.last_seen + '</div>';
+        ;
+      }
+
+      var html = "\n                <div class=\"favorites-item\">\n                    <div class=\"favorites-avatar\">\n                        <img src=\"" + window.location.origin + '/gfx/avatars/' + elem.user.avatar + "\" alt=\"avatar\">\n                    </div>\n\n                    <div class=\"favorites-info\">\n                        <div class=\"favorites-name\"><a href=\"" + window.location.origin + '/user/' + elem.user.name + "\">" + elem.user.name + "</a></div>\n                        " + status + "\n                    </div>\n\n                    <div class=\"favorites-action\">\n                        <a class=\"button is-success\" href=\"" + window.location.origin + '/messages/create?u=' + elem.user.name + "\">" + this.translationTable.message + "</a>\n                    </div>\n                </div>\n            ";
+      return html;
+    },
+    toggleOverlay: function toggleOverlay(ident) {
       var obj = document.getElementById(ident);
 
       if (obj) {

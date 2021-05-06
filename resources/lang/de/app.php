@@ -338,5 +338,12 @@ return [
     'orientation_bi' => 'Bisexuell',
     'orientation_homo' => 'Homosexuell',
     'gender_unspecified' => 'Unspecified',
-    'no_more_messages' => 'Keine weiteren Nachrichten'
+    'no_more_messages' => 'Keine weiteren Nachrichten',
+    'add_favorite' => 'Favorit',
+    'remove_favorite' => 'Un-Favorit',
+    'added_to_favorites' => 'Zu Favoriten hinzugefügt',
+    'removed_from_favorites' => 'Von Favoriten entfernt',
+    'favorites' => 'Favoriten',
+    'no_favorites_yet' => 'Noch keine Favoriten hinzugefügt',
+    'user_not_receiving_messages' => 'Die Nachricht konnte nicht zugestellt werden'
 ];

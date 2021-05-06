@@ -168,7 +168,7 @@
                 document.getElementById('btnDiverse').classList.remove('is-success');
             }
 
-            document.getElementById('orientation').selectedIndex = window.searchOrientation;
+            document.getElementById('orientation').selectedIndex = window.searchOrientation - 1;
 
             document.getElementById('ageFrom').value = window.searchAgeFrom;
             document.getElementById('ageTill').value = window.searchAgeTill;

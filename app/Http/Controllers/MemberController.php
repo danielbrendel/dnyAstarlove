@@ -20,6 +20,7 @@ use App\Models\LikeModel;
 use App\Models\IgnoreModel;
 use App\Models\VisitorModel;
 use App\Models\VerifyModel;
+use App\Models\FavoritesModel;
 
 /**
  * Class MemberController
@@ -90,6 +91,7 @@ class MemberController extends Controller
             $user->self_liked = LikeModel::hasLiked(auth()->id(), $user->id);
             $user->liked_back = LikeModeL::hasLiked($user->id, auth()->id());
             $user->both_liked = ($user->self_liked) && ($user->liked_back);
+            $user->favorited = FavoritesModel::hasFavorited(auth()->id(), $user->id);
 
             return view('member.random', [
                 'user' => $user
@@ -220,6 +222,7 @@ class MemberController extends Controller
             $user->self_liked = LikeModel::hasLiked(auth()->id(), $user->id);
             $user->liked_back = LikeModeL::hasLiked($user->id, auth()->id());
             $user->both_liked = ($user->self_liked) && ($user->liked_back);
+            $user->favorited = FavoritesModel::hasFavorited(auth()->id(), $user->id);
 
             return view('member.profile', [
                 'user' => $user
@@ -667,6 +670,74 @@ class MemberController extends Controller
             return redirect('/settings?tab=notifications')->with('flash.success', __('app.notifications_saved'));
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Add user to favorites
+     * 
+     * @param $id
+     * @return mixed
+     */
+    public function addFavorite($id)
+    {
+        try {
+            $this->validateLogin();
+
+            $user = User::get($id);
+            if ((!$user) || ($user->deactivated)) {
+                throw new \Exception(__('app.user_not_found_or_deactivated'));
+            }
+
+            FavoritesModel::add(auth()->id(), $id);
+
+            return back()->with('flash.success', __('app.added_to_favorites'));
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Remove user from favorites
+     * 
+     * @param $id
+     * @return mixed
+     */
+    public function removeFavorite($id)
+    {
+        try {
+            $this->validateLogin();
+
+            FavoritesModel::remove(auth()->id(), $id);
+
+            return back()->with('flash.success', __('app.removed_from_favorites'));
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Query favorites
+     * 
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function queryFavorites()
+    {
+        try {
+            $this->validateLogin();
+
+            $paginate = request('paginate', null);
+
+            $data = FavoritesModel::fetch(auth()->id(), env('APP_FAVORITEPACKCOUNT', 30), $paginate)->toArray();
+            foreach ($data as &$item) {
+                $item['user'] = User::get($item['favoriteId'])->toArray();
+                $item['user']['is_online'] = User::isMemberOnline($item['user']['id']);
+                $item['user']['last_seen'] = Carbon::parse($item['user']['last_action'])->diffForHumans();
+            }
+
+            return response()->json(array('code' => 200, 'data' => $data));
+        } catch (\Exception $e) {
+            return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
         }
     }
 

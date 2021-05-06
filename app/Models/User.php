@@ -257,7 +257,6 @@ class User extends Authenticatable
             $user->name = $attr['username'];
             $user->password = password_hash($attr['password'], PASSWORD_BCRYPT);
             $user->email = $attr['email'];
-            $user->email_verified_at = date('Y-m-d H:i:s');
             $user->avatar = 'default.png';
             $user->avatar_large = $user->avatar;
             $user->account_confirm = md5($attr['email'] . $attr['username'] . random_bytes(55));
@@ -312,6 +311,7 @@ class User extends Authenticatable
             }
 
             $user->account_confirm = '_confirmed';
+            $user->email_verified_at = date('Y-m-d H:i:s');
             $user->save();
         } catch (\Exception $e) {
             throw $e;
