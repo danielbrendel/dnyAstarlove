@@ -35,6 +35,7 @@ class CreateUsersTable extends Migration
             $table->dateTime('last_action')->useCurrent(); //Use to determine online status
             $table->boolean('admin')->default(false);
             $table->string('language')->nullable();
+            $table->boolean('firstlogin')->default(false);
             $table->string('avatar');
             $table->string('avatar_large');
             $table->string('photo1')->nullable();

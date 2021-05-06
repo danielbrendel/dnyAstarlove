@@ -282,7 +282,14 @@ class MainController extends Controller
                     'email' => $attr['email'],
                     'password' => $attr['password']
                 ])) {
-                    return redirect('/')->with('flash.success', __('app.login_successful'));
+                    if (!$user->firstlogin) {
+                        $user->firstlogin = true;
+                        $user->save();
+
+                        return redirect('/settings?tab=profile')->with('flash.success', __('app.login_successful'));
+                    } else {
+                        return redirect('/')->with('flash.success', __('app.login_successful'));
+                    }
                 } else {
                     return back()->with('error', __('app.login_failed'));
                 }

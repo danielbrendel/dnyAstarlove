@@ -262,6 +262,7 @@ class User extends Authenticatable
             $user->avatar_large = $user->avatar;
             $user->account_confirm = md5($attr['email'] . $attr['username'] . random_bytes(55));
             $user->language = env('APP_LANG', 'en');
+            $user->firstlogin = false;
             $user->save();
 
             $html = view('mail.registered', ['username' => $user->name, 'hash' => $user->account_confirm])->render();
