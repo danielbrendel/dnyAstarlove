@@ -822,9 +822,10 @@ a.navbar-item:hover {
 .imgpreview-body {
     width: 100%;
     height: 95%;
+    text-align: center;
 }
 .imgpreview-body img {
-    width: 100%;
+    width: auto;
     height: 95%;
 }
 
