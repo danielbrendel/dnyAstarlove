@@ -135,12 +135,13 @@ class MemberController extends Controller
             $male = request('male', 1);
             $female = request('female', 1);
             $diverse = request('diverse', 1);
+            $orientation = request('orientation', 1);
             $from = request('from', 18);
             $till = request('till', 100);
             $online = request('online', false);
             $paginate = request('paginate', null);
 
-            $data = User::queryProfiles($geo, $male, $female, $diverse, $from, $till, $online, $paginate);
+            $data = User::queryProfiles($geo, $male, $female, $diverse, $orientation, $from, $till, $online, $paginate);
 
             return response()->json(array('code' => 200, 'data' => $data));
         } catch (\Exception $e) {
@@ -456,6 +457,7 @@ class MemberController extends Controller
                 'realname' => 'nullable',
                 'birthday' => 'nullable|date',
                 'gender' => 'nullable|numeric',
+                'orientation' => 'nullable|numeric',
                 'height' => 'nullable|numeric',
                 'weight' => 'nullable|numeric',
                 'rel_status' => 'nullable',
@@ -477,6 +479,10 @@ class MemberController extends Controller
 
             if (!isset($attr['gender'])) {
                 $attr['gender'] = null;
+            }
+
+            if (!isset($attr['orientation'])) {
+                $attr['orientation'] = 1;
             }
 
             if (!isset($attr['height'])) {

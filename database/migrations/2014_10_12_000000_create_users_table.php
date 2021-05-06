@@ -54,6 +54,7 @@ class CreateUsersTable extends Migration
             $table->string('music', 1024)->nullable();
             $table->string('job', 1024)->nullable();
             $table->string('location')->nullable();
+            $table->integer('orientation')->default(1); //1 = heterosexual, 2 = bisexual, 3 = homosexual
             $table->decimal('latitude', 10, 8)->nullable();
             $table->decimal('longitude', 11, 8)->nullable();
             $table->boolean('mail_on_message')->default(true);

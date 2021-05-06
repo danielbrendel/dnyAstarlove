@@ -40,6 +40,17 @@
                 </div>
 
                 <div class="field">
+                    <label class="label">{{ __('app.orientation') }}</label>
+                    <div class="control">
+                        <select id="orientation" onchange="window.searchOrientation = this.selectedIndex + 1; window.vue.setSearchOrientation(window.searchOrientation);">
+                            <option value="{{ \App\Models\User::ORIENTATION_HETERO }}">{{ __('app.orientation_hetero') }}</option>
+                            <option value="{{ \App\Models\User::ORIENTATION_BI }}">{{ __('app.orientation_bi') }}</option>
+                            <option value="{{ \App\Models\User::ORIENTATION_HOMO }}">{{ __('app.orientation_homo') }}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="field">
                     <label class="label">{{ __('app.age_range') }}</label>
                     <div class="control">
                         {{ __('app.from') }}: <input class="input" type="number" id="ageFrom" min="18" onchange="window.vue.setSearchAgeFrom(this.value); window.searchAgeFrom = this.value;" onkeyup="window.vue.setSearchAgeFrom(this.value); window.searchAgeFrom = this.value;">
@@ -73,6 +84,7 @@
         window.searchGenderMale = true;
         window.searchGenderFemale = true;
         window.searchGenderDiverse = true;
+        window.searchOrientation = 1;
         window.searchAgeFrom = 18;
         window.searchAgeTill = 100;
         window.searchOnlyOnline = false;
@@ -125,6 +137,7 @@
             window.searchGenderMale = window.vue.getSearchGenderMale();
             window.searchGenderFemale = window.vue.getSearchGenderFemale();
             window.searchGenderDiverse = window.vue.getSearchGenderDiverse();
+            window.searchOrientation = window.vue.getSearchOrientation();
             window.searchAgeFrom = window.vue.getSearchAgeFrom();
             window.searchAgeTill = window.vue.getSearchAgeTill();
             window.searchOnlyOnline = window.vue.getSearchOnlyOnline();
@@ -155,6 +168,8 @@
                 document.getElementById('btnDiverse').classList.remove('is-success');
             }
 
+            document.getElementById('orientation').selectedIndex = window.searchOrientation;
+
             document.getElementById('ageFrom').value = window.searchAgeFrom;
             document.getElementById('ageTill').value = window.searchAgeTill;
 
@@ -176,6 +191,7 @@
                 male: window.searchGenderMale,
                 female: window.searchGenderFemale,
                 diverse: window.searchGenderDiverse,
+                orientation: window.searchOrientation,
                 from: window.searchAgeFrom,
                 till: window.searchAgeTill,
                 online: window.searchOnlyOnline,

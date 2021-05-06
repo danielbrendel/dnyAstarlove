@@ -63,6 +63,7 @@ Route::post('/member/geoexclude/save', [MemberController::class, 'saveGeoExclude
 Route::post('/member/account/verify', [MemberController::class, 'verifyAccount']);
 Route::post('/member/likes/received/query', [MemberController::class, 'queryReceivedLikes']);
 Route::post('/member/likes/given/query', [MemberController::class, 'queryGivenLikes']);
+Route::post('/member/lookingfor/{type}/{value}', [MemberController::class, 'lookingFor']);
 
 Route::get('/messages', [MessageController::class, 'list']);
 Route::get('/messages/list', [MessageController::class, 'fetchList']);

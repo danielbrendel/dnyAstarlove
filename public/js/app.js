@@ -2055,6 +2055,21 @@ window.vue = new Vue({
       var expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
       document.cookie = 'search_gender_diverse=' + value + '; expires=' + expDate.toUTCString() + ';';
     },
+    getSearchOrientation: function getSearchOrientation() {
+      var cookies = document.cookie.split(';');
+
+      for (var i = 0; i < cookies.length; i++) {
+        if (cookies[i].indexOf('search_orientation') !== -1) {
+          return parseInt(cookies[i].substr(cookies[i].indexOf('=') + 1));
+        }
+      }
+
+      return 1;
+    },
+    setSearchOrientation: function setSearchOrientation(value) {
+      var expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
+      document.cookie = 'search_orientation=' + value + '; expires=' + expDate.toUTCString() + ';';
+    },
     getSearchAgeFrom: function getSearchAgeFrom() {
       var cookies = document.cookie.split(';');
 

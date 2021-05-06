@@ -332,5 +332,9 @@ return [
     'like_received_long' => '<a href=":url_profile">@:name</a> hat dir einen Like dagelassen. <a href=":url_settings">Alle anzeigen</a>',
     'view_profile' => 'Profil anzeigen',
     'delete_photo' => 'Löschen',
-    'photo_deleted' => 'Das Foto wurde gelöscht'
+    'photo_deleted' => 'Das Foto wurde gelöscht',
+    'orientation' => 'Sexuelle Orientierung',
+    'orientation_hetero' => 'Heterosexuell',
+    'orientation_bi' => 'Bisexuell',
+    'orientation_homo' => 'Homosexuell'
 ];

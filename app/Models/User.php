@@ -44,6 +44,10 @@ class User extends Authenticatable
     const GENDER_FEMALE = 2;
     const GENDER_DIVERSE = 3;
 
+    const ORIENTATION_HETERO = 1;
+    const ORIENTATION_BI = 2;
+    const ORIENTATION_HOMO = 3;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -372,6 +376,7 @@ class User extends Authenticatable
      * @param $male
      * @param $female
      * @param $diverse
+     * @param $orientation
      * @param $from
      * @param $till
      * @param $online
@@ -379,7 +384,7 @@ class User extends Authenticatable
      * @return array
      * @throws \Exception
      */
-    public static function queryProfiles($range, $male, $female, $diverse, $from, $till, $online, $paginate = null)
+    public static function queryProfiles($range, $male, $female, $diverse, $orientation, $from, $till, $online, $paginate = null)
     {
         try {
             $user = static::getByAuthId();
@@ -406,6 +411,8 @@ class User extends Authenticatable
             }
 
             $query->whereRaw('(gender IN (' . implode(',', $gender) . '))');
+
+            $query->where('orientation', '=', $orientation);
 
             if (($from !== null) && (is_numeric($from))) {
                 $query->whereRaw('TIMESTAMPDIFF(YEAR, birthday, CURDATE()) >= ?', [(int)$from]);
@@ -447,7 +454,7 @@ class User extends Authenticatable
                         break;
                 }
 
-                $item->age = Carbon::parse($user->birthday)->age;
+                $item->age = Carbon::parse($item->birthday)->age;
                 $item->is_online = static::isMemberOnline($item->id);
                 $item->verified = VerifyModel::getState($item->id) == VerifyModel::STATE_VERIFIED;
             }
@@ -511,6 +518,7 @@ class User extends Authenticatable
             $user->realname = $attr['realname'];
             $user->birthday = $attr['birthday'];
             $user->gender = $attr['gender'];
+            $user->orientation = $attr['orientation'];
             $user->height = $attr['height'];
             $user->weight = $attr['weight'];
             $user->rel_status = $attr['rel_status'];

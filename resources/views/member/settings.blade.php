@@ -90,6 +90,17 @@
                 </div>
 
                 <div class="field">
+                    <label class="label">{{ __('app.orientation') }}</label>
+                    <div class="control">
+                        <select name="orientation">
+                            <option value="{{ \App\Models\User::ORIENTATION_HETERO }}" @if ($user->orientation === \App\Models\User::ORIENTATION_HETERO) {{ 'selected' }} @endif>{{ __('app.orientation_hetero') }}</option>
+                            <option value="{{ \App\Models\User::ORIENTATION_BI }}" @if ($user->orientation === \App\Models\User::ORIENTATION_BI) {{ 'selected' }} @endif>{{ __('app.orientation_bi') }}</option>
+                            <option value="{{ \App\Models\User::ORIENTATION_HOMO }}" @if ($user->orientation === \App\Models\User::ORIENTATION_HOMO) {{ 'selected' }} @endif>{{ __('app.orientation_homo') }}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="field">
                     <label class="label">{{ __('app.height') }}</label>
                     <div class="control">
                         <input type="number" class="input" name="height" value="{{ $user->height }}">

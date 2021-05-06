@@ -332,5 +332,9 @@ return [
     'like_received_long' => '<a href=":url_profile">@:name</a> has sent you a like. <a href=":url_settings">View all</a>',
     'view_profile' => 'View profile',
     'delete_photo' => 'Delete',
-    'photo_deleted' => 'Photo has been deleted'
+    'photo_deleted' => 'Photo has been deleted',
+    'orientation' => 'Sexual orientation',
+    'orientation_hetero' => 'Heterosexual',
+    'orientation_bi' => 'Bisexual',
+    'orientation_homo' => 'Homosexual'
 ];
