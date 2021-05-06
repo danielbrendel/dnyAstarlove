@@ -98,10 +98,16 @@ class MessageModel extends Model
     public static function fetch($userId, $limit, $paginate = null)
     {
         try {
-            $rowset = static::where('userId', '=', $userId)->orWhere('senderId', '=', $userId);
+            $rowset = static::where(function($rowset) use ($userId) {
+                $rowset->where('userId', '=', $userId)
+                    ->orWhere('senderId', '=', $userId);
+            });
 
             if ($paginate !== null) {
                 $rowset->where('id', '<', $paginate);
+
+                $channel = static::where('id', '=', $paginate)->first();
+                $rowset->where('channel', '<>', $channel->channel);
             }
 
             return $rowset->orderBy('id', 'desc')->limit($limit)->get();

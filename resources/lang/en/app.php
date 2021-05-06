@@ -337,5 +337,6 @@ return [
     'orientation_hetero' => 'Heterosexual',
     'orientation_bi' => 'Bisexual',
     'orientation_homo' => 'Homosexual',
-    'gender_unspecified' => 'Unspecified'
+    'gender_unspecified' => 'Unspecified',
+    'no_more_messages' => 'No more messages'
 ];
