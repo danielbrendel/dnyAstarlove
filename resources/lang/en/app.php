@@ -345,5 +345,17 @@ return [
     'removed_from_favorites' => 'Removed from favorites',
     'favorites' => 'Favorites',
     'no_favorites_yet' => 'No favorites added yet',
-    'user_not_receiving_messages' => 'The message could not be delivered'
+    'user_not_receiving_messages' => 'The message could not be delivered',
+    'approvals' => 'Approvals',
+    'approval_id' => 'ID',
+    'approval_user' => 'User',
+    'approval_photo' => 'Photo',
+    'approve' => 'Approve',
+    'decline' => 'Decline',
+    'approval_approved_short' => 'Your photo has been approved',
+    'approval_approved_long' => 'Your photo has been approved',
+    'approval_declined_short' => 'Your photo has been declined',
+    'approval_declined_long' => 'Your photo has been declined',
+    'photo_approved' => 'Photo has been approved',
+    'photo_declined' => 'Photo has been declined'
 ];

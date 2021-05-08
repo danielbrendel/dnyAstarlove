@@ -342,31 +342,31 @@ window.vue = new Vue({
         },
 
         renderMessageListItem: function(item) {
-            let message = item.message;
+            let message = item.lm.message;
             if (message.length > 20) {
                 message = message.substr(0, 20) + '...';
             }
 
             let html = `
-                <div class="messages-item ` + ((!item.seen) ? 'is-new-message' : '') + `">
+                <div class="messages-item ` + ((!item.lm.seen) ? 'is-new-message' : '') + `">
                     <div class="messages-item-avatar">
-                        <img src="` + window.location.origin + `/gfx/avatars/` + item.user.avatar + `">
+                        <img src="` + window.location.origin + `/gfx/avatars/` + item.lm.user.avatar + `">
                     </div>
         
                     <div class="messages-item-name">
-                        <a href="` + window.location.origin + `/user/` + item.user.name + `">` + item.user.name + `</a>
+                        <a href="` + window.location.origin + `/user/` + item.lm.user.name + `">` + item.lm.user.name + `</a>
                     </div>
         
                     <div class="messages-item-subject">
-                        <a href="` + window.location.origin + `/messages/show/` + item.id + `">` + item.subject + `</a>
+                        <a href="` + window.location.origin + `/messages/show/` + item.lm.id + `">` + item.lm.subject + `</a>
                     </div>
 
                     <div class="message-item-lastmsg">
-                        <a href="` + window.location.origin + `/messages/show/` + item.id + `">` + item.sender.name + `: ` + message + `</a>
+                        <a href="` + window.location.origin + `/messages/show/` + item.lm.id + `">` + item.lm.sender.name + `: ` + message + `</a>
                     </div>
         
-                    <div class="messages-item-date" title="` + item.created_at + `">
-                        ` + item.diffForHumans + `
+                    <div class="messages-item-date" title="` + item.lm.created_at + `">
+                        ` + item.lm.diffForHumans + `
                     </div>
                 </div>
             `;
@@ -515,6 +515,9 @@ window.vue = new Vue({
             } else if (elem.type === 'PUSH_MESSAGED') {
                 icon = 'far fa-envelope';
                 color = 'is-notification-color-yellow';
+            } else if (elem.type === 'PUSH_APPROVAL') {
+                icon = 'fas fa-camera';
+                color = 'is-notification-color-orange';
             }
 
             let html = `

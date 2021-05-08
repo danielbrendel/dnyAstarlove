@@ -26,6 +26,7 @@ use App\Models\ReportModel;
 use App\Models\VisitorModel;
 use App\Models\VerifyModel;
 use App\Models\FavoritesModel;
+use App\Models\PhotoApprovalModel;
 
 /**
  * Class User
@@ -84,7 +85,7 @@ class User extends Authenticatable
      * 
      * @var array
      */
-    protected static $allowed_photo_attributes = array('avatar', 'photo1', 'photo2', 'photo3');
+    public static $allowed_photo_attributes = array('avatar', 'photo1', 'photo2', 'photo3');
 
     /**
      * Get last registered members
@@ -96,7 +97,59 @@ class User extends Authenticatable
     public static function getLastRegisteredMembers($count)
     {
         try {
-            return static::where('deactivated', '=', false)->where('account_confirm', '=', '_confirmed')->orderBy('id', 'desc')->limit($count)->get();
+            $data = static::where('deactivated', '=', false)->where('account_confirm', '=', '_confirmed')->orderBy('id', 'desc')->limit($count)->get();
+
+            foreach ($data as &$item) {
+                static::filterNonApprovedPhotos($item);
+            }
+
+            return $data;
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Filter non approved photos
+     * 
+     * @param &$user
+     * @return void
+     * @throws \Exception
+     */
+    public static function filterNonApprovedPhotos(&$user)
+    {
+        try {
+            foreach (static::$allowed_photo_attributes as $photo) {
+                if (PhotoApprovalModel::isApprovalPending($user->id, $photo)) {
+                    $large = $photo . '_large';
+
+                    $user->$photo = 'default.png';
+                    $user->$large = 'default.png';
+                }
+            }
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Filter non approved photos
+     * 
+     * @param array &$user
+     * @return void
+     * @throws \Exception
+     */
+    public static function filterNonApprovedPhotosArray(array &$user)
+    {
+        try {
+            foreach (static::$allowed_photo_attributes as $photo) {
+                if (PhotoApprovalModel::isApprovalPending($user['id'], $photo)) {
+                    $large = $photo . '_large';
+
+                    $user[$photo] = 'default.png';
+                    $user[$large] = 'default.png';
+                }
+            }
         } catch (\Exception $e) {
             throw $e;
         }
@@ -817,6 +870,10 @@ class User extends Authenticatable
 
                 if (!static::createThumbFile($fullFile, static::getImageType($fext, $baseFile), $baseFile, $fext)) {
                     throw new \Exception('createThumbFile failed', 500);
+                }
+
+                if (!$user->admin) {
+                    PhotoApprovalModel::add($user->id, $which);
                 }
                 
                 $large = $which . '_large';

@@ -45,6 +45,7 @@
             <li><a href="#tab-page-14">{{ __('app.head_code') }}</a></li>
             <li><a href="#tab-page-15">{{ __('app.adcode') }}</a></li>
             <li><a href="#tab-page-16">{{ __('app.verification') }}</a></li>
+            <li><a href="#tab-page-17">{{ __('app.approvals') }}</a></li>
         </ul>
         <div class="border bd-default no-border-top p-2">
             <div id="tab-page-1">
@@ -657,7 +658,7 @@
             </div>
 
             <div id="tab-page-16">
-            <table class="table striped table-border mt-4" data-role="table" data-pagination="true"
+                <table class="table striped table-border mt-4" data-role="table" data-pagination="true"
                         data-table-rows-count-title="{{ __('app.table_show_entries') }}"
                         data-table-search-title="{{ __('app.table_search') }}"
                         data-table-info-title="{{ __('app.table_row_info') }}"
@@ -699,6 +700,51 @@
 
                             <td>
                                 <a href="javascript:void(0)" onclick="let inpReason = prompt('{{ __('app.decline_reason') }}', ''); if (!inpReason) return; location.href = '{{ url('/admin/verify/' . $item->userId . '/decline?reason=') }}' + encodeURIComponent(inpReason);">{{ __('app.verify_decline') }}</a>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="tab-page-17">
+                <table class="table striped table-border mt-4" data-role="table" data-pagination="true"
+                        data-table-rows-count-title="{{ __('app.table_show_entries') }}"
+                        data-table-search-title="{{ __('app.table_search') }}"
+                        data-table-info-title="{{ __('app.table_row_info') }}"
+                        data-pagination-prev-title="{{ __('app.table_pagination_prev') }}"
+                        data-pagination-next-title="{{ __('app.table_pagination_next') }}">
+                    <thead>
+                    <tr>
+                        <th class="text-left">{{ __('app.approval_id') }}</th>
+                        <th class="text-left">{{ __('app.approval_user') }}</th>
+                        <th class="text-left">{{ __('app.approval_photo') }}</th>
+                        <th class="text-right">{{ __('app.approve') }}</th>
+                        <th class="text-right">{{ __('app.decline') }}</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    @foreach ($approvals as $approval)
+                        <tr>
+                            <td>
+                                #{{ $approval->id }}
+                            </td>
+
+                            <td class="right">
+                                <a href="{{ url('/user/' . $approval->user->name) }}">{{ $approval->user->name }}</a>
+                            </td>
+
+                            <td>
+                                {{ $approval->which }}
+                            </td>
+
+                            <td>
+                                <a href="{{ url('/admin/approval/photo/' . $approval->user->id . '/' . $approval->which . '/approve') }}">{{ __('app.approve') }}</a>
+                            </td>
+
+                            <td>
+                                <a href="{{ url('/admin/approval/photo/' . $approval->user->id . '/' . $approval->which . '/decline') }}">{{ __('app.decline') }}</a>
                             </td>
                         </tr>
                     @endforeach

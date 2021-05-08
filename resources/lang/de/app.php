@@ -345,5 +345,17 @@ return [
     'removed_from_favorites' => 'Von Favoriten entfernt',
     'favorites' => 'Favoriten',
     'no_favorites_yet' => 'Noch keine Favoriten hinzugefügt',
-    'user_not_receiving_messages' => 'Die Nachricht konnte nicht zugestellt werden'
+    'user_not_receiving_messages' => 'Die Nachricht konnte nicht zugestellt werden',
+    'approvals' => 'Bewilligungen',
+    'approval_id' => 'ID',
+    'approval_user' => 'Benutzer',
+    'approval_photo' => 'Foto',
+    'approve' => 'Bewilligen',
+    'decline' => 'Ablehnen',
+    'approval_approved_short' => 'Dein Foto wurde akzeptiert',
+    'approval_approved_long' => 'Dein Foto wurde akzeptiert',
+    'approval_declined_short' => 'Dein Foto wurde abgelehnt',
+    'approval_declined_long' => 'Dein Photo wurde abgelehnt',
+    'photo_approved' => 'Das Foto wurde akzeptiert',
+    'photo_declined' => 'Das Foto wurde abgelehnt'
 ];

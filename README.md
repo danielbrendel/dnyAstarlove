@@ -29,6 +29,7 @@ detailed first impressions of each other.
 + Ignore system
 + Ads system
 + Pro-mode system
++ Photo approval system
 + Admin system
 + HelpRealm integration
 + Twitter news integration

@@ -16,6 +16,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
+use App\Models\MessageListModel;
 use App\Models\PushModel;
 use App\Models\MailerModel;
 
@@ -63,6 +64,15 @@ class MessageModel extends Model
                 $channel = $channel->channel;
             }
 
+            $list = MessageListModel::where('channel', '=', $channel)->first();
+            if (!$list) {
+                $list = new MessageListModel();
+                $list->channel = $channel;
+                $list->user1 = $userId;
+                $list->user2 = $senderId;
+                $list->save();
+            }
+
             $msg = new self();
             $msg->userId = $userId;
             $msg->senderId = $senderId;
@@ -98,19 +108,19 @@ class MessageModel extends Model
     public static function fetch($userId, $limit, $paginate = null)
     {
         try {
-            $rowset = static::where(function($rowset) use ($userId) {
-                $rowset->where('userId', '=', $userId)
-                    ->orWhere('senderId', '=', $userId);
-            });
-
+            $channels = MessageListModel::where('user1', '=', $userId)->orWhere('user2', '=', $userId);
+            
             if ($paginate !== null) {
-                $rowset->where('id', '<', $paginate);
-
-                $channel = static::where('id', '=', $paginate)->first();
-                $rowset->where('channel', '<>', $channel->channel);
+                $channels->where('id', '<', $paginate);
             }
 
-            return $rowset->orderBy('id', 'desc')->limit($limit)->get();
+            $channels = $channels->orderBy('id', 'desc')->limit($limit)->get();
+
+            foreach ($channels as &$item) {
+                $item->lm = static::where('channel', '=', $item->channel)->orderBy('id', 'desc')->first();
+            }
+
+            return $channels;
         } catch (\Exception $e) {
             throw $e;
         }

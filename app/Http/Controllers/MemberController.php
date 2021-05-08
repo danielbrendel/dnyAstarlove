@@ -21,6 +21,7 @@ use App\Models\IgnoreModel;
 use App\Models\VisitorModel;
 use App\Models\VerifyModel;
 use App\Models\FavoritesModel;
+use App\Models\PhotoApprovalModel;
 
 /**
  * Class MemberController
@@ -93,6 +94,8 @@ class MemberController extends Controller
             $user->both_liked = ($user->self_liked) && ($user->liked_back);
             $user->favorited = FavoritesModel::hasFavorited(auth()->id(), $user->id);
 
+            User::filterNonApprovedPhotos($user);
+
             return view('member.random', [
                 'user' => $user
             ]);
@@ -144,6 +147,9 @@ class MemberController extends Controller
             $paginate = request('paginate', null);
 
             $data = User::queryProfiles($geo, $male, $female, $diverse, $orientation, $from, $till, $online, $paginate);
+            foreach ($data as &$item) {
+                User::filterNonApprovedPhotos($item);
+            }
 
             return response()->json(array('code' => 200, 'data' => $data));
         } catch (\Exception $e) {
@@ -223,6 +229,14 @@ class MemberController extends Controller
             $user->liked_back = LikeModeL::hasLiked($user->id, auth()->id());
             $user->both_liked = ($user->self_liked) && ($user->liked_back);
             $user->favorited = FavoritesModel::hasFavorited(auth()->id(), $user->id);
+
+            if ($user->id !== auth()->id()) {
+                $viewer = User::getByAuthId();
+                
+                if (!$viewer->admin) {
+                    User::filterNonApprovedPhotos($user);
+                }
+            }
 
             return view('member.profile', [
                 'user' => $user

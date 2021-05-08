@@ -21,6 +21,7 @@ use App\Models\FeatureItemModel;
 use App\Models\ReportModel;
 use App\Models\VerifyModel;
 use App\Models\MailerModel;
+use App\Models\PhotoApprovalModel;
 
 /**
  * Class AdminController
@@ -63,13 +64,16 @@ class AdminController extends Controller
             $report['user'] = User::get($report['targetId'])->toArray();
         }
 
+        $approvals = PhotoApprovalModel::fetchPack(env('APP_PHOTOAPPROVALPACKLIMIT', 20));
+
         return view('admin.index', [
             'settings' => AppModel::getAppSettings(),
             'langs' => $langs,
             'features' => FeatureItemModel::getAll(),
             'faqs' => FaqModel::getAll(),
             'reports' => ReportModel::getReportPack(),
-            'verification_users' => VerifyModel::fetchPack()
+            'verification_users' => VerifyModel::fetchPack(),
+            'approvals' => $approvals
         ]);
     }
 
@@ -641,6 +645,42 @@ class AdminController extends Controller
             MailerModel::sendMail($user->email, __('app.mail_acc_verify_title'), $html);
 
             return back()->with('flash.success', __('app.account_verification_declined'));
+        } catch (\Exception $e) {
+            return back()->with('flash.error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Approve user photo
+     * 
+     * @param $userId
+     * @param $which
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function approvePhoto($userId, $which)
+    {
+        try {
+            PhotoApprovalModel::approve($userId, $which);
+
+            return back()->with('flash.success', __('app.photo_approved'));
+        } catch (\Exception $e) {
+            return back()->with('flash.error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Decline user photo
+     * 
+     * @param $userId
+     * @param $which
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function declinePhoto($userId, $which)
+    {
+        try {
+            PhotoApprovalModel::decline($userId, $which);
+
+            return back()->with('flash.success', __('app.photo_declined'));
         } catch (\Exception $e) {
             return back()->with('flash.error', $e->getMessage());
         }

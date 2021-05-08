@@ -105,6 +105,8 @@ Route::any('/admin/user/{id}/safe', [AdminController::class, 'setUserSafe']);
 Route::post('/admin/newsletter', [AdminController::class, 'newsletter']);
 Route::any('/admin/verify/{id}/approve', [AdminController::class, 'approveAccount']);
 Route::any('/admin/verify/{id}/decline', [AdminController::class, 'declineAccount']);
+Route::any('/admin/approval/photo/{userId}/{which}/approve', [AdminController::class, 'approvePhoto']);
+Route::any('/admin/approval/photo/{userId}/{which}/decline', [AdminController::class, 'declinePhoto']);
 
 Route::any('/cronjob/newsletter/{password}', [MainController::class, 'cronjob_newsletter']);
 

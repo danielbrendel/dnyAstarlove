@@ -2134,13 +2134,13 @@ window.vue = new Vue({
       return html;
     },
     renderMessageListItem: function renderMessageListItem(item) {
-      var message = item.message;
+      var message = item.lm.message;
 
       if (message.length > 20) {
         message = message.substr(0, 20) + '...';
       }
 
-      var html = "\n                <div class=\"messages-item " + (!item.seen ? 'is-new-message' : '') + "\">\n                    <div class=\"messages-item-avatar\">\n                        <img src=\"" + window.location.origin + "/gfx/avatars/" + item.user.avatar + "\">\n                    </div>\n        \n                    <div class=\"messages-item-name\">\n                        <a href=\"" + window.location.origin + "/user/" + item.user.name + "\">" + item.user.name + "</a>\n                    </div>\n        \n                    <div class=\"messages-item-subject\">\n                        <a href=\"" + window.location.origin + "/messages/show/" + item.id + "\">" + item.subject + "</a>\n                    </div>\n\n                    <div class=\"message-item-lastmsg\">\n                        <a href=\"" + window.location.origin + "/messages/show/" + item.id + "\">" + item.sender.name + ": " + message + "</a>\n                    </div>\n        \n                    <div class=\"messages-item-date\" title=\"" + item.created_at + "\">\n                        " + item.diffForHumans + "\n                    </div>\n                </div>\n            ";
+      var html = "\n                <div class=\"messages-item " + (!item.lm.seen ? 'is-new-message' : '') + "\">\n                    <div class=\"messages-item-avatar\">\n                        <img src=\"" + window.location.origin + "/gfx/avatars/" + item.lm.user.avatar + "\">\n                    </div>\n        \n                    <div class=\"messages-item-name\">\n                        <a href=\"" + window.location.origin + "/user/" + item.lm.user.name + "\">" + item.lm.user.name + "</a>\n                    </div>\n        \n                    <div class=\"messages-item-subject\">\n                        <a href=\"" + window.location.origin + "/messages/show/" + item.lm.id + "\">" + item.lm.subject + "</a>\n                    </div>\n\n                    <div class=\"message-item-lastmsg\">\n                        <a href=\"" + window.location.origin + "/messages/show/" + item.lm.id + "\">" + item.lm.sender.name + ": " + message + "</a>\n                    </div>\n        \n                    <div class=\"messages-item-date\" title=\"" + item.lm.created_at + "\">\n                        " + item.lm.diffForHumans + "\n                    </div>\n                </div>\n            ";
       return html;
     },
     renderMessageItem: function renderMessageItem(elem, self) {
@@ -2220,6 +2220,9 @@ window.vue = new Vue({
       } else if (elem.type === 'PUSH_MESSAGED') {
         icon = 'far fa-envelope';
         color = 'is-notification-color-yellow';
+      } else if (elem.type === 'PUSH_APPROVAL') {
+        icon = 'fas fa-camera';
+        color = 'is-notification-color-orange';
       }
 
       var html = "\n                <div class=\"notification-item " + (newItem ? 'is-new-notification' : '') + "\">\n                    <div class=\"notification-icon\">\n                        <div class=\"notification-item-icon\"><i class=\"" + icon + " fa-3x " + color + "\"></i></div>\n                    </div>\n                    <div class=\"notification-info\">\n                        <div class=\"notification-item-message\">" + elem.longMsg + "</div>\n                        <div class=\"notification-item-message is-color-grey is-font-size-small is-margin-top-5\">" + elem.diffForHumans + "</div>\n                    </div>\n                </div>\n            ";
