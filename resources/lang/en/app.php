@@ -299,7 +299,7 @@ return [
     'account_verification_declined' => 'The account verification has been declined',
     'verified_profile' => 'Verified profile',
     'new_message_short' => ':name has sent you a message',
-    'new_message' => ':name has sent you a message: :subject',
+    'new_message' => ':name has sent you a message: <a href=":url">:subject</a>',
     'message_received' => 'Message received',
     'project_stripe_currency' => 'Currency',
     'payment_service_deactivated' => 'Payment is currently deactivated',
@@ -357,5 +357,11 @@ return [
     'approval_declined_short' => 'Your photo has been declined',
     'approval_declined_long' => 'Your photo has been declined',
     'photo_approved' => 'Photo has been approved',
-    'photo_declined' => 'Photo has been declined'
+    'photo_declined' => 'Photo has been declined',
+    'geo_required' => 'You must enable your geo positioning in order to view this page',
+    'register_captcha_invalid' => 'Invalid captcha specified. Please try again.',
+    'passwords_mismatch' => 'The passwords do not match',
+    'register_email_in_use' => 'The specified E-Mail address is already in use',
+    'register_username_in_use' => 'The specified username is already in use',
+    'register_username_invalid_chars' => 'The specified username contains invalid characters'
 ];

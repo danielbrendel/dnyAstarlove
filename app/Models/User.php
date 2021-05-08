@@ -444,6 +444,10 @@ class User extends Authenticatable
         try {
             $user = static::getByAuthId();
 
+            if ((is_null($user->latitude)) || (is_null($user->longitude))) {
+                throw new \Exception('No own coordinates provided');
+            }
+
             $query = \DB::table(with(new self)->getTable())
                 ->select(\DB::raw('id, name, avatar, birthday, gender, realname, rel_status, last_action, introduction, location, latitude, longitude, SQRT(POW(69.1 * (latitude - ' . $user->latitude . '), 2) + POW(69.1 * (' . $user->longitude . ' - longitude) * COS(latitude / 57.3), 2)) AS distance'))
                 ->where('deactivated', '=', false)

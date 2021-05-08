@@ -343,8 +343,8 @@
                     window.geoLoopTransmission = function() {
                         window.queryGeoLocation();
 
-                        setTimeout('window.geoLoopTransmission()', 1000 * 150)
-                    }
+                        setTimeout('window.geoLoopTransmission()', 5000)
+                    };
 
                     @if ((!isset($_GET['clep_geo'])) || ($_GET['clep_geo'] == 0))
                         setTimeout('window.geoLoopTransmission()', 2500);

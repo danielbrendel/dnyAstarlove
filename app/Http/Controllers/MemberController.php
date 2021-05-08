@@ -50,6 +50,12 @@ class MemberController extends Controller
         try {
             $this->validateLogin();
 
+            $user = User::getByAuthId();
+
+            /*if ((is_null($user->latitude)) || (is_null($user->longitude))) {
+                return redirect('/')->with('error', __('app.geo_required'));
+            }*/
+
             return view('member.profiles');
         } catch (\Exception $e) {
             return redirect('/')->with('error', $e->getMessage());

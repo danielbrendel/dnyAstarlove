@@ -127,7 +127,7 @@ return [
     'invalid_keyphrase' => 'Ungültige Zeichenfolge angegeben',
     'account_deleted' => 'Konto wurde gelöscht',
     'mail_on_message' => 'E-Mail Benachrichtigung bei neuen privaten Nachrichten',
-    'newsletter_notice' => 'Ich möchte über Neuigkeiten informatiert werden',
+    'newsletter_notice' => 'Ich möchte über Neuigkeiten informiert werden',
     'notifications_saved' => 'Benachrichtigungseinstellungen erfolgreicht gespeichert',
     'select_photo' => 'Foto auswählen',
     'photo_saved' => 'Photo wurde gespeichert',
@@ -299,7 +299,7 @@ return [
     'account_verification_declined' => 'Die Verifizierung wurde abgelehnt',
     'verified_profile' => 'Verifiziertes Profil',
     'new_message_short' => ':name hat dir eine Nachricht geschickt',
-    'new_message' => ':name hat dir eine Nachricht geschickt: :subject',
+    'new_message' => ':name hat dir eine Nachricht geschickt: <a href=":url">:subject</a>',
     'message_received' => 'Nachricht erhalten',
     'project_stripe_currency' => 'Währung',
     'payment_service_deactivated' => 'Zahlungsfunktion ist momentan deaktiviert',
@@ -357,5 +357,11 @@ return [
     'approval_declined_short' => 'Dein Foto wurde abgelehnt',
     'approval_declined_long' => 'Dein Photo wurde abgelehnt',
     'photo_approved' => 'Das Foto wurde akzeptiert',
-    'photo_declined' => 'Das Foto wurde abgelehnt'
+    'photo_declined' => 'Das Foto wurde abgelehnt',
+    'geo_required' => 'Du musst die Positionsdienste aktivieren, um diese Seite zu sehen.',
+    'register_captcha_invalid' => 'Der eingegebene Captcha war ungültig. Bitte erneut probieren.',
+    'passwords_mismatch' => 'Die Passwörter stimmen nicht überein',
+    'register_email_in_use' => 'Die angegebene E-Mail Adresse wird bereits verwendet.',
+    'register_username_in_use' => 'Der angegebene Benutzername ist schon vergeben.',
+    'register_username_invalid_chars' => 'Der angegebene Benutzername enthält ungültige Zeichen.'
 ];
