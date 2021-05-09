@@ -45,7 +45,7 @@
             if (document.getElementById('loadmore') !== null) {
                 document.getElementById('loadmore').remove();
             }
-
+            
             window.vue.ajaxRequest('get', '{{ url('/messages/list') }}' + ((window.paginateList !== null) ? '?paginate=' + window.paginateList : ''), {}, function(response) {
                 if (response.code === 200) {  
                     if (document.getElementById('spinner') !== null) {
@@ -59,7 +59,7 @@
                     });
 
                     if (response.data.length > 0) {
-                        window.paginateList = response.data[response.data.length - 1].id;
+                        window.paginateList = response.data[response.data.length - 1].updated_at;
 
                         document.getElementById('messages-list').innerHTML += '<div id="loadmore" class="is-pointer" onclick="window.fetchMessageList();"><br/><center><i class="fas fa-arrow-down"></i></center></div>';
                     } else {

@@ -71,6 +71,8 @@ class MessageModel extends Model
                 $list->user1 = $userId;
                 $list->user2 = $senderId;
                 $list->save();
+            } else {
+                $list->touch();
             }
 
             $msg = new self();
@@ -108,16 +110,24 @@ class MessageModel extends Model
     public static function fetch($userId, $limit, $paginate = null)
     {
         try {
-            $channels = MessageListModel::where('user1', '=', $userId)->orWhere('user2', '=', $userId);
+            $channels = MessageListModel::where(function($channels) use ($userId) {
+                $channels->where('user1', '=', $userId)
+                    ->orWhere('user2', '=', $userId);
+            });
             
             if ($paginate !== null) {
-                $channels->where('id', '<', $paginate);
+                $channels->where('updated_at', '<', $paginate);
             }
 
-            $channels = $channels->orderBy('id', 'desc')->limit($limit)->get();
+            $channels = $channels->orderBy('updated_at', 'desc')->limit($limit)->get();
 
             foreach ($channels as &$item) {
                 $item->lm = static::where('channel', '=', $item->channel)->orderBy('id', 'desc')->first();
+                if ($item->lm->senderId === auth()->id()) {
+                    if (!$item->lm->seen) {
+                        $item->lm->seen = true;
+                    }
+                }
             }
 
             return $channels;
@@ -195,9 +205,12 @@ class MessageModel extends Model
             }
 
             $items = $query->orderBy('id', 'desc')->limit($limit)->get();
+
             foreach ($items as &$item) {
-                $item->seen = true;
-                $item->save();
+                if ($item->senderId !== auth()->id()) {
+                    $item->seen = true;
+                    $item->save();
+                }
             }
 
             $items = $items->toArray();
