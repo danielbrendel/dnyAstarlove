@@ -364,5 +364,6 @@ return [
     'register_email_in_use' => 'The specified E-Mail address is already in use',
     'register_username_in_use' => 'The specified username is already in use',
     'register_username_invalid_chars' => 'The specified username contains invalid characters',
-    'account_not_yet_confirmed' => 'Please confirm your account before logging in. <a href=":url">Resend confirmation link</a>'
+    'account_not_yet_confirmed' => 'Please confirm your account before logging in. <a href=":url">Resend confirmation link</a>',
+    'back' => 'Back'
 ];

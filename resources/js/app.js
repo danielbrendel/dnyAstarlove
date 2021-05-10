@@ -316,6 +316,21 @@ window.vue = new Vue({
                 verified = '&nbsp;<i class="far fa-check-circle is-color-dark-blue" title="' + this.translationTable.verifiedProfile + '"></i>';
             }
 
+            let rel_status = elem.rel_status;
+            if (rel_status === null) {
+                rel_status = 'n/a';
+            }
+
+            let location = elem.location;
+            if (location === null) {
+                location = 'n/a';
+            }
+
+            let introduction = elem.introduction;
+            if (introduction === null) {
+                introduction = 'n/a';
+            }
+
             let html = `
                 <div class="profile">
                     <div class="profile-avatar">
@@ -327,13 +342,13 @@ window.vue = new Vue({
 
                     <div class="profile-info">
                         <div><strong>` + this.translationTable.age + `: </strong>` + elem.age + `</div>
-                        <div><strong>` + this.translationTable.status + `: </strong>` + elem.rel_status + `</div>
-                        <div><strong>` + this.translationTable.location + `: </strong>` + elem.location + `</div>
+                        <div><strong>` + this.translationTable.status + `: </strong>` + rel_status + `</div>
+                        <div><strong>` + this.translationTable.location + `: </strong>` + location + `</div>
                         <div><strong>` + this.translationTable.gender + `: </strong>` + elem.gender + `</div>
                     </div>
 
                     <div class="profile-introduction">
-                        ` + elem.introduction + `
+                        ` + introduction + `
                     </div>
                 </div>
             `;

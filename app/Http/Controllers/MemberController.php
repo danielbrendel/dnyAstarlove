@@ -270,7 +270,7 @@ class MemberController extends Controller
 
             LikeModel::add(auth()->id(), $id);
 
-            return redirect('/user/' . $user->name)->with('flash.success', __('app.liked_successfully'));
+            return back()->with('flash.success', __('app.liked_successfully'));
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }

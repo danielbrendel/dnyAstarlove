@@ -2130,7 +2130,25 @@ window.vue = new Vue({
         verified = '&nbsp;<i class="far fa-check-circle is-color-dark-blue" title="' + this.translationTable.verifiedProfile + '"></i>';
       }
 
-      var html = "\n                <div class=\"profile\">\n                    <div class=\"profile-avatar\">\n                        <a href=\"" + window.location.origin + '/user/' + elem.name + "\"><img src=\"" + window.location.origin + '/gfx/avatars/' + elem.avatar + "\" alt=\"avatar\"></a>\n                        " + online + "\n                    </div>\n\n                    <div class=\"profile-name\"><a href=\"" + window.location.origin + '/user/' + elem.name + "\">" + elem.name + "</a>" + verified + "</div>\n\n                    <div class=\"profile-info\">\n                        <div><strong>" + this.translationTable.age + ": </strong>" + elem.age + "</div>\n                        <div><strong>" + this.translationTable.status + ": </strong>" + elem.rel_status + "</div>\n                        <div><strong>" + this.translationTable.location + ": </strong>" + elem.location + "</div>\n                        <div><strong>" + this.translationTable.gender + ": </strong>" + elem.gender + "</div>\n                    </div>\n\n                    <div class=\"profile-introduction\">\n                        " + elem.introduction + "\n                    </div>\n                </div>\n            ";
+      var rel_status = elem.rel_status;
+
+      if (rel_status === null) {
+        rel_status = 'n/a';
+      }
+
+      var location = elem.location;
+
+      if (location === null) {
+        location = 'n/a';
+      }
+
+      var introduction = elem.introduction;
+
+      if (introduction === null) {
+        introduction = 'n/a';
+      }
+
+      var html = "\n                <div class=\"profile\">\n                    <div class=\"profile-avatar\">\n                        <a href=\"" + window.location.origin + '/user/' + elem.name + "\"><img src=\"" + window.location.origin + '/gfx/avatars/' + elem.avatar + "\" alt=\"avatar\"></a>\n                        " + online + "\n                    </div>\n\n                    <div class=\"profile-name\"><a href=\"" + window.location.origin + '/user/' + elem.name + "\">" + elem.name + "</a>" + verified + "</div>\n\n                    <div class=\"profile-info\">\n                        <div><strong>" + this.translationTable.age + ": </strong>" + elem.age + "</div>\n                        <div><strong>" + this.translationTable.status + ": </strong>" + rel_status + "</div>\n                        <div><strong>" + this.translationTable.location + ": </strong>" + location + "</div>\n                        <div><strong>" + this.translationTable.gender + ": </strong>" + elem.gender + "</div>\n                    </div>\n\n                    <div class=\"profile-introduction\">\n                        " + introduction + "\n                    </div>\n                </div>\n            ";
       return html;
     },
     renderMessageListItem: function renderMessageListItem(item) {

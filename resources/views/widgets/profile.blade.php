@@ -53,7 +53,11 @@
 
         <div class="user-frame-right">
             <div class="user-name">
-                {{ '@' . $user->name }}
+                <div>
+                    <div>{{ '@' . $user->name }}</div>
+                    <div class="is-action-right is-top-negative-22"><a href="javascript:window.history.back();" >{{ __('app.back') }}</a></div>
+                </div>
+                
                 @if ($user->verified)
                     &nbsp;
                     <i class="far fa-check-circle is-color-dark-blue" title="{{ __('app.verified_profile') }}"></i>

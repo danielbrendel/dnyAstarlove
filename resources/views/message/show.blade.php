@@ -15,7 +15,10 @@
 
 @section('content')
     <div class="form">
-        <h1>{{ __('app.message_thread', ['name' => $msg->message_partner]) }}</h1>
+        <div>
+            <div><h1>{{ __('app.message_thread', ['name' => $msg->message_partner]) }}</h1></div>
+            <div class="is-action-right is-top-negative-41"><a href="{{ url('/messages') }}">{{ __('app.back') }}</a></div>
+        </div>
 
         <div class="member-form is-default-padding member-form-fixed-top">
             <form method="POST" action="{{ url('/messages/send') }}">
