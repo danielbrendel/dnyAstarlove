@@ -24,7 +24,7 @@
     <br/><br/>
     <hr/>
     <strong>{{ $sender }}:</strong><br/>
-    <pre>{{ $message }}</pre>
+    {!! $message !!}
     <hr/>
     <br/>
 @endsection

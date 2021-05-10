@@ -145,6 +145,10 @@ a.is-link-blue:hover {
   color: white;
 }
 
+.ql-tooltip.ql-editing {
+  z-index: 3;
+}
+
 .navbar {
   background-color: transparent;
 }
@@ -520,6 +524,14 @@ a.navbar-item:hover {
 .message-thread-text {
   color: #e6e6e6;
   margin-left: 25px;
+}
+
+.message-thread-text a {
+  color: #1d67be;
+}
+
+.message-thread-text a:hover {
+  text-decoration: underline;
 }
 
 .message-align-left {

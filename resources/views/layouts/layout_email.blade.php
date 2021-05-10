@@ -40,14 +40,6 @@
             color: rgb(20, 20, 20);
         }
 
-        .mail-body pre {
-            white-space: pre-wrap;
-            white-space: -moz-pre-wrap;
-            white-space: -pre-wrap;
-            white-space: -o-pre-wrap;
-            word-wrap: break-word;
-        }
-
         .mail-action {
             position: relative;
             margin-top: 25px;
