@@ -270,7 +270,7 @@ class MainController extends Controller
                 $user = User::getByEmail($attr['email']);
                 if ($user !== null) {
                     if ($user->account_confirm !== '_confirmed') {
-                        return back()->with('error', __('app.account_not_yet_confirmed'));
+                        return back()->with('error', __('app.account_not_yet_confirmed', ['url' => url('/resend/' . $user->id)]));
                     }
     
                     if ($user->deactivated) {

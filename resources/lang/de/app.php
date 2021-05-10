@@ -363,5 +363,6 @@ return [
     'passwords_mismatch' => 'Die Passwörter stimmen nicht überein',
     'register_email_in_use' => 'Die angegebene E-Mail Adresse wird bereits verwendet.',
     'register_username_in_use' => 'Der angegebene Benutzername ist schon vergeben.',
-    'register_username_invalid_chars' => 'Der angegebene Benutzername enthält ungültige Zeichen.'
+    'register_username_invalid_chars' => 'Der angegebene Benutzername enthält ungültige Zeichen.',
+    'account_not_yet_confirmed' => 'Bitte bestätige erst dein Konto. <a href=":url">Bestätigungslink erneut anfordern</a>'
 ];
