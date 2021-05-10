@@ -521,7 +521,7 @@ window.vue = new Vue({
             }
 
             let html = `
-                <div class="notification-item ` + ((newItem) ? 'is-new-notification' : '') + `">
+                <div class="notification-item ` + ((newItem) ? 'is-new-notification' : '') + `" id="notification-item-` + elem.id + `">
                     <div class="notification-icon">
                         <div class="notification-item-icon"><i class="` + icon + ` fa-3x ` + color + `"></i></div>
                     </div>
