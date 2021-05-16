@@ -36,6 +36,7 @@ class CreateUsersTable extends Migration
             $table->boolean('admin')->default(false);
             $table->string('language')->nullable();
             $table->boolean('firstlogin')->default(false);
+            $table->string('device_token', 1024)->default(''); //Only for mobile devices
             $table->string('avatar');
             $table->string('avatar_large');
             $table->string('photo1')->nullable();

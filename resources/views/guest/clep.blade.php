@@ -26,6 +26,8 @@
         <form id="loginform" method="POST" action="{{ url('/login') }}">
             @csrf
 
+            <input type="hidden" name="device_token" id="device_token" value="">
+
             <div class="field">
                 <label class="label @if (file_exists(public_path() . '/gfx/backgrounds/clep.png')) {{ 'is-color-white' }} @endif">{{ __('app.email') }}</label>
                 <p class="control has-icons-left has-icons-right">

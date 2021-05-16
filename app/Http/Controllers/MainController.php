@@ -263,7 +263,7 @@ class MainController extends Controller
         try {
             $attr = request()->validate([
                 'email' => 'required|email',
-                'password' => 'required'
+                'password' => 'required',
             ]);
 
             if (\Auth::guest()) {
@@ -282,6 +282,12 @@ class MainController extends Controller
                     'email' => $attr['email'],
                     'password' => $attr['password']
                 ])) {
+                    $device_token = request('device_token', null);
+                    if ($device_token !== null) {
+                        $user->device_token = $device_token;
+                        $user->save();
+                    }
+
                     if (!$user->firstlogin) {
                         $user->firstlogin = true;
                         $user->save();
