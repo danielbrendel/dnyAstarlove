@@ -14,7 +14,7 @@
 @section('title', env('APP_NAME') . ' - ' . __('app.admin_area'))
 
 @section('content')
-    <div class="form is-default-padding member-form-fixed-top">
+    <div class="form">
         <div>
             <h1>{{ __('app.admin_area') }}</h1>
         </div>

@@ -83,6 +83,7 @@ class InstallerModel extends Model
 			$envcontent .= 'STRIPE_COSTS_VALUE=1000' . PHP_EOL;
 			$envcontent .= 'STRIPE_COSTS_LABEL="10.00$"' . PHP_EOL;
             $envcontent .= 'FIREBASE_ENABLE=false' . PHP_EOL;
+            $envcontent .= 'FIREBASE_ENDPOINT="https://fcm.googleapis.com/fcm/send"' . PHP_EOL;
             $envcontent .= 'FIREBASE_KEY=' . PHP_EOL;
             $envcontent .= 'BROADCAST_DRIVER=log' . PHP_EOL;
             $envcontent .= 'CACHE_DRIVER=file' . PHP_EOL;

@@ -186,14 +186,14 @@ class PushModel extends Model
 
             $data = [
                 'to' => $device_token,
-                'notification' => [
+                'data' => [
                     'title' => $title,
                     'body' => $body,
                     'icon' => asset('logo.png')
                 ]
             ];
 
-            curl_setopt($curl, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+            curl_setopt($curl, CURLOPT_URL, env('FIREBASE_ENDPOINT'));
             curl_setopt($curl, CURLOPT_POST, true);
             curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);

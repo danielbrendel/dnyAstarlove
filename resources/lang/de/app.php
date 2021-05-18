@@ -299,7 +299,7 @@ return [
     'account_verification_declined' => 'Die Verifizierung wurde abgelehnt',
     'verified_profile' => 'Verifiziertes Profil',
     'new_message_short' => ':name hat dir eine Nachricht geschickt',
-    'new_message' => ':name hat dir eine Nachricht geschickt: <a href=":url">:subject</a>',
+    'new_message' => ':name hat dir eine Nachricht geschickt: <a href=":url">:text</a>',
     'message_received' => 'Nachricht erhalten',
     'project_stripe_currency' => 'Währung',
     'payment_service_deactivated' => 'Zahlungsfunktion ist momentan deaktiviert',

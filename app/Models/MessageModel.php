@@ -29,6 +29,8 @@ class MessageModel extends Model
 {
     use HasFactory;
 
+    const PREVIEW_MESSAGE_COUNT = 50;
+
     /**
      * Add message
      *
@@ -83,7 +85,11 @@ class MessageModel extends Model
             $msg->message = \Purifier::clean($message);
             $msg->save();
 
-            PushModel::addNotification(__('app.new_message_short', ['name' => $sender->name]), __('app.new_message', ['name' => $sender->name, 'subject' => $subject, 'url' => url('/messages/show/' . $msg->id)]), 'PUSH_MESSAGED', $userId);
+            $preview_msg = strip_tags($msg->message);
+            if (strlen($preview_msg) > self::PREVIEW_MESSAGE_COUNT) {
+                $preview_msg = substr($preview_msg, 0, self::PREVIEW_MESSAGE_COUNT) . '...';
+            }
+            PushModel::addNotification(__('app.new_message_short', ['name' => $sender->name]), __('app.new_message', ['name' => $sender->name, 'text' => $preview_msg, 'url' => url('/messages/show/' . $msg->id)]), 'PUSH_MESSAGED', $userId);
 
             if ($user->mail_on_message) {
                 $html = view('mail.message', ['name' => $user->name, 'sender' => $sender->name, 'message' => $msg->message, 'msgid' => $msg->id])->render();
