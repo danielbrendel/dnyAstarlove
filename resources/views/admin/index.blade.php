@@ -20,7 +20,8 @@
         </div>
 
         <div>
-            <div><strong>{{ env('APP_NAME') }}</strong></div>
+            <div><strong>Astarlove (dnyAstarlove) v1.0 developed by Daniel Brendel (dbrendel1988@gmail.com)</strong></div>
+            <div><strong>Project: </strong>{{ env('APP_NAME') }}</div>
             <div><strong>Author: </strong>{{ env('APP_AUTHOR') }}</div>
             <div><strong>Codename: </strong>{{ env('APP_CODENAME') }}</div>
             <div><strong>Contact: </strong>{{ env('APP_CONTACT') }}</div>

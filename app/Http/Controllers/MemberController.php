@@ -22,6 +22,8 @@ use App\Models\VisitorModel;
 use App\Models\VerifyModel;
 use App\Models\FavoritesModel;
 use App\Models\PhotoApprovalModel;
+use App\Models\ProfileModel;
+use App\Models\ProfileDataModel;
 
 /**
  * Class MemberController
@@ -99,6 +101,7 @@ class MemberController extends Controller
             $user->liked_back = LikeModeL::hasLiked($user->id, auth()->id());
             $user->both_liked = ($user->self_liked) && ($user->liked_back);
             $user->favorited = FavoritesModel::hasFavorited(auth()->id(), $user->id);
+            $user->profileItems = ProfileDataModel::queryAll($user->id);
 
             User::filterNonApprovedPhotos($user);
 
@@ -235,6 +238,7 @@ class MemberController extends Controller
             $user->liked_back = LikeModeL::hasLiked($user->id, auth()->id());
             $user->both_liked = ($user->self_liked) && ($user->liked_back);
             $user->favorited = FavoritesModel::hasFavorited(auth()->id(), $user->id);
+            $user->profileItems = ProfileDataModel::queryAll($user->id);
 
             if ($user->id !== auth()->id()) {
                 $viewer = User::getByAuthId();
@@ -366,8 +370,11 @@ class MemberController extends Controller
             $user->state = VerifyModel::getState($user->id);
             $user->birthday = Carbon::parse($user->birthday)->format('Y-m-d');
 
+            $profileItems = ProfileDataModel::queryAll(auth()->id());
+
             return view('member.settings', [
-                'user' => $user
+                'user' => $user,
+                'profileItems' => $profileItems
             ]);
         } catch (\Exception $e) {
             return redirect('/')->with('error', $e->getMessage());
@@ -488,8 +495,6 @@ class MemberController extends Controller
                 'location' => 'nullable',
                 'job' => 'nullable',
                 'introduction' => 'nullable',
-                'interests' => 'nullable',
-                'music' => 'nullable',
                 'language' => 'nullable'
             ]);
 
@@ -533,19 +538,17 @@ class MemberController extends Controller
                 $attr['introduction'] = null;
             }
 
-            if (!isset($attr['interests'])) {
-                $attr['interests'] = null;
-            }
-
-            if (!isset($attr['music'])) {
-                $attr['music'] = null;
-            }
-
             if (!isset($attr['language'])) {
                 $attr['language'] = env('APP_LANG', 'en');
             }
 
             User::saveProfile($attr);
+
+            $profileItemList = ProfileModel::getList();
+            foreach ($profileItemList as $listItem) {
+                $curRequestData = request($listItem->name, '');
+                ProfileDataModel::addOrEdit(auth()->id(), $listItem->name, \Purifier::clean($curRequestData));
+            }
 
             return redirect('/settings?tab=profile')->with('flash.success', __('app.profile_saved'));
         } catch (\Exception $e) {

@@ -142,29 +142,19 @@
     </div>
 
     <div class="user-frame-bottom">
-        <div class="user-text-info">
-            <h3>{{ __('app.interests') }}</h3>
+        @foreach ($user->profileItems as $key => $item)
+            <div class="user-text-info">
+                <h3>{{ $item['translation'] }}</h3>
 
-            @if (!$user->ignored)
-                @if (($user->interests !== null) && (strlen($user->interests) > 0))
-                    {!! $user->interests !!}
-                @else
-                    {{ __('app.no_information_specified') }}
+                @if (!$user->ignored)
+                    @if (strlen($item['content']) > 0)
+                        {!! $item['content'] !!}
+                    @else
+                        {{ __('app.no_information_specified') }}
+                    @endif
                 @endif
-            @endif
-        </div>
-
-        <div class="user-text-info">
-            <h3>{{ __('app.music') }}</h3>
-
-            @if (!$user->ignored)
-                @if (($user->music !== null) && (strlen($user->music) > 0))
-                    {!! $user->music !!}
-                @else
-                    {{ __('app.no_information_specified') }}
-                @endif
-            @endif
-        </div>
+            </div>
+        @endforeach
     </div>
 </div>
 

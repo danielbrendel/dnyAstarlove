@@ -52,8 +52,6 @@ class CreateUsersTable extends Migration
             $table->integer('weight')->nullable();
             $table->string('rel_status')->nullable();
             $table->string('introduction', 1024)->nullable();
-            $table->string('interests', 1024)->nullable();
-            $table->string('music', 1024)->nullable();
             $table->string('job', 1024)->nullable();
             $table->string('location')->nullable();
             $table->integer('orientation')->default(1); //1 = heterosexual, 2 = bisexual, 3 = homosexual

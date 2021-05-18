@@ -57,6 +57,7 @@ class InstallerModel extends Model
             $envcontent .= 'APP_KEYPHRASE="keyphrase"' . PHP_EOL;
             $envcontent .= 'APP_MAXUPLOADSIZE=30000000' . PHP_EOL;
             $envcontent .= 'APP_ENABLEADS=false' . PHP_EOL;
+            $envcontent .= 'APP_VERIFICATIONCLEANUP=true' . PHP_EOL;
             $envcontent .= 'APP_NEWSLETTER_UCOUNT=5' . PHP_EOL;
             $envcontent .= 'APP_CRONPW="' . substr(md5(date('Y-m-d H:i:s') . random_bytes(55)), 0, 10) . '"' . PHP_EOL;
             $envcontent .= 'LOG_CHANNEL=stack' . PHP_EOL;

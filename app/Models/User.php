@@ -584,8 +584,6 @@ class User extends Authenticatable
             $user->location = $attr['location'];
             $user->job = $attr['job'];
             $user->introduction = \Purifier::clean($attr['introduction']);
-            $user->interests = \Purifier::clean($attr['interests']);
-            $user->music = \Purifier::clean($attr['music']);
             $user->language = $attr['language'];
 
             $user->save();

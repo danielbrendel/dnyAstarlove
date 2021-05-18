@@ -143,21 +143,15 @@
                     </div>
                 </div>
 
-                <div class="field form">
-                    <label class="label">{{ __('app.interests') }}</label>
-                    <div class="control">
-                        <div id="text-interests"></div>
-                        <textarea name="interests" id="post-text-interests" class="is-hidden" placeholder="{{ __('app.type_something') }}">{{ $user->interests }}</textarea>
+                @foreach ($profileItems as $key => $item)
+                    <div class="field form">
+                        <label class="label">{{ $item['translation'] }}</label>
+                        <div class="control">
+                            <div id="text-profile-item-{{ $key }}"></div>
+                            <textarea name="{{ $key }}" id="post-profile-item-{{ $key }}" class="is-hidden" placeholder="{{ __('app.type_something') }}">{{ $item['content'] }}</textarea>
+                        </div>
                     </div>
-                </div>
-
-                <div class="field form">
-                    <label class="label">{{ __('app.music') }}</label>
-                    <div class="control">
-                        <div id="text-music"></div>
-                        <textarea name="music" id="post-text-music" class="is-hidden" placeholder="{{ __('app.type_something') }}">{{ $user->music }}</textarea>
-                    </div>
-                </div>
+                @endforeach
 
                 <div class="field form">
                     <label class="label">{{ __('app.language') }}</label>
@@ -484,27 +478,18 @@
             document.getElementById('post-text-introduction').value = quillIntroduction.root.innerHTML;
         });
 
-        var quillInterests = new Quill('#text-interests', {
-            theme: 'snow',
-            placeholder: '{{ __('app.type_something') }}',
-        });
+        @foreach ($profileItems as $key => $value)
+            var quill{{ $key }} = new Quill('#text-profile-item-{{ $key }}', {
+                theme: 'snow',
+                placeholder: '{{ __('app.type_something') }}'
+            });
 
-        quillInterests.root.innerHTML = document.getElementById('post-text-interests').value;
+            quill{{ $key }}.root.innerHTML = document.getElementById('post-profile-item-{{ $key }}').value;
 
-        quillInterests.on('editor-change', function(eventName, ...args) {
-            document.getElementById('post-text-interests').value = quillInterests.root.innerHTML;
-        });
-
-        var quillMusic = new Quill('#text-music', {
-            theme: 'snow',
-            placeholder: '{{ __('app.type_something') }}',
-        });
-
-        quillMusic.root.innerHTML = document.getElementById('post-text-music').value;
-
-        quillMusic.on('editor-change', function(eventName, ...args) {
-            document.getElementById('post-text-music').value = quillMusic.root.innerHTML;
-        });
+            quill{{ $key }}.on('editor-change', function(eventName, ...args) {
+                document.getElementById('post-profile-item-{{ $key }}').value = quill{{ $key }}.root.innerHTML;
+            });
+        @endforeach
 
         window.queryVisitors = function() {
             let content = document.getElementById('visitor-content');

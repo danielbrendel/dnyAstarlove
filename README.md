@@ -18,7 +18,7 @@ detailed first impressions of each other.
 + Like system
 + Messaging system
 + Profile search with filters
-+ Detailed profile information
++ Detailed dynamic profile information
 + Member settings
 + Captcha system
 + Visitor system

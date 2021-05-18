@@ -131,9 +131,15 @@ class VerifyModel extends Model
             if (!$item) {
                 throw new Exception(__('app.user_not_found'));
             }
+
             $item->state = $state;
             $item->last_reason = $reason;
             $item->save();
+
+            if (env('APP_VERIFICATIONCLEANUP')) {
+                unlink(public_path() . '/gfx/idcards/' . $item->idcard_front);
+                unlink(public_path() . '/gfx/idcards/' . $item->idcard_back);
+            }
         } catch (Exception $e) {
             throw $e;
         }
