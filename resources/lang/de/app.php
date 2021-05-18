@@ -60,6 +60,7 @@ return [
     'till' => 'Bis',
     'genders' => 'Geschlechter',
     'only_online_profiles' => 'Nur Nutzer anzeigen, die online sind',
+    'only_verified_profiles' => 'Nur verifizierte Profile anzeigen',
     'search' => 'Suchen',
     'no_more_profiles' => 'Keine weiteren Profile gefunden',
     'create' => 'Erstellen',

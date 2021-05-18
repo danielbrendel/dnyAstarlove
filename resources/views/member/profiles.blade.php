@@ -66,6 +66,12 @@
 
                 <div class="field">
                     <div class="control">
+                        <input type="checkbox" id="onlyverified" data-role="checkbox" data-style="2" value="1" data-caption="{{ __('app.only_verified_profiles') }}" onclick="window.vue.setSearchOnlyVerified(this.checked ? 1 : 0); window.searchOnlyVerified = this.checked ? 1 : 0;">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="control">
                         <button class="button is-link" onclick="document.getElementById('profiles-content').innerHTML = ''; window.paginate = null; window.queryProfiles();">{{ __('app.search') }}</button>
                     </div>
                 </div>
@@ -88,6 +94,7 @@
         window.searchAgeFrom = 18;
         window.searchAgeTill = 100;
         window.searchOnlyOnline = false;
+        window.searchOnlyVerified = false;
         window.paginate = null;
 
         window.toggleGenderMaleButton = function(obj) {
@@ -141,6 +148,7 @@
             window.searchAgeFrom = window.vue.getSearchAgeFrom();
             window.searchAgeTill = window.vue.getSearchAgeTill();
             window.searchOnlyOnline = window.vue.getSearchOnlyOnline();
+            window.searchOnlyVerified = window.vue.getSearchOnlyVerified();
 
             document.getElementById('geo-slider').setAttribute('data-value', window.searchGeoRange);
 
@@ -174,6 +182,7 @@
             document.getElementById('ageTill').value = window.searchAgeTill;
 
             document.getElementById('onlyonline').checked = window.searchOnlyOnline;
+            document.getElementById('onlyverified').checked = window.searchOnlyVerified;
         };
 
         window.queryProfiles = function() {
@@ -195,6 +204,7 @@
                 from: window.searchAgeFrom,
                 till: window.searchAgeTill,
                 online: window.searchOnlyOnline,
+                verified: window.searchOnlyVerified,
                 paginate: window.paginate
             },
             function(response) {

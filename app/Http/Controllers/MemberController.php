@@ -74,7 +74,17 @@ class MemberController extends Controller
         try {
             $this->validateLogin();
 
-            $user = User::where('deactivated', '=', false)->where('account_confirm', '=', '_confirmed')->where('id', '<>', auth()->id())->inRandomOrder()->first();
+            $range = (isset($_COOKIE['search_georange'])) ? $_COOKIE['search_georange'] : env('APP_GEOMAX', 1000);
+            $male = (isset($_COOKIE['search_gender_male'])) ? $_COOKIE['search_gender_male'] : 1;
+            $female = (isset($_COOKIE['search_gender_female'])) ? $_COOKIE['search_gender_female'] : 1;
+            $diverse = (isset($_COOKIE['search_gender_diverse'])) ? $_COOKIE['search_gender_diverse'] : 1;
+            $orientation = (isset($_COOKIE['search_orientation'])) ? $_COOKIE['search_orientation'] : 1;
+            $from = (isset($_COOKIE['search_age_from'])) ? $_COOKIE['search_age_from'] : 18;
+            $till = (isset($_COOKIE['search_age_till'])) ? $_COOKIE['search_age_till'] : 100;
+            $online = (isset($_COOKIE['search_onlyonline'])) ? $_COOKIE['search_onlyonline'] : 0;
+            $verified = (isset($_COOKIE['search_onlyverified'])) ? $_COOKIE['search_onlyverified'] : 0;
+
+            $user = User::queryRandomProfile($range, $male, $female, $diverse, $orientation, $from, $till, $online, $verified);
 
             $user->ignored = IgnoreModel::hasIgnored(auth()->id(), $user->id);
             $user->age = Carbon::parse($user->birthday)->age;
@@ -104,7 +114,7 @@ class MemberController extends Controller
             $user->profileItems = ProfileDataModel::queryAll($user->id);
 
             User::filterNonApprovedPhotos($user);
-
+            
             return view('member.random', [
                 'user' => $user
             ]);
@@ -153,9 +163,10 @@ class MemberController extends Controller
             $from = request('from', 18);
             $till = request('till', 100);
             $online = request('online', false);
+            $verified = request('verified', false);
             $paginate = request('paginate', null);
 
-            $data = User::queryProfiles($geo, $male, $female, $diverse, $orientation, $from, $till, $online, $paginate);
+            $data = User::queryProfiles($geo, $male, $female, $diverse, $orientation, $from, $till, $online, $verified, $paginate);
             foreach ($data as &$item) {
                 User::filterNonApprovedPhotos($item);
             }

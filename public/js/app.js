@@ -2117,6 +2117,21 @@ window.vue = new Vue({
       var expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
       document.cookie = 'search_onlyonline=' + value + '; expires=' + expDate.toUTCString() + ';';
     },
+    getSearchOnlyVerified: function getSearchOnlyVerified() {
+      var cookies = document.cookie.split(';');
+
+      for (var i = 0; i < cookies.length; i++) {
+        if (cookies[i].indexOf('search_onlyverified') !== -1) {
+          return parseInt(cookies[i].substr(cookies[i].indexOf('=') + 1));
+        }
+      }
+
+      return false;
+    },
+    setSearchOnlyVerified: function setSearchOnlyVerified(value) {
+      var expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
+      document.cookie = 'search_onlyverified=' + value + '; expires=' + expDate.toUTCString() + ';';
+    },
     renderProfileForm: function renderProfileForm(elem) {
       var online = '';
 

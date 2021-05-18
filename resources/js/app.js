@@ -305,6 +305,23 @@ window.vue = new Vue({
             document.cookie = 'search_onlyonline=' + value + '; expires=' + expDate.toUTCString() + ';';
         },
 
+        getSearchOnlyVerified: function () {
+            let cookies = document.cookie.split(';');
+
+            for (let i = 0; i < cookies.length; i++) {
+                if (cookies[i].indexOf('search_onlyverified') !== -1) {
+                    return parseInt(cookies[i].substr(cookies[i].indexOf('=') + 1));
+                }
+            }
+
+            return false;
+        },
+
+        setSearchOnlyVerified: function(value) {
+            let expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
+            document.cookie = 'search_onlyverified=' + value + '; expires=' + expDate.toUTCString() + ';';
+        },
+
         renderProfileForm: function(elem) {
             let online = '';
             if (elem.is_online) {

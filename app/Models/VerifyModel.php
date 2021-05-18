@@ -136,6 +136,12 @@ class VerifyModel extends Model
             $item->last_reason = $reason;
             $item->save();
 
+            if ($state == self::STATE_VERIFIED) {
+                $user = User::get($userId);
+                $user->verified = true;
+                $user->save();
+            }
+
             if (env('APP_VERIFICATIONCLEANUP')) {
                 unlink(public_path() . '/gfx/idcards/' . $item->idcard_front);
                 unlink(public_path() . '/gfx/idcards/' . $item->idcard_back);

@@ -316,6 +316,8 @@ class User extends Authenticatable
             $user->account_confirm = md5($attr['email'] . $attr['username'] . random_bytes(55));
             $user->language = env('APP_LANG', 'en');
             $user->firstlogin = false;
+            $user->admin = false;
+            $user->verified = false;
             $user->save();
 
             $html = view('mail.registered', ['username' => $user->name, 'hash' => $user->account_confirm])->render();
@@ -425,7 +427,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Query user profiles
+     * Generate a profiles query statement
      * 
      * @param $range
      * @param $male
@@ -435,11 +437,13 @@ class User extends Authenticatable
      * @param $from
      * @param $till
      * @param $online
+     * @param $verified
      * @param $paginate
-     * @return array
+     * @param $doNotOrder
+     * @return mixed
      * @throws \Exception
      */
-    public static function queryProfiles($range, $male, $female, $diverse, $orientation, $from, $till, $online, $paginate = null)
+    public static function queryProfilesStatement($range, $male, $female, $diverse, $orientation, $from, $till, $online, $verified, $paginate = null, $doNotOrder = false)
     {
         try {
             $user = static::getByAuthId();
@@ -449,7 +453,7 @@ class User extends Authenticatable
             }
 
             $query = \DB::table(with(new self)->getTable())
-                ->select(\DB::raw('id, name, avatar, birthday, gender, realname, rel_status, last_action, introduction, location, latitude, longitude, SQRT(POW(69.1 * (latitude - ' . $user->latitude . '), 2) + POW(69.1 * (' . $user->longitude . ' - longitude) * COS(latitude / 57.3), 2)) AS distance'))
+                ->select(\DB::raw('id, name, avatar, avatar_large, photo1, photo1_large, photo2, photo2_large, photo3, photo3_large, birthday, gender, realname, rel_status, last_action, height, weight, job, introduction, location, verified, latitude, longitude, SQRT(POW(69.1 * (latitude - ' . $user->latitude . '), 2) + POW(69.1 * (' . $user->longitude . ' - longitude) * COS(latitude / 57.3), 2)) AS distance'))
                 ->where('deactivated', '=', false)
                 ->where('account_confirm', '=', '_confirmed')
                 ->where('id', '<>', $user->id)
@@ -485,13 +489,46 @@ class User extends Authenticatable
                 $query->whereRaw('TIMESTAMPDIFF(MINUTE, last_action, CURDATE()) <= ?', [(int)env('APP_ONLINEMINUTELIMIT', 30)]);
             }
 
+            if ($verified) {
+                $query->where('verified', '=', true);
+            }
+
             if ($paginate !== null) {
                 $query->where('last_action', '<', $paginate);
             }
 
-            $query->orderBy('last_action', 'desc')->limit(env('APP_MAXUSERPACK', 30));
+            if ($doNotOrder === false) {
+                $query->orderBy('last_action', 'desc');
+            }
 
-            $items = $query->get();
+            $query->limit(env('APP_MAXUSERPACK', 30));
+
+            return $query;
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Query user profiles
+     * 
+     * @param $range
+     * @param $male
+     * @param $female
+     * @param $diverse
+     * @param $orientation
+     * @param $from
+     * @param $till
+     * @param $online
+     * @param $verified
+     * @param $paginate
+     * @return array
+     * @throws \Exception
+     */
+    public static function queryProfiles($range, $male, $female, $diverse, $orientation, $from, $till, $online, $verified, $paginate = null)
+    {
+        try {
+            $items = static::queryProfilesStatement($range, $male, $female, $diverse, $orientation, $from, $till, $online, $verified, $paginate, false)->get();
 
             foreach ($items as &$item) {
                 if (strlen($item->introduction) >= self::INTRODUCTION_SHORT_DISPLAY_LEN) {
@@ -519,6 +556,32 @@ class User extends Authenticatable
             }
 
             return $items->toArray();
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Query random profile
+     * 
+     * @param $range
+     * @param $male
+     * @param $female
+     * @param $diverse
+     * @param $orientation
+     * @param $from
+     * @param $till
+     * @param $online
+     * @param $verified
+     * @return mixed
+     * @throws \Exception
+     */
+    public static function queryRandomProfile($range, $male, $female, $diverse, $orientation, $from, $till, $online, $verified)
+    {
+        try {
+            $query = static::queryProfilesStatement($range, $male, $female, $diverse, $orientation, $from, $till, $online, $verified, null, true);
+
+            return $query->inRandomOrder()->first();
         } catch (\Exception $e) {
             throw $e;
         }

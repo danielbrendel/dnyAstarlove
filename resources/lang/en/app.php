@@ -60,6 +60,7 @@ return [
     'till' => 'Till',
     'genders' => 'Genders',
     'only_online_profiles' => 'Show only online users',
+    'only_verified_profiles' => 'Show only verified users',
     'search' => 'Search',
     'no_more_profiles' => 'No more profiles found',
     'create' => 'Create',
