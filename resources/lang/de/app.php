@@ -76,8 +76,6 @@ return [
     'profile' => 'Profil',
     'no_introduction_specified' => 'Keine Beschreibung angegeben',
     'no_information_specified' => 'Keine Informationen angegeben',
-    'interests' => 'Interessen',
-    'music' => 'Musik',
     'message' => 'Nachricht',
     'report' => 'Melden',
     'ignore' => 'Ignorieren',

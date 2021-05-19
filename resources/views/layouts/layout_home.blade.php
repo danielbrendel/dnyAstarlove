@@ -207,7 +207,9 @@
                             response.data.forEach(function(elem, index) {
                                 if (document.getElementById('notification-item-' + elem.id) === null) {
                                     @if (isset($_GET['clep_push_handler']))
-                                        window['{{ $_GET['clep_push_handler'] }}'](elem.shortMsg, elem.longMsg);
+                                        if (typeof window['{{ $_GET['clep_push_handler'] }}'] === 'function') {
+                                            window['{{ $_GET['clep_push_handler'] }}'](elem.shortMsg, elem.longMsg);
+                                        }
                                     @else
                                         window.pushClientNotification(elem.shortMsg);
                                     @endif
