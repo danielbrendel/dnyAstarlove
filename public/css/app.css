@@ -1014,6 +1014,8 @@ a.navbar-item:hover {
 .imgpreview-header {
   width: 100%;
   height: 67px;
+  position: absolute;
+  z-index: 10000;
 }
 
 .imgpreview-name {
@@ -1035,12 +1037,13 @@ a.navbar-item:hover {
 .imgpreview-body {
   width: 100%;
   height: 95%;
-  text-align: center;
+  display: flex;
+  align-items: center;
 }
 
 .imgpreview-body img {
   width: auto;
-  height: 95%;
+  height: auto;
 }
 
 .cookienotice {
