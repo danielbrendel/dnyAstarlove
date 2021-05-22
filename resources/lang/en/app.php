@@ -364,5 +364,7 @@ return [
     'register_username_in_use' => 'The specified username is already in use',
     'register_username_invalid_chars' => 'The specified username contains invalid characters',
     'account_not_yet_confirmed' => 'Please confirm your account before logging in. <a href=":url">Resend confirmation link</a>',
-    'back' => 'Back'
+    'back' => 'Back',
+    'register_birthday' => 'Birthday',
+    'register_min_age' => 'You must be at least :min years old in order to register'
 ];

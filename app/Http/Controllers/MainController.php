@@ -147,6 +147,7 @@ class MainController extends Controller
             $attr = request()->validate([
                 'username' => 'required',
                 'email' => 'required|email',
+                'birthday' => 'required|date',
                 'password' => 'required',
                 'password_confirmation' => 'required',
                 'captcha' => 'required'

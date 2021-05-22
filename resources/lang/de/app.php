@@ -364,5 +364,7 @@ return [
     'register_username_in_use' => 'Der angegebene Benutzername ist schon vergeben.',
     'register_username_invalid_chars' => 'Der angegebene Benutzername enthält ungültige Zeichen.',
     'account_not_yet_confirmed' => 'Bitte bestätige erst dein Konto. <a href=":url">Bestätigungslink erneut anfordern</a>',
-    'back' => 'Zurück'
+    'back' => 'Zurück',
+    'register_birthday' => 'Geburtstag',
+    'register_min_age' => 'Du musst mindestens :min Jahre alt sein, um dich registrieren zu dürfen.'
 ];

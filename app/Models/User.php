@@ -286,6 +286,10 @@ class User extends Authenticatable
 
             $attr['username'] = trim(strtolower($attr['username']));
 
+            if (Carbon::parse($attr['birthday'])->age < env('APP_MINREGISTERAGE')) {
+                throw new \Exception(__('app.register_min_age', ['min' => env('APP_MINREGISTERAGE')]));
+            }
+
             if ($attr['password'] !== $attr['password_confirmation']) {
                 throw new \Exception(__('app.passwords_mismatch'));
             }
@@ -311,6 +315,7 @@ class User extends Authenticatable
             $user->name = $attr['username'];
             $user->password = password_hash($attr['password'], PASSWORD_BCRYPT);
             $user->email = $attr['email'];
+            $user->birthday = $attr['birthday'];
             $user->avatar = 'default.png';
             $user->avatar_large = $user->avatar;
             $user->account_confirm = md5($attr['email'] . $attr['username'] . random_bytes(55));

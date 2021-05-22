@@ -1878,7 +1878,11 @@ window.vue = new Vue({
       verifiedProfile: 'Verified profile',
       viewProfile: 'View profile',
       online: 'online',
-      message: 'Message'
+      message: 'Message',
+      birthdayTooYoung: 'You must be at least N years old in order to register'
+    },
+    settingsTable: {
+      minRegAge: 21
     }
   },
   methods: {
@@ -1983,6 +1987,17 @@ window.vue = new Vue({
           hint.classList.remove('is-danger');
           hint.innerHTML = window.vue.translationTable.passwordMatching;
         }
+      }
+    },
+    showValidAge: function showValidAge(value, hint) {
+      var years = new Date(new Date() - new Date(value)).getFullYear() - 1970;
+
+      if (years < this.settingsTable.minRegAge) {
+        hint.classList.add('is-danger');
+        hint.innerHTML = window.vue.translationTable.birthdayTooYoung;
+      } else {
+        hint.classList.remove('is-danger');
+        hint.innerHTML = '';
       }
     },
     showError: function showError() {

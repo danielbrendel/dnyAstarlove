@@ -60,6 +60,7 @@ class InstallerModel extends Model
             $envcontent .= 'APP_VERIFICATIONCLEANUP=true' . PHP_EOL;
             $envcontent .= 'APP_NEWSLETTER_UCOUNT=5' . PHP_EOL;
             $envcontent .= 'APP_CRONPW="' . substr(md5(date('Y-m-d H:i:s') . random_bytes(55)), 0, 10) . '"' . PHP_EOL;
+            $envcontent .= 'APP_MINREGISTERAGE=18' . PHP_EOL;
             $envcontent .= 'LOG_CHANNEL=stack' . PHP_EOL;
             $envcontent .= 'DB_CONNECTION=mysql' . PHP_EOL;
             $envcontent .= 'DB_HOST="' . $attr['dbhost'] . '"' . PHP_EOL;

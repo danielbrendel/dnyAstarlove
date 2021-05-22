@@ -322,6 +322,8 @@
                 window.vue.translationTable.viewProfile = '{{ __('app.view_profile') }}';
                 window.vue.translationTable.online = '{{ __('app.online') }}';
                 window.vue.translationTable.message = '{{ __('app.message') }}';
+                window.vue.translationTable.birthdayTooYoung = '{{ __('app.register_min_age', ['min' => env('APP_MINREGISTERAGE')]) }}';
+                window.vue.settingsTable.minRegAge = {{ env('APP_MINREGISTERAGE') }};
 
                 @auth
                     window.userProMode = {{ (\App\Models\User::promodeExpired(\App\Models\User::get(auth()->id()))) ? 'false' : 'true' }};

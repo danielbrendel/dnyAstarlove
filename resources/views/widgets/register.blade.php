@@ -36,6 +36,14 @@
                 </div>
 
                 <div class="field">
+                    <label class="label">{{ __('app.register_birthday') }}</label>
+                    <div class="control">
+                        <input class="input" type="date" name="birthday" value="{{ old('birthday') }}" onchange="window.vue.showValidAge(this.value, document.getElementById('reg-birthday-validity'));" required>
+                    </div>
+                    <p id="reg-birthday-validity" class="help"></p>
+                </div>
+
+                <div class="field">
                     <label class="label">{{ __('app.register_password') }}</label>
                     <div class="control">
                         <input class="input" type="password" name="password" id="reg-password" onchange="window.vue.showPasswordMatching(document.getElementById('reg-password-confirm').value, this.value, document.getElementById('reg-password-matching'));" onkeyup="window.vue.showPasswordMatching(document.getElementById('reg-password-confirm').value, this.value, document.getElementById('reg-password-matching'));" required>
