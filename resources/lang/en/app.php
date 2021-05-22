@@ -366,5 +366,6 @@ return [
     'account_not_yet_confirmed' => 'Please confirm your account before logging in. <a href=":url">Resend confirmation link</a>',
     'back' => 'Back',
     'register_birthday' => 'Birthday',
-    'register_min_age' => 'You must be at least :min years old in order to register'
+    'register_min_age' => 'You must be at least :min years old in order to register',
+    'settings_min_age' => 'You are not allowed to be younger than :min years.'
 ];

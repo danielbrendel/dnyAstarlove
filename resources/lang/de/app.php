@@ -366,5 +366,6 @@ return [
     'account_not_yet_confirmed' => 'Bitte bestätige erst dein Konto. <a href=":url">Bestätigungslink erneut anfordern</a>',
     'back' => 'Zurück',
     'register_birthday' => 'Geburtstag',
-    'register_min_age' => 'Du musst mindestens :min Jahre alt sein, um dich registrieren zu dürfen.'
+    'register_min_age' => 'Du musst mindestens :min Jahre alt sein, um dich registrieren zu dürfen.',
+    'settings_min_age' => 'Du darfst nicht jünger als :min Jahre alt sein.'
 ];

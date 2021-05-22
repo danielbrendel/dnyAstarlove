@@ -553,6 +553,10 @@ class MemberController extends Controller
                 $attr['language'] = env('APP_LANG', 'en');
             }
 
+            if (Carbon::parse($attr['birthday'])->age < env('APP_MINREGISTERAGE')) {
+                throw new \Exception(__('app.settings_min_age', ['min' => env('APP_MINREGISTERAGE')]));
+            }
+
             User::saveProfile($attr);
 
             $profileItemList = ProfileModel::getList();
