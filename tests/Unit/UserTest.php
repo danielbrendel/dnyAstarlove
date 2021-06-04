@@ -76,7 +76,7 @@ class UserTest extends TestCase
     {
         $this->markTestSkipped();
 
-        $result = User::queryProfiles(1000, 1, 1, 1, 18, 100, 0, null);
+        $result = User::queryProfiles(1000, 1, 1, 1, 1, 1, 1, 18, 100, 0, 0, null);
 
         $this->assertIsArray($result);
         

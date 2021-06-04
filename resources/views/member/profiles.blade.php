@@ -88,7 +88,9 @@
         window.searchGenderMale = true;
         window.searchGenderFemale = true;
         window.searchGenderDiverse = true;
-        window.searchOrientation = 1;
+        window.searchOrientationHeterosexual = 1;
+        window.searchOrientationBisexual = 1;
+        window.searchOrientationHomosexual = 0;
         window.searchAgeFrom = 18;
         window.searchAgeTill = 100;
         window.searchOnlyOnline = false;
