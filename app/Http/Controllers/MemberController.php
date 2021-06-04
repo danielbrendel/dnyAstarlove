@@ -78,13 +78,15 @@ class MemberController extends Controller
             $male = (isset($_COOKIE['search_gender_male'])) ? $_COOKIE['search_gender_male'] : 1;
             $female = (isset($_COOKIE['search_gender_female'])) ? $_COOKIE['search_gender_female'] : 1;
             $diverse = (isset($_COOKIE['search_gender_diverse'])) ? $_COOKIE['search_gender_diverse'] : 1;
-            $orientation = (isset($_COOKIE['search_orientation'])) ? $_COOKIE['search_orientation'] : 1;
+            $heterosexual = (isset($_COOKIE['search_orientation_heterosexual'])) ? $_COOKIE['search_orientation_heterosexual'] : 1;
+            $bisexual = (isset($_COOKIE['search_orientation_bisexual'])) ? $_COOKIE['search_orientation_bisexual'] : 1;
+            $homosexual = (isset($_COOKIE['search_orientation_homosexual'])) ? $_COOKIE['search_orientation_homosexual'] : 0;
             $from = (isset($_COOKIE['search_age_from'])) ? $_COOKIE['search_age_from'] : 18;
             $till = (isset($_COOKIE['search_age_till'])) ? $_COOKIE['search_age_till'] : 100;
             $online = (isset($_COOKIE['search_onlyonline'])) ? $_COOKIE['search_onlyonline'] : 0;
             $verified = (isset($_COOKIE['search_onlyverified'])) ? $_COOKIE['search_onlyverified'] : 0;
 
-            $user = User::queryRandomProfile($range, $male, $female, $diverse, $orientation, $from, $till, $online, $verified);
+            $user = User::queryRandomProfile($range, $male, $female, $diverse, $heterosexual, $bisexual, $homosexual, $from, $till, $online, $verified);
 
             $user->ignored = IgnoreModel::hasIgnored(auth()->id(), $user->id);
             $user->age = Carbon::parse($user->birthday)->age;
@@ -119,6 +121,7 @@ class MemberController extends Controller
                 'user' => $user
             ]);
         } catch (\Exception $e) {
+            throw $e;
             return redirect('/')->with('error', $e->getMessage());
         }
     }
@@ -159,14 +162,16 @@ class MemberController extends Controller
             $male = request('male', 1);
             $female = request('female', 1);
             $diverse = request('diverse', 1);
-            $orientation = request('orientation', 1);
+            $heterosexual = request('heterosexual', 1);
+            $bisexual = request('bisexual', 1);
+            $homosexual = request('homosexual', 1);
             $from = request('from', 18);
             $till = request('till', 100);
             $online = request('online', false);
             $verified = request('verified', false);
             $paginate = request('paginate', null);
 
-            $data = User::queryProfiles($geo, $male, $female, $diverse, $orientation, $from, $till, $online, $verified, $paginate);
+            $data = User::queryProfiles($geo, $male, $female, $diverse, $heterosexual, $bisexual, $homosexual, $from, $till, $online, $verified, $paginate);
             foreach ($data as &$item) {
                 User::filterNonApprovedPhotos($item);
             }

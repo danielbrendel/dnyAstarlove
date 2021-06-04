@@ -438,7 +438,9 @@ class User extends Authenticatable
      * @param $male
      * @param $female
      * @param $diverse
-     * @param $orientation
+     * @param $heterosexual
+     * @param $bisexual
+     * @param $homosexual
      * @param $from
      * @param $till
      * @param $online
@@ -448,7 +450,7 @@ class User extends Authenticatable
      * @return mixed
      * @throws \Exception
      */
-    public static function queryProfilesStatement($range, $male, $female, $diverse, $orientation, $from, $till, $online, $verified, $paginate = null, $doNotOrder = false)
+    public static function queryProfilesStatement($range, $male, $female, $diverse, $heterosexual, $bisexual, $homosexual, $from, $till, $online, $verified, $paginate = null, $doNotOrder = false)
     {
         try {
             $user = static::getByAuthId();
@@ -480,7 +482,18 @@ class User extends Authenticatable
 
             $query->whereRaw('(gender IN (' . implode(',', $gender) . '))');
 
-            $query->where('orientation', '=', $orientation);
+            $orientation = array();
+            if ($heterosexual) {
+                $orientation[] = static::ORIENTATION_HETERO;
+            }
+            if ($bisexual) {
+                $orientation[] = static::ORIENTATION_BI;
+            }
+            if ($homosexual) {
+                $orientation[] = static::ORIENTATION_HOMO;
+            }
+
+            $query->whereRaw('(orientation IN (' . implode(',', $orientation) . '))');
 
             if (($from !== null) && (is_numeric($from))) {
                 $query->whereRaw('TIMESTAMPDIFF(YEAR, birthday, CURDATE()) >= ?', [(int)$from]);
@@ -521,7 +534,9 @@ class User extends Authenticatable
      * @param $male
      * @param $female
      * @param $diverse
-     * @param $orientation
+     * @param $heterosexual
+     * @param $bisexual
+     * @param $homosexual
      * @param $from
      * @param $till
      * @param $online
@@ -530,10 +545,10 @@ class User extends Authenticatable
      * @return array
      * @throws \Exception
      */
-    public static function queryProfiles($range, $male, $female, $diverse, $orientation, $from, $till, $online, $verified, $paginate = null)
+    public static function queryProfiles($range, $male, $female, $diverse, $heterosexual, $bisexual, $homosexual, $from, $till, $online, $verified, $paginate = null)
     {
         try {
-            $items = static::queryProfilesStatement($range, $male, $female, $diverse, $orientation, $from, $till, $online, $verified, $paginate, false)->get();
+            $items = static::queryProfilesStatement($range, $male, $female, $diverse, $heterosexual, $bisexual, $homosexual, $from, $till, $online, $verified, $paginate, false)->get();
 
             foreach ($items as &$item) {
                 if (strlen($item->introduction) >= self::INTRODUCTION_SHORT_DISPLAY_LEN) {
@@ -573,7 +588,9 @@ class User extends Authenticatable
      * @param $male
      * @param $female
      * @param $diverse
-     * @param $orientation
+     * @param $heterosexual
+     * @param $bisexual
+     * @param $homosexual
      * @param $from
      * @param $till
      * @param $online
@@ -581,10 +598,10 @@ class User extends Authenticatable
      * @return mixed
      * @throws \Exception
      */
-    public static function queryRandomProfile($range, $male, $female, $diverse, $orientation, $from, $till, $online, $verified)
+    public static function queryRandomProfile($range, $male, $female, $diverse, $heterosexual, $bisexual, $homosexual, $from, $till, $online, $verified)
     {
         try {
-            $query = static::queryProfilesStatement($range, $male, $female, $diverse, $orientation, $from, $till, $online, $verified, null, true);
+            $query = static::queryProfilesStatement($range, $male, $female, $diverse, $heterosexual, $bisexual, $homosexual, $from, $till, $online, $verified, null, true);
 
             return $query->inRandomOrder()->first();
         } catch (\Exception $e) {

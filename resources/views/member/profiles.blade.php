@@ -42,11 +42,9 @@
                 <div class="field">
                     <label class="label">{{ __('app.orientation') }}</label>
                     <div class="control">
-                        <select id="orientation" onchange="window.searchOrientation = this.selectedIndex + 1; window.vue.setSearchOrientation(window.searchOrientation);">
-                            <option value="{{ \App\Models\User::ORIENTATION_HETERO }}">{{ __('app.orientation_hetero') }}</option>
-                            <option value="{{ \App\Models\User::ORIENTATION_BI }}">{{ __('app.orientation_bi') }}</option>
-                            <option value="{{ \App\Models\User::ORIENTATION_HOMO }}">{{ __('app.orientation_homo') }}</option>
-                        </select>
+                        <button id="btnHeterosexual" class="button is-outline is-light is-inline-block" onclick="window.toggleOrientationHeterosexualButton(this);">{{ __('app.orientation_hetero') }}</button>&nbsp;
+                        <button id="btnBisexual" class="button is-outline is-light is-inline-block" onclick="window.toggleOrientationBisexualButton(this);">{{ __('app.orientation_bi') }}</button>&nbsp;
+                        <button id="btnHomosexual" class="button is-outline is-light is-inline-block" onclick="window.toggleOrientationHomosexualButton(this);">{{ __('app.orientation_homo') }}</button>
                     </div>
                 </div>
 
@@ -139,12 +137,56 @@
             }
         };
 
+        window.toggleOrientationHeterosexualButton = function(obj) {
+            if (obj.classList.contains('is-light')) {
+                obj.classList.remove('is-light');
+                obj.classList.add('is-success');
+                window.vue.setSearchOrientationHeterosexual(1);
+                window.searchOrientationHeterosexual = 1;
+            } else {
+                obj.classList.add('is-light');
+                obj.classList.remove('is-success');
+                window.vue.setSearchOrientationHeterosexual(0);
+                window.searchOrientationHeterosexual = 0;
+            }
+        };
+
+        window.toggleOrientationBisexualButton = function(obj) {
+            if (obj.classList.contains('is-light')) {
+                obj.classList.remove('is-light');
+                obj.classList.add('is-success');
+                window.vue.setSearchOrientationBisexual(1);
+                window.searchOrientationBisexual = 1;
+            } else {
+                obj.classList.add('is-light');
+                obj.classList.remove('is-success');
+                window.vue.setSearchOrientationBisexual(0);
+                window.searchOrientationBisexual = 0;
+            }
+        };
+
+        window.toggleOrientationHomosexualButton = function(obj) {
+            if (obj.classList.contains('is-light')) {
+                obj.classList.remove('is-light');
+                obj.classList.add('is-success');
+                window.vue.setSearchOrientationHomosexual(1);
+                window.searchOrientationHomosexual = 1;
+            } else {
+                obj.classList.add('is-light');
+                obj.classList.remove('is-success');
+                window.vue.setSearchOrientationHomosexual(0);
+                window.searchOrientationHomosexual = 0;
+            }
+        };
+
         window.initSearchOptions = function() {
             window.searchGeoRange = window.vue.getSearchGeoRange();
             window.searchGenderMale = window.vue.getSearchGenderMale();
             window.searchGenderFemale = window.vue.getSearchGenderFemale();
             window.searchGenderDiverse = window.vue.getSearchGenderDiverse();
-            window.searchOrientation = window.vue.getSearchOrientation();
+            window.searchOrientationHeterosexual = window.vue.getSearchOrientationHeterosexual();
+            window.searchOrientationBisexual = window.vue.getSearchOrientationBisexual();
+            window.searchOrientationHomosexual = window.vue.getSearchOrientationHomosexual();
             window.searchAgeFrom = window.vue.getSearchAgeFrom();
             window.searchAgeTill = window.vue.getSearchAgeTill();
             window.searchOnlyOnline = window.vue.getSearchOnlyOnline();
@@ -176,7 +218,29 @@
                 document.getElementById('btnDiverse').classList.remove('is-success');
             }
 
-            document.getElementById('orientation').selectedIndex = window.searchOrientation - 1;
+            if (window.searchOrientationHeterosexual) {
+                document.getElementById('btnHeterosexual').classList.remove('is-light');
+                document.getElementById('btnHeterosexual').classList.add('is-success');
+            } else {
+                document.getElementById('btnHeterosexual').classList.add('is-light');
+                document.getElementById('btnHeterosexual').classList.remove('is-success');
+            }
+
+            if (window.searchOrientationBisexual) {
+                document.getElementById('btnBisexual').classList.remove('is-light');
+                document.getElementById('btnBisexual').classList.add('is-success');
+            } else {
+                document.getElementById('btnBisexual').classList.add('is-light');
+                document.getElementById('btnBisexual').classList.remove('is-success');
+            }
+
+            if (window.searchOrientationHomosexual) {
+                document.getElementById('btnHomosexual').classList.remove('is-light');
+                document.getElementById('btnHomosexual').classList.add('is-success');
+            } else {
+                document.getElementById('btnHomosexual').classList.add('is-light');
+                document.getElementById('btnHomosexual').classList.remove('is-success');
+            }
 
             document.getElementById('ageFrom').value = window.searchAgeFrom;
             document.getElementById('ageTill').value = window.searchAgeTill;
@@ -200,7 +264,9 @@
                 male: window.searchGenderMale,
                 female: window.searchGenderFemale,
                 diverse: window.searchGenderDiverse,
-                orientation: window.searchOrientation,
+                heterosexual: window.searchOrientationHeterosexual,
+                bisexual: window.searchOrientationBisexual,
+                homosexual: window.searchOrientationHomosexual,
                 from: window.searchAgeFrom,
                 till: window.searchAgeTill,
                 online: window.searchOnlyOnline,

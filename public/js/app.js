@@ -2072,20 +2072,50 @@ window.vue = new Vue({
       var expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
       document.cookie = 'search_gender_diverse=' + value + '; expires=' + expDate.toUTCString() + ';';
     },
-    getSearchOrientation: function getSearchOrientation() {
+    getSearchOrientationHeterosexual: function getSearchOrientationHeterosexual() {
       var cookies = document.cookie.split(';');
 
       for (var i = 0; i < cookies.length; i++) {
-        if (cookies[i].indexOf('search_orientation') !== -1) {
+        if (cookies[i].indexOf('search_orientation_heterosexual') !== -1) {
           return parseInt(cookies[i].substr(cookies[i].indexOf('=') + 1));
         }
       }
 
-      return 1;
+      return true;
     },
-    setSearchOrientation: function setSearchOrientation(value) {
+    setSearchOrientationHeterosexual: function setSearchOrientationHeterosexual(value) {
       var expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
-      document.cookie = 'search_orientation=' + value + '; expires=' + expDate.toUTCString() + ';';
+      document.cookie = 'search_orientation_heterosexual=' + value + '; expires=' + expDate.toUTCString() + ';';
+    },
+    getSearchOrientationBisexual: function getSearchOrientationBisexual() {
+      var cookies = document.cookie.split(';');
+
+      for (var i = 0; i < cookies.length; i++) {
+        if (cookies[i].indexOf('search_orientation_bisexual') !== -1) {
+          return parseInt(cookies[i].substr(cookies[i].indexOf('=') + 1));
+        }
+      }
+
+      return true;
+    },
+    setSearchOrientationBisexual: function setSearchOrientationBisexual(value) {
+      var expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
+      document.cookie = 'search_orientation_bisexual=' + value + '; expires=' + expDate.toUTCString() + ';';
+    },
+    getSearchOrientationHomosexual: function getSearchOrientationHomosexual() {
+      var cookies = document.cookie.split(';');
+
+      for (var i = 0; i < cookies.length; i++) {
+        if (cookies[i].indexOf('search_orientation_homosexual') !== -1) {
+          return parseInt(cookies[i].substr(cookies[i].indexOf('=') + 1));
+        }
+      }
+
+      return false;
+    },
+    setSearchOrientationHomosexual: function setSearchOrientationHomosexual(value) {
+      var expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
+      document.cookie = 'search_orientation_homosexual=' + value + '; expires=' + expDate.toUTCString() + ';';
     },
     getSearchAgeFrom: function getSearchAgeFrom() {
       var cookies = document.cookie.split(';');
