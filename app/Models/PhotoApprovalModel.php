@@ -159,10 +159,11 @@ class PhotoApprovalModel extends Model
         try {
             $approvals = static::orderBy('id', 'asc')->limit($limit)->get();
 
-            foreach ($approvals as &$approval) {
+            foreach ($approvals as $key => &$approval) {
                 $user = User::get($approval->userId);
                 if (!$user) {
                     $approval->delete();
+                    unset($approvals[$key]);
                 } else {
                     $approval->user = $user;
                 }

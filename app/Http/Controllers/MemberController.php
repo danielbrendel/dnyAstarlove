@@ -121,7 +121,6 @@ class MemberController extends Controller
                 'user' => $user
             ]);
         } catch (\Exception $e) {
-            throw $e;
             return redirect('/')->with('error', $e->getMessage());
         }
     }
