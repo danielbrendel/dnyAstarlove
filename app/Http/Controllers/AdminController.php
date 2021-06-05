@@ -383,7 +383,10 @@ class AdminController extends Controller
             if (!$user) {
                 $user = User::getByName($ident);
                 if (!$user) {
-                    return response()->json(array('code' => 404, 'msg' => __('app.user_not_found')));
+                    $user = User::getByEmail($ident);
+                    if (!$user) {
+                        return response()->json(array('code' => 404, 'msg' => __('app.user_not_found')));
+                    }
                 }
             }
 

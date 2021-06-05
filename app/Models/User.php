@@ -21,12 +21,14 @@ use Illuminate\Support\Carbon;
 use App\Models\IgnoreModel;
 use App\Models\LikeModel;
 use App\Models\MessageModel;
+use App\Models\MessageListModel;
 use App\Models\PushModel;
 use App\Models\ReportModel;
 use App\Models\VisitorModel;
 use App\Models\VerifyModel;
 use App\Models\FavoritesModel;
 use App\Models\PhotoApprovalModel;
+use App\Models\ProfileDataModel;
 
 /**
  * Class User
@@ -1085,6 +1087,11 @@ class User extends Authenticatable
                 $item->delete();
             }
 
+            $messageLists = MessageListModel::where('user1', '=', $userId)->orWhere('user2', '=', $userId)->get();
+            foreach ($messageLists as $item) {
+                $item->delete();
+            }
+
             $pushes = PushModel::where('userId', '=', $userId)->get();
             foreach ($pushes as $item) {
                 $item->delete();
@@ -1102,6 +1109,11 @@ class User extends Authenticatable
 
             $favorites = FavoritesModel::where('userId', '=', $userId)->orWhere('favoriteId', '=', $userId)->get();
             foreach ($favorites as $item) {
+                $item->delete();
+            }
+
+            $profileItems = ProfileDataModel::where('userId', '=', $userId)->get();
+            foreach ($profileItems as $item) {
                 $item->delete();
             }
 
