@@ -68,6 +68,10 @@ Route::any('/member/favorites/{id}/add', [MemberController::class, 'addFavorite'
 Route::any('/member/favorites/{id}/remove', [MemberController::class, 'removeFavorite']);
 Route::post('/member/favorites/query', [MemberController::class, 'queryFavorites']);
 Route::post('/member/device/token', [MemberController::class, 'setDeviceToken']);
+Route::post('/member/{userId}/guestbook/add', [MemberController::class, 'addToGuestbook']);
+Route::post('/member/{userId}/guestbook/fetch', [MemberController::class, 'fetchFromGuestbook']);
+Route::any('/guestbook/{id}/remove', [MemberController::class, 'deleteGbEntry']);
+Route::post('/guestbook/edit', [MemberController::class, 'editGbEntry']);
 
 Route::get('/messages', [MessageController::class, 'list']);
 Route::get('/messages/list', [MessageController::class, 'fetchList']);

@@ -367,5 +367,17 @@ return [
     'back' => 'Zurück',
     'register_birthday' => 'Geburtstag',
     'register_min_age' => 'Du musst mindestens :min Jahre alt sein, um dich registrieren zu dürfen.',
-    'settings_min_age' => 'Du darfst nicht jünger als :min Jahre alt sein.'
+    'settings_min_age' => 'Du darfst nicht jünger als :min Jahre alt sein.',
+    'guestbook' => 'Gästebuch',
+    'guestbook_entry_short' => 'Neuer Eintrag im Gästebuch',
+    'guestbook_entry_long' => '<a href=":url">@:name</a> hat einen neuen Eintrag in deinem Gästebuch verfasst',
+    'user_guestbook_ignored' => 'Fehler beim Übermitteln des Gästebuch Eintrages.',
+    'guestbook_entry_added' => 'Der Eintrag wurde in das Gästebuch hinzugefügt',
+    'no_more_entries_found' => 'Keine weiteren Einträge gefunden',
+    'guestbook_item_deleted' => 'Der Eintrag wurde gelöscht',
+    'enable_guestbook' => 'Mein Gästebuch aktivieren',
+    'edit_guestbook_entry' => 'Eintrag des Gästebuches bearbeiten',
+    'guestbook_entry_updated' => 'Der Eintrag wurde aktualisiert',
+    'edit' => 'Bearbeiten',
+    'edited' => 'Bearbeitet'
 ];

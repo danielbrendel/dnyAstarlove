@@ -23,6 +23,7 @@ window.vue = new Vue({
         bShowCreateFaq: false,
         bShowEditFaq: false,
         bShowBuyProMode: false,
+        bShowEditGbEntry: false,
 
         translationTable: {
             usernameOk: 'The given name is valid and available',
@@ -41,6 +42,10 @@ window.vue = new Vue({
             online: 'online',
             message: 'Message',
             birthdayTooYoung: 'You must be at least N years old in order to register',
+            report: 'Report',
+            edit: 'Edit',
+            delete: 'Delete',
+            edited: 'Edited',
         },
 
         settingsTable: {
@@ -486,6 +491,95 @@ window.vue = new Vue({
             return html;
         },
 
+        renderGbEntry: function(elem) {
+            let senderOptions = '';
+            if (elem.is_sender_or_admin) {
+                senderOptions = `
+                    <a onclick="window.vue.showEditGbItem(` + elem.id + `); window.vue.toggleContextMenu(document.getElementById('gb-options-` + elem.id + `'));" href="javascript:void(0)" class="dropdown-item">
+                        <i class="far fa-edit"></i>&nbsp;` + window.vue.translationTable.edit + `
+                    </a>
+
+                    <a href="` + window.location.origin + '/guestbook/item/' + elem.id + `/remove" class="dropdown-item">
+                        <i class="fas fa-times"></i>&nbsp;` + window.vue.translationTable.delete + `
+                    </a>
+
+                    <hr class="dropdown-divider">
+                `;
+            }
+
+            let edited = '';
+            if (elem.edited) {
+                edited = `
+                    <div class="gb-edited">
+                        ` + this.translationTable.edited + `: <span title="` + elem.updated_at + `">` + elem.updatedDiffForHumans + `</span>
+                    </div>
+                `;
+            }
+
+            let html = `
+                <div class="gb-entry">
+                    <div class="gb-header">
+                        <div class="gb-userinfo">
+                            <div class="gb-avatar">
+                                <a href="` + window.location.origin + '/user/' + elem.sender.name + `"><img src="` + window.location.origin + '/gfx/avatars/' + elem.sender.avatar + `" alt="avatar"></a>
+                            </div>
+
+                            <div class="gb-details">
+                                <div class="gb-detail-name">
+                                    <a href="` + window.location.origin + '/user/' + elem.sender.name + `">` + elem.sender.name + `</a>
+                                </div>
+
+                                <div class="gb-detail-time" title="` + elem.created_at + `">
+                                    ` + elem.diffForHumans + `
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="gb-options">
+                            <div class="dropdown is-right" id="gb-options-` + elem.id + `">
+                                <div class="dropdown-trigger">
+                                    <i class="fas fa-ellipsis-v is-pointer" onclick="window.vue.toggleContextMenu(document.getElementById('gb-options-` + elem.id + `'));"></i>
+                                </div>
+                                
+                                <div class="dropdown-menu" role="menu">
+                                    <div class="dropdown-content">
+                                        ` + senderOptions + `
+
+                                        <a href="` + window.location.origin + '/member/report/' + elem.senderId + `" class="dropdown-item">
+                                            ` + window.vue.translationTable.report + `
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="gb-content" id="gb-entry-content-` + elem.id + `">
+                        ` + elem.content + `
+                    </div>
+
+                    ` + edited + `
+                </div>
+            `;
+
+            return html;
+        },
+
+        toggleContextMenu: function(elem) {
+            if (elem.classList.contains('is-active')) {
+                elem.classList.remove('is-active');
+            } else {
+                elem.classList.add('is-active');
+            }
+        },
+
+        showEditGbItem: function(id) {
+            document.getElementById('gb_entry_id').value = id;
+            document.getElementById('gb_entry_content').value = document.getElementById('gb-entry-content-' + id).innerHTML;
+
+            this.bShowEditGbEntry = true;
+        },
+
         showTabMenu: function(target) {
             let tabItems = ['tabVisitors', 'tabLikes', 'tabProfile', 'tabPhotos', 'tabSecurity', 'tabNotifications', 'tabIgnoreList', 'tabMembership'];
 
@@ -600,6 +694,9 @@ window.vue = new Vue({
             } else if (elem.type === 'PUSH_APPROVAL') {
                 icon = 'fas fa-camera';
                 color = 'is-notification-color-orange';
+            } else if (elem.type === 'PUSH_GUESTBOOK') {
+                icon = 'fas fa-book-open';
+                color = 'is-notification-color-black';
             }
 
             let html = `

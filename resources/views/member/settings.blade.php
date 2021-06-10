@@ -164,6 +164,13 @@
                     </div>
                 </div>
 
+                <div class="field form">
+                    <label class="label">{{ __('app.guestbook') }}</label>
+                    <div class="control">
+                        <input type="checkbox" name="guestbook" data-role="checkbox" data-style="2" data-caption="{{ __('app.enable_guestbook') }}" value="1" @if ($user->enable_gb) {{ 'checked' }} @endif>
+                    </div>
+                </div>
+
                 <div class="field">
                     <div class="control">
                         <br/>

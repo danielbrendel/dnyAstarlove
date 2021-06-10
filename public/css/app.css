@@ -161,6 +161,10 @@ a.is-link-blue:hover {
   top: -22px;
 }
 
+.is-right {
+  float: right;
+}
+
 .navbar {
   background-color: transparent;
 }
@@ -662,6 +666,72 @@ a.navbar-item:hover {
   padding-bottom: 10px;
   border-bottom: 2px solid #969696;
   font-style: italic;
+}
+
+.gb-entry {
+  position: relative;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+.gb-header {
+  position: relative;
+  width: 100%;
+}
+
+.gb-userinfo {
+  position: relative;
+  display: inline-block;
+}
+
+.gb-avatar {
+  position: relative;
+  display: inline-block;
+}
+
+.gb-avatar img {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+}
+
+.gb-details {
+  position: relative;
+  display: inline-block;
+  top: 15px;
+  margin-left: 20px;
+}
+
+.gb-detail-name {
+  position: relative;
+  font-size: 1.5em;
+}
+
+.gb-detail-time {
+  position: relative;
+  color: #969696;
+  font-size: 0.8em;
+}
+
+.gb-options {
+  position: relative;
+  display: inline-block;
+  float: right;
+  top: 39px;
+}
+
+.gb-content {
+  position: relative;
+  margin-top: 15px;
+  margin-left: 90px;
+}
+
+.gb-edited {
+  position: relative;
+  margin-top: 20px;
+  margin-left: 90px;
+  color: #646464;
+  font-size: 0.7em;
 }
 
 .tab-content {

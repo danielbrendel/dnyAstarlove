@@ -24,6 +24,8 @@ use App\Models\FavoritesModel;
 use App\Models\PhotoApprovalModel;
 use App\Models\ProfileModel;
 use App\Models\ProfileDataModel;
+use App\Models\GuestbookModel;
+use App\Models\ReportModel;
 
 /**
  * Class MemberController
@@ -363,9 +365,102 @@ class MemberController extends Controller
         try {
             $this->validateLogin();
 
-            //ReportModel::add(auth()->id(), $id);
+            $reason = request('reason', null);
+
+            ReportModel::add(auth()->id(), $id, $reason);
 
             return back()->with('flash.success', __('app.reported_successfully'));
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Add guestbook entry
+     * 
+     * @param $userId
+     * @return mixed
+     */
+    public function addToGuestbook($userId)
+    {
+        try {
+            $this->validateLogin();
+
+            $attr = request()->validate([
+                'text' => 'required'
+            ]);
+
+            if (IgnoreModel::hasIgnored($userId, auth()->id())) {
+                throw new \Exception(__('app.user_guestbook_ignored'));
+            }
+
+            GuestbookModel::add(auth()->id(), $userId, $attr['text']);
+
+            return back()->with('flash.success', __('app.guestbook_entry_added'));
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Fetch guestbook data from user
+     * 
+     * @param $userId
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function fetchFromGuestbook($userId)
+    {
+        try {
+            $paginate = request('paginate', null);
+
+            if (IgnoreModel::hasIgnored($userId, auth()->id())) {
+                throw new \Exception(__('app.user_guestbook_ignored'));
+            }
+
+            $data = GuestbookModel::fetchPack($userId, env('APP_GUESTBOOKPACKCOUNT', 20), $paginate);
+            foreach ($data as &$item) {
+                $item->sender = User::get($item->senderId);
+                $item->receiver = User::get($item->receiverId);
+                $item->diffForHumans = $item->created_at->diffForHumans();
+                $item->updatedDiffForHumans = $item->updated_at->diffForHumans();
+                $item->is_sender_or_admin = (auth()->id() === $item->senderId) || (User::isAdmin(auth()->id()));
+            }
+
+            return response()->json(array('code' => 200, 'data' => $data->toArray()));
+        } catch (\Exception $e) {
+            return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
+        }
+    }
+
+    /**
+     * Edit guestbook entry
+     */
+    public function editGbEntry()
+    {
+        try {
+            $id = request('id');
+            $content = request('content');
+
+            GuestbookModel::edit($id, $content);
+
+            return back()->with('flash.success', __('app.guestbook_entry_updated'));
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Delete guestbook entry
+     * 
+     * @param $id
+     * @return mixed
+     */
+    public function deleteGbEntry($id)
+    {
+        try {
+            GuestbookModel::remove($id);
+
+            return back()->with('flash.success', __('app.guestbook_item_deleted'));
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -510,7 +605,8 @@ class MemberController extends Controller
                 'location' => 'nullable',
                 'job' => 'nullable',
                 'introduction' => 'nullable',
-                'language' => 'nullable'
+                'language' => 'nullable',
+                'guestbook' => 'nullable|numeric'
             ]);
 
             if (!isset($attr['realname'])) {
@@ -555,6 +651,10 @@ class MemberController extends Controller
 
             if (!isset($attr['language'])) {
                 $attr['language'] = env('APP_LANG', 'en');
+            }
+
+            if (!isset($attr['guestbook'])) {
+                $attr['guestbook'] = 0;
             }
 
             if (Carbon::parse($attr['birthday'])->age < env('APP_MINREGISTERAGE')) {

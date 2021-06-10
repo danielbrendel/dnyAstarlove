@@ -137,20 +137,140 @@
     </div>
 
     <div class="user-frame-bottom">
-        @foreach ($user->profileItems as $key => $item)
-            <div class="user-text-info">
-                <h3>{{ $item['translation'] }}</h3>
+        <div>
+            @foreach ($user->profileItems as $key => $item)
+                <div class="user-text-info">
+                    <h3>{{ $item['translation'] }}</h3>
 
-                @if (!$user->ignored)
-                    @if (strlen($item['content']) > 0)
-                        {!! $item['content'] !!}
-                    @else
-                        {{ __('app.no_information_specified') }}
+                    @if (!$user->ignored)
+                        @if (strlen($item['content']) > 0)
+                            {!! $item['content'] !!}
+                        @else
+                            {{ __('app.no_information_specified') }}
+                        @endif
                     @endif
+                </div>
+            @endforeach
+        </div>
+
+        @if ($user->enable_gb)
+            <div>
+                <h3>{{ __('app.guestbook') }}</h3>
+
+                @if ($user->id !== auth()->id())
+                    <div>
+                        <form method="POST" action="{{ url('/member/' . $user->id . '/guestbook/add') }}">
+                            @csrf
+
+                            <div class="field">
+                                <div class="control">
+                                    <div id="input-text"></div>
+                                    <textarea name="text" id="post-text" class="is-hidden" placeholder="{{ __('app.type_something') }}"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <div class="control">
+                                    <input type="submit" value="{{ __('app.send') }}"/>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 @endif
+
+                <div id="gb-content"></div>
             </div>
-        @endforeach
+        @endif
     </div>
 </div>
+
+<div class="modal" :class="{'is-active': bShowEditGbEntry}">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head is-stretched">
+        <p class="modal-card-title">{{ __('app.edit_guestbook_entry') }}</p>
+        <button class="delete" aria-label="close" onclick="window.vue.bShowEditGbEntry = false;"></button>
+        </header>
+        <section class="modal-card-body is-stretched">
+            <form method="POST" action="{{ url('/guestbook/edit') }}" id="formEditGbEntry">
+                @csrf
+
+                <input type="hidden" name="id" id="gb_entry_id" value=""/>
+
+                <div class="field">
+                    <label class="label">{{ __('app.text') }}</label>
+                    <div class="control">
+                        <textarea name="content" id="gb_entry_content"></textarea>
+                    </div>
+                </div>
+
+                <input type="submit" id="editgbentrysubmit" class="is-hidden">
+            </form>
+        </section>
+        <footer class="modal-card-foot is-stretched">
+        <button class="button is-success" onclick="document.getElementById('editgbentrysubmit').click();">{{ __('app.save') }}</button>
+        <button class="button" onclick="window.vue.bShowEditGbEntry = false;">{{ __('app.cancel') }}</button>
+        </footer>
+    </div>
+</div>
+
+@section('javascript')
+    <script>
+        @if ($user->enable_gb)
+            @if ($user->id !== auth()->id())
+                var quillEditor = new Quill('#input-text', {
+                    theme: 'snow',
+                    placeholder: '{{ __('app.type_something') }}',
+                });
+
+                quillEditor.on('editor-change', function(eventName, ...args) {
+                    document.getElementById('post-text').value = quillEditor.root.innerHTML;
+                });
+            @endif
+
+            window.paginateGb = null;
+
+            window.queryGuestbook = function() {
+                let content = document.getElementById('gb-content');
+
+                content.innerHTML += '<div id="spinner"><br/><center><i class="fas fa-spinner fa-spin"></i></center></div>';
+
+                let loadmore = document.getElementById('loadmore');
+                if (loadmore) {
+                    loadmore.remove();
+                }
+
+                window.vue.ajaxRequest('post', '{{ url('/member/' . $user->id . '/guestbook/fetch') }}', {paginate: window.paginateGb}, function(response) {
+                    if (response.code == 200) {
+                        let spinner = document.getElementById('spinner');
+                        if (spinner) {
+                            spinner.remove();
+                        }
+
+                        response.data.forEach(function(elem, index) {
+                            let html = window.vue.renderGbEntry(elem);
+
+                            content.innerHTML += html;
+                        });
+
+                        if (response.data.length > 0) {
+                            window.paginateGb = response.data[response.data.length - 1];
+
+                            content.innerHTML += '<div id="loadmore" onclick="window.queryGuestbook();"><br/><center><i class="fas fa-arrow-down is-pointer"></i></center></div>';
+                        } else {
+                            content.innerHTML += '<div><br/><center>{{ __('app.no_more_entries_found') }}</center></div>';
+                        }
+                    } else {
+                        console.error(response.msg);
+                    }
+                });
+            };
+
+            document.addEventListener('DOMContentLoaded', function() {
+                window.queryGuestbook();
+            });
+        @endif
+    </script>
+@endsection
 
 @include('widgets.imgpreview')

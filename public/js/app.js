@@ -1863,6 +1863,7 @@ window.vue = new Vue({
     bShowCreateFaq: false,
     bShowEditFaq: false,
     bShowBuyProMode: false,
+    bShowEditGbEntry: false,
     translationTable: {
       usernameOk: 'The given name is valid and available',
       invalidUsername: 'The name is invalid. Please use only alphanumeric characters, numbers 0-9 and the characters \'-\' and \'_\'. Also number only identifiers are considered invalid',
@@ -1879,7 +1880,11 @@ window.vue = new Vue({
       viewProfile: 'View profile',
       online: 'online',
       message: 'Message',
-      birthdayTooYoung: 'You must be at least N years old in order to register'
+      birthdayTooYoung: 'You must be at least N years old in order to register',
+      report: 'Report',
+      edit: 'Edit',
+      "delete": 'Delete',
+      edited: 'Edited'
     },
     settingsTable: {
       minRegAge: 21
@@ -2233,6 +2238,34 @@ window.vue = new Vue({
       var html = "\n                <div class=\"message-thread " + align + "\">\n                    <div class=\"message-thread-header\">\n                        <div class=\"message-thread-header-avatar\">\n                            <a href=\"" + window.location.origin + '/user/' + elem.sender.name + "\"><img src=\"" + window.location.origin + '/gfx/avatars/' + elem.sender.avatar + "\"></a>\n                        </div>\n\n                        <div class=\"message-thread-header-userinfo\">\n                            <div><a href=\"" + window.location.origin + '/user/' + elem.sender.name + "\">" + elem.sender.name + "</a></div>\n                            <div class=\"is-message-label-small\" title=\"" + elem.created_at + "\">" + elem.diffForHumans + "</div>\n                        </div>\n\n                        <div class=\"message-thread-header-subject\">" + elem.subject + "</div>\n                    </div>\n\n                    <div class=\"message-thread-text\">" + elem.message + "</div>\n                </div>\n            ";
       return html;
     },
+    renderGbEntry: function renderGbEntry(elem) {
+      var senderOptions = '';
+
+      if (elem.is_sender_or_admin) {
+        senderOptions = "\n                    <a onclick=\"window.vue.showEditGbItem(" + elem.id + "); window.vue.toggleContextMenu(document.getElementById('gb-options-" + elem.id + "'));\" href=\"javascript:void(0)\" class=\"dropdown-item\">\n                        <i class=\"far fa-edit\"></i>&nbsp;" + window.vue.translationTable.edit + "\n                    </a>\n\n                    <a href=\"" + window.location.origin + '/guestbook/item/' + elem.id + "/remove\" class=\"dropdown-item\">\n                        <i class=\"fas fa-times\"></i>&nbsp;" + window.vue.translationTable["delete"] + "\n                    </a>\n\n                    <hr class=\"dropdown-divider\">\n                ";
+      }
+
+      var edited = '';
+
+      if (elem.edited) {
+        edited = "\n                    <div class=\"gb-edited\">\n                        " + this.translationTable.edited + ": <span title=\"" + elem.updated_at + "\">" + elem.updatedDiffForHumans + "</span>\n                    </div>\n                ";
+      }
+
+      var html = "\n                <div class=\"gb-entry\">\n                    <div class=\"gb-header\">\n                        <div class=\"gb-userinfo\">\n                            <div class=\"gb-avatar\">\n                                <a href=\"" + window.location.origin + '/user/' + elem.sender.name + "\"><img src=\"" + window.location.origin + '/gfx/avatars/' + elem.sender.avatar + "\" alt=\"avatar\"></a>\n                            </div>\n\n                            <div class=\"gb-details\">\n                                <div class=\"gb-detail-name\">\n                                    <a href=\"" + window.location.origin + '/user/' + elem.sender.name + "\">" + elem.sender.name + "</a>\n                                </div>\n\n                                <div class=\"gb-detail-time\" title=\"" + elem.created_at + "\">\n                                    " + elem.diffForHumans + "\n                                </div>\n                            </div>\n                        </div>\n\n                        <div class=\"gb-options\">\n                            <div class=\"dropdown is-right\" id=\"gb-options-" + elem.id + "\">\n                                <div class=\"dropdown-trigger\">\n                                    <i class=\"fas fa-ellipsis-v is-pointer\" onclick=\"window.vue.toggleContextMenu(document.getElementById('gb-options-" + elem.id + "'));\"></i>\n                                </div>\n                                \n                                <div class=\"dropdown-menu\" role=\"menu\">\n                                    <div class=\"dropdown-content\">\n                                        " + senderOptions + "\n\n                                        <a href=\"" + window.location.origin + '/member/report/' + elem.senderId + "\" class=\"dropdown-item\">\n                                            " + window.vue.translationTable.report + "\n                                        </a>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n\n                    <div class=\"gb-content\" id=\"gb-entry-content-" + elem.id + "\">\n                        " + elem.content + "\n                    </div>\n\n                    " + edited + "\n                </div>\n            ";
+      return html;
+    },
+    toggleContextMenu: function toggleContextMenu(elem) {
+      if (elem.classList.contains('is-active')) {
+        elem.classList.remove('is-active');
+      } else {
+        elem.classList.add('is-active');
+      }
+    },
+    showEditGbItem: function showEditGbItem(id) {
+      document.getElementById('gb_entry_id').value = id;
+      document.getElementById('gb_entry_content').value = document.getElementById('gb-entry-content-' + id).innerHTML;
+      this.bShowEditGbEntry = true;
+    },
     showTabMenu: function showTabMenu(target) {
       var tabItems = ['tabVisitors', 'tabLikes', 'tabProfile', 'tabPhotos', 'tabSecurity', 'tabNotifications', 'tabIgnoreList', 'tabMembership'];
       tabItems.forEach(function (elem, index) {
@@ -2301,6 +2334,9 @@ window.vue = new Vue({
       } else if (elem.type === 'PUSH_APPROVAL') {
         icon = 'fas fa-camera';
         color = 'is-notification-color-orange';
+      } else if (elem.type === 'PUSH_GUESTBOOK') {
+        icon = 'fas fa-book-open';
+        color = 'is-notification-color-black';
       }
 
       var html = "\n                <div class=\"notification-item " + (newItem ? 'is-new-notification' : '') + "\" id=\"notification-item-" + elem.id + "\">\n                    <div class=\"notification-icon\">\n                        <div class=\"notification-item-icon\"><i class=\"" + icon + " fa-3x " + color + "\"></i></div>\n                    </div>\n                    <div class=\"notification-info\">\n                        <div class=\"notification-item-message\">" + elem.longMsg + "</div>\n                        <div class=\"notification-item-message is-color-grey is-font-size-small is-margin-top-5\">" + elem.diffForHumans + "</div>\n                    </div>\n                </div>\n            ";

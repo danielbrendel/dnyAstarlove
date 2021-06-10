@@ -367,5 +367,17 @@ return [
     'back' => 'Back',
     'register_birthday' => 'Birthday',
     'register_min_age' => 'You must be at least :min years old in order to register',
-    'settings_min_age' => 'You are not allowed to be younger than :min years.'
+    'settings_min_age' => 'You are not allowed to be younger than :min years.',
+    'guestbook' => 'Guestbook',
+    'guestbook_entry_short' => 'New guestbook entry',
+    'guestbook_entry_long' => 'You have received a new guestbook entry by <a href=":url">@:name</a>',
+    'user_guestbook_ignored' => 'Error when transmitting guestbook entry',
+    'guestbook_entry_added' => 'Guestbook entry has been added',
+    'no_more_entries_found' => 'No more entries found',
+    'guestbook_item_deleted' => 'Guestbook entry has been deleted',
+    'enable_guestbook' => 'Enable my guestbook',
+    'edit_guestbook_entry' => 'Edit guestbook entry',
+    'guestbook_entry_updated' => 'Guestbook entry updated',
+    'edit' => 'Edit',
+    'edited' => 'Edited'
 ];

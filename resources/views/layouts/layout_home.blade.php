@@ -323,6 +323,10 @@
                 window.vue.translationTable.online = '{{ __('app.online') }}';
                 window.vue.translationTable.message = '{{ __('app.message') }}';
                 window.vue.translationTable.birthdayTooYoung = '{{ __('app.register_min_age', ['min' => env('APP_MINREGISTERAGE')]) }}';
+                window.vue.translationTable.report = '{{ __('app.report') }}';
+                window.vue.translationTable.edit = '{{ __('app.edit') }}';
+                window.vue.translationTable.delete = '{{ __('app.delete') }}';
+                window.vue.translationTable.edited = '{{ __('app.edited') }}';
                 window.vue.settingsTable.minRegAge = {{ env('APP_MINREGISTERAGE') }};
 
                 @auth

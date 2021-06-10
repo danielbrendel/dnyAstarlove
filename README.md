@@ -24,6 +24,7 @@ detailed first impressions of each other.
 + Visitor system
 + Notification system
 + Favorites system
++ Guestbook system
 + E-Mail system
 + Reporting system
 + Ignore system

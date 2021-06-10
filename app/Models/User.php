@@ -29,6 +29,7 @@ use App\Models\VerifyModel;
 use App\Models\FavoritesModel;
 use App\Models\PhotoApprovalModel;
 use App\Models\ProfileDataModel;
+use App\Models\GuestbookModel;
 
 /**
  * Class User
@@ -672,6 +673,7 @@ class User extends Authenticatable
             $user->job = $attr['job'];
             $user->introduction = \Purifier::clean($attr['introduction']);
             $user->language = $attr['language'];
+            $user->enable_gb = $attr['guestbook'];
 
             $user->save();
         } catch (\Exception $e) {
@@ -1114,6 +1116,11 @@ class User extends Authenticatable
 
             $profileItems = ProfileDataModel::where('userId', '=', $userId)->get();
             foreach ($profileItems as $item) {
+                $item->delete();
+            }
+
+            $gbItems = GuestbookModel::where('senderId', '=', $userId)->orWhere('receiverId', '=', $userId)->get();
+            foreach ($gbItems as $item) {
                 $item->delete();
             }
 
