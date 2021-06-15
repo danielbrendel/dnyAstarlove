@@ -480,7 +480,7 @@ class User extends Authenticatable
             }
 
             $query = \DB::table(with(new self)->getTable())
-                ->select(\DB::raw('id, name, avatar, avatar_large, photo1, photo1_large, photo2, photo2_large, photo3, photo3_large, birthday, gender, realname, rel_status, last_action, height, weight, job, introduction, location, verified, latitude, longitude, SQRT(POW(69.1 * (latitude - ' . $user->latitude . '), 2) + POW(69.1 * (' . $user->longitude . ' - longitude) * COS(latitude / 57.3), 2)) AS distance'))
+                ->select(\DB::raw('id, name, avatar, avatar_large, photo1, photo1_large, photo2, photo2_large, photo3, photo3_large, birthday, gender, realname, rel_status, last_action, height, weight, job, introduction, location, enable_gb, verified, latitude, longitude, SQRT(POW(69.1 * (latitude - ' . $user->latitude . '), 2) + POW(69.1 * (' . $user->longitude . ' - longitude) * COS(latitude / 57.3), 2)) AS distance'))
                 ->where('deactivated', '=', false)
                 ->where('account_confirm', '=', '_confirmed')
                 ->where('id', '<>', $user->id)

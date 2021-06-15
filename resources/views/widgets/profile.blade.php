@@ -171,7 +171,7 @@
 
                             <div class="field">
                                 <div class="control">
-                                    <input type="submit" value="{{ __('app.send') }}"/>
+                                    <input type="submit" class="button is-link" value="{{ __('app.send') }}"/>
                                 </div>
                             </div>
                         </form>
