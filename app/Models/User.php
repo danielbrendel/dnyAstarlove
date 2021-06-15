@@ -1032,6 +1032,7 @@ class User extends Authenticatable
             }
 
             $user->mail_on_message = $attr['mail_on_message'];
+            $user->info_profile_visit = $attr['info_profile_visit'];
             $user->newsletter = $attr['newsletter'];
             $user->save();
         } catch (\Exception $e) {

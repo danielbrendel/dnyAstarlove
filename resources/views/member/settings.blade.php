@@ -325,6 +325,12 @@
 
                 <div class="field">
                     <div class="control">
+                        <input type="checkbox" name="info_profile_visit" data-role="checkbox" data-style="2" value="1" data-caption="{{ __('app.info_profile_visit') }}" @if ($user->info_profile_visit) {{ 'checked' }} @endif>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="control">
                         <input type="checkbox" name="newsletter" data-role="checkbox" data-style="2" value="1" data-caption="{{ __('app.newsletter_notice') }}" @if ($user->newsletter) {{ 'checked' }} @endif>
                     </div>
                 </div>

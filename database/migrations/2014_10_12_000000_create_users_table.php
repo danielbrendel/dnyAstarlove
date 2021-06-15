@@ -58,6 +58,7 @@ class CreateUsersTable extends Migration
             $table->decimal('latitude', 10, 8)->nullable();
             $table->decimal('longitude', 11, 8)->nullable();
             $table->boolean('mail_on_message')->default(true);
+            $table->boolean('info_profile_visit')->default(true);
             $table->boolean('newsletter')->default(true);
             $table->string('newsletter_token')->default('');
             $table->boolean('enable_gb')->default(true);

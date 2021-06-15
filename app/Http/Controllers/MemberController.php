@@ -225,7 +225,7 @@ class MemberController extends Controller
                 throw new \Exception(__('app.user_not_found_or_deactivated'));
             }
 
-            $visitorUser = User::getByAuthid();
+            $visitorUser = User::getByAuthId();
             if (($user->id !== auth()->id()) && (!$visitorUser->admin)) {
                 VisitorModel::add(auth()->id(), $user->id);
             }
@@ -797,11 +797,16 @@ class MemberController extends Controller
 
             $attr = request()->validate([
                 'mail_on_message' => 'nullable|numeric',
+                'info_profile_visit' => 'nullable|numeric',
                 'newsletter' => 'nullable|numeric'
             ]);
 
             if (!isset($attr['mail_on_message'])) {
                 $attr['mail_on_message'] = false;
+            }
+
+            if (!isset($attr['info_profile_visit'])) {
+                $attr['info_profile_visit'] = false;
             }
 
             if (!isset($attr['newsletter'])) {

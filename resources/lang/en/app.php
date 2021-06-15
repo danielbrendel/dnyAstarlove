@@ -379,5 +379,6 @@ return [
     'edit_guestbook_entry' => 'Edit guestbook entry',
     'guestbook_entry_updated' => 'Guestbook entry updated',
     'edit' => 'Edit',
-    'edited' => 'Edited'
+    'edited' => 'Edited',
+    'info_profile_visit' => 'Notify me about new profile visits'
 ];

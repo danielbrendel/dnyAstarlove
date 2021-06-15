@@ -379,5 +379,6 @@ return [
     'edit_guestbook_entry' => 'Eintrag des Gästebuches bearbeiten',
     'guestbook_entry_updated' => 'Der Eintrag wurde aktualisiert',
     'edit' => 'Bearbeiten',
-    'edited' => 'Bearbeitet'
+    'edited' => 'Bearbeitet',
+    'info_profile_visit' => 'Benachrichtigung erhalten bei neuen Profilbesuchern'
 ];
