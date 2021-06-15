@@ -18,7 +18,7 @@
         <button class="delete" aria-label="close" onclick="window.vue.bShowRecover = false;"></button>
         </header>
         <section class="modal-card-body is-stretched">
-            <form method="POST" action="/recover" id="formResetPw">
+            <form method="POST" action="{{ url('/recover') }}" id="formResetPw">
                 @csrf
 
                 <div class="field">
