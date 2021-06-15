@@ -58,6 +58,10 @@ class Controller extends BaseController
                 \App::setLocale($user->language);
             }
 
+            if (isset($_GET['lang'])) {
+                \App::setLocale($_GET['lang']);
+            }
+
             return $next($request);
         });
 
