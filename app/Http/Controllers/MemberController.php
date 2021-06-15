@@ -225,7 +225,8 @@ class MemberController extends Controller
                 throw new \Exception(__('app.user_not_found_or_deactivated'));
             }
 
-            if ($user->id !== auth()->id()) {
+            $visitorUser = User::getByAuthid();
+            if (($user->id !== auth()->id()) && (!$visitorUser->admin)) {
                 VisitorModel::add(auth()->id(), $user->id);
             }
 

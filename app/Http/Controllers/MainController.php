@@ -152,7 +152,7 @@ class MainController extends Controller
                 'password_confirmation' => 'required',
                 'captcha' => 'required'
             ]);
-
+            
             $id = User::register($attr);
 
             return back()->with('success', __('app.register_confirm_email', ['id' => $id]));
