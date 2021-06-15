@@ -39,7 +39,7 @@ return [
     'password_confirm' => 'Passwort Bestätigung',
     'password_reset' => 'Passwort zurücksetzen',
     'reset' => 'Zurücksetzen',
-    'profiles' => 'Profile',
+    'profiles' => 'Mitglieder',
     'random' => 'Zufall',
     'messages' => 'Nachrichten',
     'notifications' => 'Benachrichtigungen',
