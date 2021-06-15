@@ -175,6 +175,10 @@ a.is-link-blue:hover {
   }
 }
 
+.ql-editor {
+  height: 100px;
+}
+
 .navbar {
   background-color: transparent;
 }
