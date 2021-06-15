@@ -23,6 +23,7 @@ use App\Models\CaptchaModel;
 use App\Models\MessageModel;
 use App\Models\VerifyModel;
 use App\Models\VisitorModel;
+use App\Models\AnnouncementsModel;
 
 /**
  * Class MainController
@@ -64,7 +65,8 @@ class MainController extends Controller
 
             return view('member.home', [
                 'user' => $user,
-                'userCount' => User::getOnlineUserCount()
+                'userCount' => User::getOnlineUserCount(),
+                'announcements' => AnnouncementsModel::queryAll()
             ]);
         }
     }

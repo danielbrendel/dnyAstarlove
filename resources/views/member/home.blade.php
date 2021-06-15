@@ -13,6 +13,22 @@
 
 @section('title', env('APP_NAME'))
 
+@section('announcements')
+    @foreach ($announcements as $key => $announcement)
+        <div id="announcement-message-{{ $key }}" class="is-z-index-3">
+            <article class="message is-info">
+                <div class="message-header">
+                    <p>{{ $announcement->title }}</p>
+                    <button class="delete" aria-label="delete" onclick="document.getElementById('announcement-message-{{ $key }}').style.display = 'none';"></button>
+                </div>
+                <div class="message-body">
+                    {!! $announcement->content !!}
+                </div>
+            </article>
+        </div>
+    @endforeach
+@endsection
+
 @section('content')
     <div class="form">
         <h4>{{ __('app.welcome_dashboard', ['name' => $user->name]) }}</h4>

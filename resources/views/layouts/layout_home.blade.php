@@ -98,6 +98,8 @@
                     </div>
                 @endif
 
+                @yield('announcements')
+
                 <div class="container">
                     <div class="app-overlay" id="notifications">
                         <center><div class="overlay-arrow-up"></div></center>
