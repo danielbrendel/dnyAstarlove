@@ -15,7 +15,7 @@
 
 @section('content')
     <div class="form">
-        @include('widgets.profile', ['user' => $user])
+        @include('widgets.profile', ['user' => $user, 'hide_back_link' => true])
 
         <div>
             <br/><br/>

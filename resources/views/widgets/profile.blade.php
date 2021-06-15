@@ -55,7 +55,10 @@
             <div class="user-name">
                 <div>
                     <div>{{ '@' . $user->name }}&nbsp;@if ($user->verified) <i class="far fa-check-circle is-color-dark-blue" title="{{ __('app.verified_profile') }}"></i> @endif</div>
-                    <div class="is-action-right is-top-negative-22"><a href="javascript:window.history.back();" >{{ __('app.back') }}</a></div>
+                    
+                    @if ((!isset($hide_back_link)) || (!$hide_back_link))
+                        <div class="is-action-right is-top-negative-22"><a href="javascript:window.history.back();" >{{ __('app.back') }}</a></div>
+                    @endif
                 </div>
             </div>
 
