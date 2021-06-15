@@ -380,5 +380,6 @@ return [
     'guestbook_entry_updated' => 'Der Eintrag wurde aktualisiert',
     'edit' => 'Bearbeiten',
     'edited' => 'Bearbeitet',
-    'info_profile_visit' => 'Benachrichtigung erhalten bei neuen Profilbesuchern'
+    'info_profile_visit' => 'Benachrichtigung erhalten bei neuen Profilbesuchern',
+    'online_user_count' => 'Es sind gerade :count Mitglieder online'
 ];

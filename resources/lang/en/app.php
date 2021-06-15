@@ -380,5 +380,6 @@ return [
     'guestbook_entry_updated' => 'Guestbook entry updated',
     'edit' => 'Edit',
     'edited' => 'Edited',
-    'info_profile_visit' => 'Notify me about new profile visits'
+    'info_profile_visit' => 'Notify me about new profile visits',
+    'online_user_count' => 'Currently there are :count users online'
 ];

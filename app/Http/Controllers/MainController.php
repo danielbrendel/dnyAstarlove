@@ -63,7 +63,8 @@ class MainController extends Controller
             $user->promode_count = env('STRIPE_EXPIRE_DAY_COUNT') - (Carbon::parse($user->last_payed)->diffInDays(Carbon::now()));
 
             return view('member.home', [
-                'user' => $user
+                'user' => $user,
+                'userCount' => User::getOnlineUserCount()
             ]);
         }
     }

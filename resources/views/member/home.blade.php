@@ -21,6 +21,12 @@
             {!! __('app.dashboard_find_members', ['url' => url('/profiles')]) !!}
         </p>
 
+        @if (env('APP_SHOWONLINECOUNT', true))
+        <p>
+            {{ __('app.online_user_count', ['count' => $userCount]) }}
+        </p>
+        @endif
+
         <p>
             {!! __('app.dashboard_new_visitors', ['count' => $user->visitor_count, 'url' => url('/settings?tab=visitors')]) !!}
         </p>

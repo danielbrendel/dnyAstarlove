@@ -180,6 +180,23 @@ class User extends Authenticatable
     }
 
     /**
+     * Get online user count
+     * 
+     * @return int
+     * @throws \Exception
+     */
+    public static function getOnlineUserCount()
+    {
+        try {
+            $diffTime = Carbon::now()->subMinutes(env('APP_ONLINEMINUTELIMIT', 30));
+
+            return static::where('last_action', '>=', $diffTime)->count();
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
      * Get user by ID
      * 
      * @param $id
