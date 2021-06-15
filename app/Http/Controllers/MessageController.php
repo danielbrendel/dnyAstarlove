@@ -186,17 +186,17 @@ class MessageController extends Controller
 
             $attr = request()->validate([
                'username' => 'required',
-               'subject' => 'required',
+               'subject' => 'nullable',
                'text' => 'required'
             ]);
-
-            if (!isset($attr['subject'])) {
-                $attr['subject'] = '';
-            }
 
             $sender = User::getByAuthId();
             if (!$sender) {
                 throw new \Exception('Not logged in');
+            }
+
+            if (!isset($attr['subject'])) {
+                $attr['subject'] = $sender->name;
             }
 
             $receiver = User::getByName($attr['username']);

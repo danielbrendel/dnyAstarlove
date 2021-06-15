@@ -29,7 +29,7 @@
                 <div class="field">
                     <label class="label">{{ __('app.subject') }}</label>
                     <div class="control">
-                        <input type="text" name="subject" value="{{ $msg->subject }}" required>
+                        <input type="text" name="subject" value="{{ $msg->subject }}">
                     </div>
                 </div>
 
