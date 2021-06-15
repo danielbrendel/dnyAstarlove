@@ -134,6 +134,13 @@ a.is-link-blue:hover {
 .is-right {
     float: right;
 }
+.scroll-hint {
+    font-size: 0.9em;
+    margin-bottom: 10px;
+    @media screen and (min-width: 1089px) {
+        display: none;
+    }
+}
 
 //Navbar
 .navbar {

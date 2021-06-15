@@ -16,7 +16,8 @@
 @section('content')
     <div class="form">
         <h2>{{ __('app.settings') }}</h2>
-        <br/>
+
+        <div class="scroll-hint">{{ __('app.tab_scroll_hint') }}</div>
 
         <div class="tabs">
             <ul>
