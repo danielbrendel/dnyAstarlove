@@ -98,7 +98,7 @@ class GuestbookModel extends Model
             $item = static::where('id', '=', $id);
 
             if (!User::isAdmin(auth()->id())) {
-                $item->where('senderId', '=', auth()->id());
+                $item->where('senderId', '=', auth()->id())->orWhere('receiverId', '=', auth()->id());
             }
 
             $item = $item->first();

@@ -425,6 +425,7 @@ class MemberController extends Controller
                 $item->diffForHumans = $item->created_at->diffForHumans();
                 $item->updatedDiffForHumans = $item->updated_at->diffForHumans();
                 $item->is_sender_or_admin = (auth()->id() === $item->senderId) || (User::isAdmin(auth()->id()));
+                $item->is_receiver = (auth()->id() == $item->receiverId);
             }
 
             return response()->json(array('code' => 200, 'data' => $data->toArray()));

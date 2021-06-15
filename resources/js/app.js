@@ -492,19 +492,27 @@ window.vue = new Vue({
         },
 
         renderGbEntry: function(elem) {
-            let senderOptions = '';
+            let editOption = '';
             if (elem.is_sender_or_admin) {
-                senderOptions = `
+                editOption = `
                     <a onclick="window.vue.showEditGbItem(` + elem.id + `); window.vue.toggleContextMenu(document.getElementById('gb-options-` + elem.id + `'));" href="javascript:void(0)" class="dropdown-item">
                         <i class="far fa-edit"></i>&nbsp;` + window.vue.translationTable.edit + `
                     </a>
+                `;
+            }
 
-                    <a href="` + window.location.origin + '/guestbook/item/' + elem.id + `/remove" class="dropdown-item">
+            let deleteOption = '';
+            if ((elem.is_sender_or_admin) || (elem.is_receiver)) {
+                deleteOption = `
+                    <a href="` + window.location.origin + '/guestbook/' + elem.id + `/remove" class="dropdown-item">
                         <i class="fas fa-times"></i>&nbsp;` + window.vue.translationTable.delete + `
                     </a>
-
-                    <hr class="dropdown-divider">
                 `;
+            }
+
+            let divider = '';
+            if ((editOption.length > 0) || (deleteOption.length > 0)) {
+                divider = '<hr class="dropdown-divider">';
             }
 
             let edited = '';
@@ -543,7 +551,9 @@ window.vue = new Vue({
                                 
                                 <div class="dropdown-menu" role="menu">
                                     <div class="dropdown-content">
-                                        ` + senderOptions + `
+                                        ` + editOption + `
+                                        ` + deleteOption + `
+                                        ` + divider + `
 
                                         <a href="` + window.location.origin + '/member/report/' + elem.senderId + `" class="dropdown-item">
                                             ` + window.vue.translationTable.report + `
