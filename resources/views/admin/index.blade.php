@@ -384,6 +384,12 @@
                         <input type="hidden" name="id" id="user_id">
 
                         <div class="field">
+                            <div class="control">
+                                <a id="userDetailsLink" href=""></a>
+                            </div>
+                        </div>
+
+                        <div class="field">
                             <label class="label">{{ __('app.username') }}</label>
                             <div class="control">
                                 <input type="text" id="user_name" name="username">
@@ -907,6 +913,9 @@
 
                     document.getElementById('user_deactivated').checked = response.data.deactivated;
                     document.getElementById('user_admin').checked = response.data.admin;
+
+                    document.getElementById('userDetailsLink').href = window.location.origin + '/user/' + response.data.name;
+                    document.getElementById('userDetailsLink').innerHTML = window.location.origin + '/user/' + response.data.name;
                 } else {
                     document.getElementById('user_settings').classList.add('is-hidden');
                     alert(response.msg);
