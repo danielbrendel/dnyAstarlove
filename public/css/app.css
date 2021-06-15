@@ -419,6 +419,12 @@ a.navbar-item:hover {
   overflow-y: auto;
 }
 
+.btn-margin {
+  margin-right: 5px;
+  margin-top: 5px;
+  display: inline-block;
+}
+
 .messages {
   padding: 21px;
   background-color: #e6e6e6;

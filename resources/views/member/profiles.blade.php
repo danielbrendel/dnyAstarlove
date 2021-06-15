@@ -33,18 +33,18 @@
                 <div class="field">
                     <label class="label">{{ __('app.genders') }}</label>
                     <div class="control">
-                        <button id="btnMale" class="button is-outline is-light is-inline-block" onclick="window.toggleGenderMaleButton(this);">{{ __('app.gender_male') }}</button>&nbsp;
-                        <button id="btnFemale" class="button is-outline is-light is-inline-block" onclick="window.toggleGenderFemaleButton(this);">{{ __('app.gender_female') }}</button>&nbsp;
-                        <button id="btnDiverse" class="button is-outline is-light is-inline-block" onclick="window.toggleGenderDiverseButton(this);">{{ __('app.gender_diverse') }}</button>
+                        <div class="btn-margin"><button id="btnMale" class="button is-outline is-light is-inline-block" onclick="window.toggleGenderMaleButton(this);">{{ __('app.gender_male') }}</button></div>
+                        <div class="btn-margin"><button id="btnFemale" class="button is-outline is-light is-inline-block" onclick="window.toggleGenderFemaleButton(this);">{{ __('app.gender_female') }}</button></div>
+                        <div class="btn-margin"><button id="btnDiverse" class="button is-outline is-light is-inline-block" onclick="window.toggleGenderDiverseButton(this);">{{ __('app.gender_diverse') }}</button></div>
                     </div>
                 </div>
 
                 <div class="field">
                     <label class="label">{{ __('app.orientation') }}</label>
                     <div class="control">
-                        <button id="btnHeterosexual" class="button is-outline is-light is-inline-block" onclick="window.toggleOrientationHeterosexualButton(this);">{{ __('app.orientation_hetero') }}</button>&nbsp;
-                        <button id="btnBisexual" class="button is-outline is-light is-inline-block" onclick="window.toggleOrientationBisexualButton(this);">{{ __('app.orientation_bi') }}</button>&nbsp;
-                        <button id="btnHomosexual" class="button is-outline is-light is-inline-block" onclick="window.toggleOrientationHomosexualButton(this);">{{ __('app.orientation_homo') }}</button>
+                        <div class="btn-margin"><button id="btnHeterosexual" class="button is-outline is-light is-inline-block" onclick="window.toggleOrientationHeterosexualButton(this);">{{ __('app.orientation_hetero') }}</button></div>
+                        <div class="btn-margin"><button id="btnBisexual" class="button is-outline is-light is-inline-block" onclick="window.toggleOrientationBisexualButton(this);">{{ __('app.orientation_bi') }}</button></div>
+                        <div class="btn-margin"><button id="btnHomosexual" class="button is-outline is-light is-inline-block" onclick="window.toggleOrientationHomosexualButton(this);">{{ __('app.orientation_homo') }}</button></div>
                     </div>
                 </div>
 
