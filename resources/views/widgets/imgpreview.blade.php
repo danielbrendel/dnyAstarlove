@@ -19,6 +19,16 @@
     </div>
 
     <div class="imgpreview-body">
-        <img src="{{ asset('gfx/avatars/default.png') }}" id="imgpreview-image">
+        <div class="imgpreview-switch">
+            <div onclick="window.vue.displayNextPhoto('left');"><i class="fas fa-chevron-left fa-5x is-color-white is-pointer"></i></div>
+        </div>
+
+        <div>
+            <img src="{{ asset('gfx/avatars/default.png') }}" id="imgpreview-image">
+        </div>
+
+        <div class="imgpreview-switch">
+            <div onclick="window.vue.displayNextPhoto('right');"><i class="fas fa-chevron-right fa-5x is-color-white is-pointer"></i></div>
+        </div>
     </div>
 </div>

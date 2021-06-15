@@ -1142,6 +1142,11 @@ a.navbar-item:hover {
   height: auto;
 }
 
+.imgpreview-switch {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
 .cookienotice {
   position: absolute;
   display: none;

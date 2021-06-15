@@ -2385,7 +2385,7 @@ window.vue = new Vue({
         }
       });
     },
-    showImagePreview: function showImagePreview(image, name) {
+    showImagePreview: function showImagePreview(which, image, name) {
       var obj = document.getElementById('imgpreview');
 
       if (obj) {
@@ -2402,6 +2402,35 @@ window.vue = new Vue({
 
       if (obj3) {
         obj3.src = window.location.origin + '/gfx/avatars/' + image;
+      }
+
+      window.currentImgPreview = which;
+    },
+    displayNextPhoto: function displayNextPhoto(dir) {
+      if (window.currentImgPreview == 'avatar') {
+        if (dir === 'left') {
+          document.getElementById('imgpreview-photo-photo3').click();
+        } else if (dir === 'right') {
+          document.getElementById('imgpreview-photo-photo1').click();
+        }
+      } else if (window.currentImgPreview == 'photo1') {
+        if (dir === 'left') {
+          document.getElementById('imgpreview-photo-avatar').click();
+        } else if (dir === 'right') {
+          document.getElementById('imgpreview-photo-photo2').click();
+        }
+      } else if (window.currentImgPreview == 'photo2') {
+        if (dir === 'left') {
+          document.getElementById('imgpreview-photo-photo1').click();
+        } else if (dir === 'right') {
+          document.getElementById('imgpreview-photo-photo3').click();
+        }
+      } else if (window.currentImgPreview == 'photo3') {
+        if (dir === 'left') {
+          document.getElementById('imgpreview-photo-photo2').click();
+        } else if (dir === 'right') {
+          document.getElementById('imgpreview-photo-avatar').click();
+        }
       }
     },
     handleCookieConsent: function handleCookieConsent() {
