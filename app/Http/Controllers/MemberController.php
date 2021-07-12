@@ -89,6 +89,9 @@ class MemberController extends Controller
             $verified = (isset($_COOKIE['search_onlyverified'])) ? $_COOKIE['search_onlyverified'] : 0;
 
             $user = User::queryRandomProfile($range, $male, $female, $diverse, $heterosexual, $bisexual, $homosexual, $from, $till, $online, $verified);
+            if ((IgnoreModel::hasIgnored($user->id, auth()->id())) || (IgnoreModel::hasIgnored(auth()->id(), $user->id))) {
+                return redirect('/random');
+            }
 
             $user->ignored = IgnoreModel::hasIgnored(auth()->id(), $user->id);
             $user->age = Carbon::parse($user->birthday)->age;
