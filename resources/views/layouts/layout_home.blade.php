@@ -182,10 +182,13 @@
                 }
             };
 
+            window.gotNewNotifications = false;
             window.fetchNotifications = function() {
                 window.vue.ajaxRequest('get', '{{ url('/notifications/list?mark=0') }}', {}, function(response){
                     if (response.code === 200) {
                         if (response.data.length > 0) {
+                            window.gotNewNotifications = true;
+
                             let noyet = document.getElementById('no-notifications-yet');
                             if (noyet) {
                                 noyet.remove();
@@ -216,7 +219,7 @@
                                         window.pushClientNotification(elem.shortMsg);
                                     @endif
 
-                                    let html = window.vue.renderNotification(elem, true);
+                                    let html = window.vue.renderNotification(elem, true); 
                                     document.getElementById('notification-content').innerHTML = html + document.getElementById('notification-content').innerHTML;
                                 }
                             });
@@ -255,7 +258,7 @@
                             document.getElementById('notification-content').innerHTML += '<center><i id="load-more-notifications" class="fas fa-plus is-pointer" onclick="fetchNotificationList()"></i></center>';
                             document.getElementById('notification-spinner').remove();
                         } else {
-                            if (window.notificationPagination === null) {
+                            if ((window.notificationPagination === null) && (!window.gotNewNotifications)) {
                                 document.getElementById('notification-content').innerHTML = '<div id="no-notifications-yet"><center><i>{{ __('app.no_notifications_yet') }}</i></center></div>';
                             }
 
