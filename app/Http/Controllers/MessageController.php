@@ -221,6 +221,51 @@ class MessageController extends Controller
     }
 
     /**
+     * Post image to user
+     * 
+     * @return mixed
+     */
+    public function postImage()
+    {
+        try {
+            $this->validateLogin();
+
+            $attr = request()->validate([
+                'username' => 'required',
+                'subject' => 'nullable'
+             ]);
+
+            $sender = User::getByAuthId();
+            if (!$sender) {
+                throw new \Exception('Not logged in');
+            }
+
+            if (!isset($attr['subject'])) {
+                $attr['subject'] = $sender->name;
+            }
+
+            $receiver = User::getByName($attr['username']);
+            if (!$receiver) {
+                throw new \Exception(__('app.user_not_found'));
+            }
+
+            if (IgnoreModel::hasIgnored($receiver->id, $sender->id)) {
+                throw new \Exception(__('app.user_not_receiving_messages'));
+            }
+
+            if (!LikeModel::bothLiked($receiver->id, $sender->id)) {
+                throw new \Exception(__('app.both_not_liked'));
+            }
+
+            $id = MessageModel::image($receiver->id, $sender->id, $attr['subject']);
+
+            return redirect('/messages/show/' . $id)->with('flash.success', __('app.image_posted'));
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
+    /**
      * Get amount of unread messages
      *
      * @return \Illuminate\Http\JsonResponse

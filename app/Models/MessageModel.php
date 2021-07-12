@@ -19,6 +19,7 @@ use Illuminate\Support\Carbon;
 use App\Models\MessageListModel;
 use App\Models\PushModel;
 use App\Models\MailerModel;
+use App\Models\ImageModel;
 
 /**
  * Class MessageModel
@@ -102,6 +103,50 @@ class MessageModel extends Model
         }
 
         return 0;
+    }
+
+    /**
+     * Post image to user
+     * 
+     * @param $userId
+     * @param $senderId
+     * @param $subject
+     * @return int
+     * @throws \Exception
+     */
+    public static function image($userId, $senderId, $subject)
+    {
+        try {
+            $att = request()->file('image');
+            if ($att != null) {
+                if ($att->getSize() > env('APP_MAXUPLOADSIZE')) {
+                    throw new Exception(__('app.post_upload_size_exceeded'));
+                }
+
+                $fname = uniqid('', true) . md5(random_bytes(55));
+                $fext = $att->getClientOriginalExtension();
+
+                $att->move(public_path() . '/gfx/uploads/', $fname . '.' . $fext);
+
+                $baseFile = public_path() . '/gfx/uploads/' . $fname;
+                $fullFile = $baseFile . '.' . $fext;
+
+                if (ImageModel::isValidImage(public_path() . '/gfx/uploads/' . $fname . '.' . $fext)) {
+                    if (!ImageModel::createThumbFile($fullFile, ImageModel::getImageType($fext, $baseFile), $baseFile, $fext)) {
+                        throw new \Exception('createThumbFile failed', 500);
+                    }
+                } else {
+                    unlink(public_path() . '/gfx/uploads/' . $fname . '.' . $fext);
+                    throw new \Exception(__('app.image_invalid_file_type'));
+                }
+
+                return static::add($userId, $senderId, $subject, '<a href="' . asset('/gfx/uploads/' . $fname . '_thumb.' . $fext) . '"><img src="' . asset('/gfx/uploads/' . $fname . '_thumb.' . $fext) . '" alt="image"/></a>');
+            }
+
+            return 0;
+        } catch (\Exception $e) {
+            throw $e;
+        }
     }
 
     /**

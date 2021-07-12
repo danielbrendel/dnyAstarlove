@@ -416,5 +416,7 @@ return [
     'event_approved' => 'Veranstaltung wurde bewilligt',
     'event_declined' => 'Veranstaltung wurde abgelehnt',
     'no_more_events' => 'Keine weiteren Veranstaltungen',
-    'not_approved_yet' => 'Veranstaltung wurde noch nicht freigeschaltet'
+    'not_approved_yet' => 'Veranstaltung wurde noch nicht freigeschaltet',
+    'image_posted' => 'Das Bild wurde gepostet',
+    'send_image' => 'Bild senden'
 ];

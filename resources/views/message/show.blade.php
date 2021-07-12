@@ -21,7 +21,7 @@
         </div>
 
         <div class="member-form is-default-padding member-form-fixed-top">
-            <form method="POST" action="{{ url('/messages/send') }}">
+            <form method="POST" action="{{ url('/messages/send') }}" id="frmSendMessage">
                 @csrf
 
                 <input type="hidden" name="username" value="{{ $msg->message_partner }}">
@@ -40,11 +40,21 @@
                         <textarea name="text" id="post-text" class="is-hidden" placeholder="{{ __('app.type_something') }}"></textarea>
                     </div>
                 </div>
-
-                <div class="field">
-                    <input type="submit" value="{{ __('app.send') }}">
-                </div>
             </form>
+
+            <form method="POST" action="{{ url('/messages/image') }}" enctype="multipart/form-data" id="frmSendImage">
+                @csrf
+
+                <input type="hidden" name="username" value="{{ $msg->message_partner }}">
+                <input type="hidden" name="subject" value="{{ $msg->subject }}">
+
+                <input type="file" name="image" id="inpImage" class="is-hidden">
+            </form>
+
+            <div class="field is-margin-top-10">
+                <span><a class="button is-link" href="javascript:void(0);" onclick="document.getElementById('frmSendMessage').submit();">{{ __('app.send') }}</a></span>
+                <span>&nbsp;<a class="is-underline" href="javascript:void(0);" onclick="window.sendImage();">{{ __('app.send_image') }}</a></span>
+            </div>
 
             <br/><br/>
         </div>
@@ -104,6 +114,14 @@
                     console.error(response.msg);
                 }
             });
+        };
+
+        window.sendImage = function() {
+            document.getElementById('inpImage').onchange = function() {
+                document.getElementById('frmSendImage').submit();
+            };
+
+            document.getElementById('inpImage').click();
         };
 
         document.addEventListener('DOMContentLoaded', function() {

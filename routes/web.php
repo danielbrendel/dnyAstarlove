@@ -80,6 +80,7 @@ Route::get('/messages/show/{id}', [MessageController::class, 'show']);
 Route::post('/messages/query', [MessageController::class, 'query']);
 Route::get('/messages/create', [MessageController::class, 'create']);
 Route::post('/messages/send', [MessageController::class, 'send']);
+Route::post('/messages/image', [MessageController::class, 'postImage']);
 Route::any('/messages/unread/count', [MessageController::class, 'unreadCount']);
 
 Route::get('/notifications/list', [NotificationController::class, 'list']);

@@ -416,5 +416,7 @@ return [
     'event_approved' => 'Event has been approved',
     'event_declined' => 'Event has been declined',
     'no_more_events' => 'No more events',
-    'not_approved_yet' => 'Not yet approved'
+    'not_approved_yet' => 'Not yet approved',
+    'image_posted' => 'Image has been posted',
+    'send_image' => 'Send image'
 ];
