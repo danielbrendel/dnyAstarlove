@@ -360,7 +360,7 @@
                     };
 
                     @if ((!isset($_GET['clep_geo'])) || ($_GET['clep_geo'] == 0))
-                        setTimeout('window.geoLoopTransmission()', 2500);
+                        setTimeout('window.geoLoopTransmission()', 1000);
                     @endif
                 @endauth
 
