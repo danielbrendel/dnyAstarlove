@@ -22,6 +22,9 @@ use App\Models\ReportModel;
 use App\Models\VerifyModel;
 use App\Models\MailerModel;
 use App\Models\PhotoApprovalModel;
+use App\Models\EventsModel;
+use App\Models\EventsParticipantsModel;
+use App\Models\EventsThreadModel;
 
 /**
  * Class AdminController
@@ -66,6 +69,11 @@ class AdminController extends Controller
 
         $approvals = PhotoApprovalModel::fetchPack(env('APP_PHOTOAPPROVALPACKLIMIT', 20));
 
+        $events = EventsModel::where('initialApproved', '=', false)->orWhere('approved', '=', false)->limit(env('APP_EVENTSPACKLIMIT', 20))->get();
+        foreach ($events as &$event) {
+            $event->user = User::get($event->userId);
+        }
+
         return view('admin.index', [
             'settings' => AppModel::getAppSettings(),
             'langs' => $langs,
@@ -73,7 +81,8 @@ class AdminController extends Controller
             'faqs' => FaqModel::getAll(),
             'reports' => ReportModel::getReportPack(),
             'verification_users' => VerifyModel::fetchPack(),
-            'approvals' => $approvals
+            'approvals' => $approvals,
+            'events' => $events
         ]);
     }
 
@@ -684,6 +693,62 @@ class AdminController extends Controller
             PhotoApprovalModel::decline($userId, $which);
 
             return back()->with('flash.success', __('app.photo_declined'));
+        } catch (\Exception $e) {
+            return back()->with('flash.error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Approve an event
+     * 
+     * @param $id
+     * @return mixed
+     */
+    public function approveEvent($id)
+    {
+        try {
+            $event = EventsModel::where('id', '=', $id)->first();
+            if (!$event) {
+                throw new \Exception('Event not found: ' . $id);
+            }
+
+            $event->initialApproved = true;
+            $event->approved = true;
+            $event->save();
+
+            return back()->with('flash.success', __('app.event_approved'));
+        } catch (\Exception $e) {
+            return back()->with('flash.error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Decline an event
+     * 
+     * @param $id
+     * @return mixed
+     */
+    public function declineEvent($id)
+    {
+        try {
+            $event = EventsModel::where('id', '=', $id)->first();
+            if (!$event) {
+                throw new \Exception('Event not found: ' . $id);
+            }
+
+            $comments = EventsThreadModel::where('eventId', '=', $id)->get();
+            foreach ($comments as $comment) {
+                $comment->delete();
+            }
+
+            $participants = EventsParticipantsModel::where('eventId', '=', $id)->get();
+            foreach ($participants as $participant) {
+                $participant->delete();
+            }
+
+            $event->delete();
+
+            return back()->with('flash.success', __('app.event_declined'));
         } catch (\Exception $e) {
             return back()->with('flash.error', $e->getMessage());
         }

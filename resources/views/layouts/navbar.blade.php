@@ -34,12 +34,17 @@
 
     <div class="navbar-end">
         @auth
+
         <a class="navbar-item" href="{{ url('/profiles') }}">
             {{ __('app.profiles') }}
         </a>
 
         <a class="navbar-item" href="{{ url('/random') }}">
             {{ __('app.random') }}
+        </a>
+
+        <a class="navbar-item" href="{{ url('/events') }}">
+            {{ __('app.events') }}
         </a>
 
         <a class="navbar-item" href="javascript:void(0);" onclick="window.vue.toggleOverlay('favorites'); if (window.menuVisible) { document.getElementById('navbarMenu').classList.remove('is-active'); document.getElementById('navbarBurger').classList.remove('is-active'); }">

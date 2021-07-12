@@ -1864,6 +1864,9 @@ window.vue = new Vue({
     bShowEditFaq: false,
     bShowBuyProMode: false,
     bShowEditGbEntry: false,
+    bShowCreateEvent: false,
+    bShowEditEvent: false,
+    bShowEditEventComment: false,
     translationTable: {
       usernameOk: 'The given name is valid and available',
       invalidUsername: 'The name is invalid. Please use only alphanumeric characters, numbers 0-9 and the characters \'-\' and \'_\'. Also number only identifiers are considered invalid',
@@ -1884,7 +1887,8 @@ window.vue = new Vue({
       report: 'Report',
       edit: 'Edit',
       "delete": 'Delete',
-      edited: 'Edited'
+      edited: 'Edited',
+      confirmDeleteEvent: 'Do you really want to delete this event?'
     },
     settingsTable: {
       minRegAge: 21
@@ -2266,6 +2270,38 @@ window.vue = new Vue({
       var html = "\n                <div class=\"gb-entry\">\n                    <div class=\"gb-header\">\n                        <div class=\"gb-userinfo\">\n                            <div class=\"gb-avatar\">\n                                <a href=\"" + window.location.origin + '/user/' + elem.sender.name + "\"><img src=\"" + window.location.origin + '/gfx/avatars/' + elem.sender.avatar + "\" alt=\"avatar\"></a>\n                            </div>\n\n                            <div class=\"gb-details\">\n                                <div class=\"gb-detail-name\">\n                                    <a href=\"" + window.location.origin + '/user/' + elem.sender.name + "\">" + elem.sender.name + "</a>\n                                </div>\n\n                                <div class=\"gb-detail-time\" title=\"" + elem.created_at + "\">\n                                    " + elem.diffForHumans + "\n                                </div>\n                            </div>\n                        </div>\n\n                        <div class=\"gb-options\">\n                            <div class=\"dropdown is-right\" id=\"gb-options-" + elem.id + "\">\n                                <div class=\"dropdown-trigger\">\n                                    <i class=\"fas fa-ellipsis-v is-pointer\" onclick=\"window.vue.toggleContextMenu(document.getElementById('gb-options-" + elem.id + "'));\"></i>\n                                </div>\n                                \n                                <div class=\"dropdown-menu\" role=\"menu\">\n                                    <div class=\"dropdown-content\">\n                                        " + editOption + "\n                                        " + deleteOption + "\n                                        " + divider + "\n\n                                        <a href=\"" + window.location.origin + '/member/report/' + elem.senderId + "\" class=\"dropdown-item\">\n                                            " + window.vue.translationTable.report + "\n                                        </a>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n\n                    <div class=\"gb-content\" id=\"gb-entry-content-" + elem.id + "\">\n                        " + elem.content + "\n                    </div>\n\n                    " + edited + "\n                </div>\n            ";
       return html;
     },
+    renderEvent: function renderEvent(elem) {
+      var html = "\n                <div class=\"event-list-item is-pointer\" onclick=\"location.href = '" + window.location.origin + '/events/show/' + elem.id + "';\">\n                    <div class=\"event-list-name\">" + elem.name + "</div>\n\n                    <div class=\"event-list-info\">\n                        <span><i class=\"fas fa-clock\"></i>&nbsp;" + elem.displayDate + "</span>\n                        <span><i class=\"fas fa-map-marker-alt\"></i>&nbsp;" + elem.location + "</span>\n                        <span><i class=\"far fa-comments\"></i>&nbsp;" + elem.commentCount + "</span>\n                        <span><i class=\"fas fa-users\"></i>&nbsp;" + elem.participantCount + "</span>\n                    </div>\n                </div>\n            ";
+      return html;
+    },
+    renderEventComment: function renderEventComment(elem) {
+      var editOption = '';
+
+      if (elem.is_sender_or_admin) {
+        editOption = "\n                    <a onclick=\"window.vue.showEditEventCommentItem(" + elem.id + "); window.vue.toggleContextMenu(document.getElementById('comment-options-" + elem.id + "'));\" href=\"javascript:void(0)\" class=\"dropdown-item\">\n                        <i class=\"far fa-edit\"></i>&nbsp;" + window.vue.translationTable.edit + "\n                    </a>\n                ";
+      }
+
+      var deleteOption = '';
+
+      if (elem.is_sender_or_admin) {
+        deleteOption = "\n                    <a href=\"" + window.location.origin + '/events/thread/' + elem.id + "/remove\" class=\"dropdown-item\">\n                        <i class=\"fas fa-times\"></i>&nbsp;" + window.vue.translationTable["delete"] + "\n                    </a>\n                ";
+      }
+
+      var divider = '';
+
+      if (editOption.length > 0 || deleteOption.length > 0) {
+        divider = '<hr class="dropdown-divider">';
+      }
+
+      var edited = '';
+
+      if (elem.edited) {
+        edited = "\n                    <div class=\"gb-edited\">\n                        " + this.translationTable.edited + ": <span title=\"" + elem.updated_at + "\">" + elem.updatedDiffForHumans + "</span>\n                    </div>\n                ";
+      }
+
+      var html = "\n                <div class=\"comment-entry\">\n                    <div class=\"comment-header\">\n                        <div class=\"comment-userinfo\">\n                            <div class=\"comment-avatar\">\n                                <a href=\"" + window.location.origin + '/user/' + elem.sender.name + "\"><img src=\"" + window.location.origin + '/gfx/avatars/' + elem.sender.avatar + "\" alt=\"avatar\"></a>\n                            </div>\n\n                            <div class=\"comment-details\">\n                                <div class=\"comment-detail-name\">\n                                    <a href=\"" + window.location.origin + '/user/' + elem.sender.name + "\">" + elem.sender.name + "</a>\n                                </div>\n\n                                <div class=\"comment-detail-time\" title=\"" + elem.created_at + "\">\n                                    " + elem.diffForHumans + "\n                                </div>\n                            </div>\n                        </div>\n\n                        <div class=\"comment-options\">\n                            <div class=\"dropdown is-right\" id=\"comment-options-" + elem.id + "\">\n                                <div class=\"dropdown-trigger\">\n                                    <i class=\"fas fa-ellipsis-v is-pointer\" onclick=\"window.vue.toggleContextMenu(document.getElementById('comment-options-" + elem.id + "'));\"></i>\n                                </div>\n                                \n                                <div class=\"dropdown-menu\" role=\"menu\">\n                                    <div class=\"dropdown-content\">\n                                        " + editOption + "\n                                        " + deleteOption + "\n                                        " + divider + "\n\n                                        <a href=\"" + window.location.origin + '/member/report/' + elem.userId + "\" class=\"dropdown-item\">\n                                            " + window.vue.translationTable.report + "\n                                        </a>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n\n                    <div class=\"comment-content\" id=\"comment-entry-content-" + elem.id + "\">\n                        " + elem.content + "\n                    </div>\n\n                    " + edited + "\n                </div>\n            ";
+      return html;
+    },
     toggleContextMenu: function toggleContextMenu(elem) {
       if (elem.classList.contains('is-active')) {
         elem.classList.remove('is-active');
@@ -2277,6 +2313,11 @@ window.vue = new Vue({
       document.getElementById('gb_entry_id').value = id;
       document.getElementById('gb_entry_content').value = document.getElementById('gb-entry-content-' + id).innerHTML;
       this.bShowEditGbEntry = true;
+    },
+    showEditEventCommentItem: function showEditEventCommentItem(id) {
+      document.getElementById('comment_entry_id').value = id;
+      document.getElementById('comment_entry_content').value = document.getElementById('comment-entry-content-' + id).innerHTML;
+      this.bShowEditEventComment = true;
     },
     showTabMenu: function showTabMenu(target) {
       var tabItems = ['tabVisitors', 'tabLikes', 'tabProfile', 'tabPhotos', 'tabSecurity', 'tabNotifications', 'tabIgnoreList', 'tabMembership'];
@@ -2484,6 +2525,11 @@ window.vue = new Vue({
     setClepFlag: function setClepFlag() {
       var expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
       document.cookie = 'clep=1; expires=' + expDate.toUTCString() + '; path=/;';
+    },
+    deleteEvent: function deleteEvent(id) {
+      if (confirm(window.vue.translationTable.confirmDeleteEvent)) {
+        location.href = window.location.origin + '/events/delete/' + id;
+      }
     }
   }
 });

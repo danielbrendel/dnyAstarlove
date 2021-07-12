@@ -1081,6 +1081,141 @@ a.navbar-item:hover {
   top: 19px;
 }
 
+.event-header {
+  font-size: 1.5em;
+  color: black;
+}
+
+.event-dropdown {
+  position: relative;
+  top: -30px;
+}
+
+.event-info {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: #969696;
+  font-size: 0.8em;
+}
+
+.event-approval {
+  font-size: 0.9em;
+  color: #960000;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.event-content {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  color: #5a5a5a;
+  font-size: 1.2em;
+}
+
+.events-userlist {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.event-small-headline {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.event-user-item {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.event-user-avatar img {
+  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+}
+
+.event-list-item {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background-color: #c8c8c8;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.event-list-name {
+  font-size: 1.5em;
+}
+
+.event-list-info {
+  font-size: 0.8em;
+  color: #787878;
+}
+
+.comment-entry {
+  position: relative;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+.comment-header {
+  position: relative;
+  width: 100%;
+}
+
+.comment-userinfo {
+  position: relative;
+  display: inline-block;
+}
+
+.comment-avatar {
+  position: relative;
+  display: inline-block;
+}
+
+.comment-avatar img {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+}
+
+.comment-details {
+  position: relative;
+  display: inline-block;
+  top: 15px;
+  margin-left: 20px;
+}
+
+.comment-detail-name {
+  position: relative;
+  font-size: 1.5em;
+}
+
+.comment-detail-time {
+  position: relative;
+  color: #969696;
+  font-size: 0.8em;
+}
+
+.comment-options {
+  position: relative;
+  display: inline-block;
+  float: right;
+  top: 39px;
+}
+
+.comment-content {
+  position: relative;
+  margin-top: 15px;
+  margin-left: 90px;
+}
+
+.comment-edited {
+  position: relative;
+  margin-top: 20px;
+  margin-left: 90px;
+  color: #646464;
+  font-size: 0.7em;
+}
+
 .settings-photo-image img {
   border-radius: 50%;
   width: 64px;

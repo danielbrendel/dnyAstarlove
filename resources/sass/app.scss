@@ -911,6 +911,122 @@ a.navbar-item:hover {
     top: 19px;
 }
 
+//Events
+.event-header {
+    font-size: 1.5em;
+    color: rgb(0, 0, 0);
+}
+.event-dropdown {
+    position: relative;
+    top: -30px;
+}
+.event-info {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: rgb(150, 150, 150);
+    font-size: 0.8em;
+}
+.event-approval {
+    font-size: 0.9em;
+    color: rgb(150, 0, 0);
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.event-content {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: rgb(90, 90, 90);
+    font-size: 1.2em;
+}
+.events-userlist {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.event-small-headline {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+.event-user-item {
+    display: inline-block;
+    margin-right: 10px;
+}
+.event-user-avatar img {
+    border-radius: 50%;
+    width: 64px;
+    height: 64px;
+}
+.event-list-item {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: rgb(200, 200, 200);
+    border-radius: 4px;
+    padding: 10px;
+}
+.event-list-name {
+    font-size: 1.5em;
+}
+.event-list-info {
+    font-size: 0.8em;
+    color: rgb(120, 120, 120);
+}
+
+//Event comments
+.comment-entry {
+    position: relative;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+.comment-header {
+    position: relative;
+    width: 100%;
+}
+.comment-userinfo {
+    position: relative;
+    display: inline-block;
+}
+.comment-avatar {
+    position: relative;
+    display: inline-block;
+}
+.comment-avatar img {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+}
+.comment-details {
+    position: relative;
+    display: inline-block;
+    top: 15px;
+    margin-left: 20px;
+}
+.comment-detail-name {
+    position: relative;
+    font-size: 1.5em;
+}
+.comment-detail-time {
+    position: relative;
+    color: rgb(150, 150, 150);
+    font-size: 0.8em;
+}
+.comment-options {
+    position: relative;
+    display: inline-block;
+    float: right;
+    top: 39px;
+}
+.comment-content {
+    position: relative;
+    margin-top: 15px;
+    margin-left: 90px;
+}
+.comment-edited {
+    position: relative;
+    margin-top: 20px;
+    margin-left: 90px;
+    color: rgb(100, 100, 100);
+    font-size: 0.7em;
+}
+
 //Settings
 .settings-photo-image img {
     border-radius: 50%;

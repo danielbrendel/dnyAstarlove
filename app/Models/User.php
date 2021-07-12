@@ -30,6 +30,9 @@ use App\Models\FavoritesModel;
 use App\Models\PhotoApprovalModel;
 use App\Models\ProfileDataModel;
 use App\Models\GuestbookModel;
+use App\Models\EventsParticipantsModel;
+use App\Models\EventsThreadModel;
+use App\Models\EventsModel;
 
 /**
  * Class User
@@ -1139,6 +1142,21 @@ class User extends Authenticatable
 
             $gbItems = GuestbookModel::where('senderId', '=', $userId)->orWhere('receiverId', '=', $userId)->get();
             foreach ($gbItems as $item) {
+                $item->delete();
+            }
+
+            $eventComments = EventsThreadModel::where('userId', '=', $userId)->get();
+            foreach ($eventComments as $item) {
+                $item->delete();
+            }
+
+            $eventParticipants = EventsParticipantsModel::where('userId', '=', $userId)->get();
+            foreach ($eventParticipants as $item) {
+                $item->delete();
+            }
+
+            $events = EventsModel::where('userId', '=', $userId)->get();
+            foreach ($events as $item) {
                 $item->delete();
             }
 

@@ -47,6 +47,7 @@
             <li><a href="#tab-page-15">{{ __('app.adcode') }}</a></li>
             <li><a href="#tab-page-16">{{ __('app.verification') }}</a></li>
             <li><a href="#tab-page-17">{{ __('app.approvals') }}</a></li>
+            <li><a href="#tab-page-18">{{ __('app.events') }}</a></li>
         </ul>
         <div class="border bd-default no-border-top p-2">
             <div id="tab-page-1">
@@ -752,6 +753,51 @@
 
                             <td>
                                 <a href="{{ url('/admin/approval/photo/' . $approval->user->id . '/' . $approval->which . '/decline') }}">{{ __('app.decline') }}</a>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="tab-page-18">
+                <table class="table striped table-border mt-4" data-role="table" data-pagination="true"
+                        data-table-rows-count-title="{{ __('app.table_show_entries') }}"
+                        data-table-search-title="{{ __('app.table_search') }}"
+                        data-table-info-title="{{ __('app.table_row_info') }}"
+                        data-pagination-prev-title="{{ __('app.table_pagination_prev') }}"
+                        data-pagination-next-title="{{ __('app.table_pagination_next') }}">
+                    <thead>
+                    <tr>
+                        <th class="text-left">{{ __('app.event_id') }}</th>
+                        <th class="text-left">{{ __('app.event_name') }}</th>
+                        <th class="text-left">{{ __('app.event_owner') }}</th>
+                        <th class="text-right">{{ __('app.approve') }}</th>
+                        <th class="text-right">{{ __('app.decline') }}</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    @foreach ($events as $event)
+                        <tr>
+                            <td>
+                                #{{ $event->id }}
+                            </td>
+
+                            <td class="right">
+                                <a href="{{ url('/events/show/' . $event->id) }}">{{ $event->name }}</a>
+                            </td>
+
+                            <td>
+                                <a href="{{ url('/user/' . $event->user->name) }}">{{ $event->user->name }}</a>
+                            </td>
+
+                            <td>
+                                <a href="{{ url('/admin/event/' . $event->id . '/approve') }}">{{ __('app.approve') }}</a>
+                            </td>
+
+                            <td>
+                                <a href="{{ url('/admin/event/' . $event->id . '/decline') }}">{{ __('app.decline') }}</a>
                             </td>
                         </tr>
                     @endforeach

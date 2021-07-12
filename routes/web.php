@@ -19,6 +19,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\InstallerController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\EventsController;
 
 Route::get('/', [MainController::class, 'index']);
 Route::get('/faq', [MainController::class, 'faq']);
@@ -85,6 +86,20 @@ Route::get('/notifications/list', [NotificationController::class, 'list']);
 Route::get('/notifications/fetch', [NotificationController::class, 'fetch']);
 Route::get('/notifications/seen', [NotificationController::class, 'seen']);
 
+Route::get('/events', [EventsController::class, 'index']);
+Route::post('/events/create', [EventsController::class, 'create']);
+Route::post('/events/query', [EventsController::class, 'query']);
+Route::get('/events/show/{id}', [EventsController::class, 'show']);
+Route::post('/events/edit/{id}', [EventsController::class, 'edit']);
+Route::post('/events/{id}/thread/query', [EventsController::class, 'queryComments']);
+Route::post('/events/{id}/thread/add', [EventsController::class, 'addComment']);
+Route::post('/events/thread/edit', [EventsController::class, 'editComment']);
+Route::any('/events/thread/{id}/remove', [EventsController::class, 'removeComment']);
+Route::any('/events/{id}/participate/add', [EventsController::class, 'addParticipant']);
+Route::any('/events/{id}/participate/remove', [EventsController::class, 'removeParticipant']);
+Route::any('/events/{id}/interested/add', [EventsController::class, 'addInterested']);
+Route::any('/events/{id}/interested/remove', [EventsController::class, 'removeInterested']);
+
 Route::get('/admin', [AdminController::class, 'index']);
 Route::post('/admin/about/save', [AdminController::class, 'saveAbout']);
 Route::post('/admin/background/save', [AdminController::class, 'saveBackground']);
@@ -112,6 +127,8 @@ Route::any('/admin/verify/{id}/approve', [AdminController::class, 'approveAccoun
 Route::any('/admin/verify/{id}/decline', [AdminController::class, 'declineAccount']);
 Route::any('/admin/approval/photo/{userId}/{which}/approve', [AdminController::class, 'approvePhoto']);
 Route::any('/admin/approval/photo/{userId}/{which}/decline', [AdminController::class, 'declinePhoto']);
+Route::any('/admin/event/{id}/approve', [AdminController::class, 'approveEvent']);
+Route::any('/admin/event/{id}/decline', [AdminController::class, 'declineEvent']);
 
 Route::any('/cronjob/newsletter/{password}', [MainController::class, 'cronjob_newsletter']);
 

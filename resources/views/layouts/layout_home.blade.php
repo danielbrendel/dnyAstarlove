@@ -329,6 +329,7 @@
                 window.vue.translationTable.edit = '{{ __('app.edit') }}';
                 window.vue.translationTable.delete = '{{ __('app.delete') }}';
                 window.vue.translationTable.edited = '{{ __('app.edited') }}';
+                window.vue.translationTable.confirmDeleteEvent = '{{ __('app.confirm_delete_event') }}';
                 window.vue.settingsTable.minRegAge = {{ env('APP_MINREGISTERAGE') }};
 
                 @auth

@@ -24,6 +24,9 @@ window.vue = new Vue({
         bShowEditFaq: false,
         bShowBuyProMode: false,
         bShowEditGbEntry: false,
+        bShowCreateEvent: false,
+        bShowEditEvent: false,
+        bShowEditEventComment: false,
 
         translationTable: {
             usernameOk: 'The given name is valid and available',
@@ -46,6 +49,7 @@ window.vue = new Vue({
             edit: 'Edit',
             delete: 'Delete',
             edited: 'Edited',
+            confirmDeleteEvent: 'Do you really want to delete this event?',
         },
 
         settingsTable: {
@@ -575,6 +579,107 @@ window.vue = new Vue({
             return html;
         },
 
+        renderEvent: function(elem) {
+            let html = `
+                <div class="event-list-item is-pointer" onclick="location.href = '` + window.location.origin + '/events/show/' + elem.id + `';">
+                    <div class="event-list-name">` + elem.name + `</div>
+
+                    <div class="event-list-info">
+                        <span><i class="fas fa-clock"></i>&nbsp;` + elem.displayDate + `</span>
+                        <span><i class="fas fa-map-marker-alt"></i>&nbsp;` + elem.location + `</span>
+                        <span><i class="far fa-comments"></i>&nbsp;` + elem.commentCount + `</span>
+                        <span><i class="fas fa-users"></i>&nbsp;` + elem.participantCount + `</span>
+                    </div>
+                </div>
+            `;
+
+            return html;
+        },
+
+        renderEventComment: function(elem) {
+            let editOption = '';
+            if (elem.is_sender_or_admin) {
+                editOption = `
+                    <a onclick="window.vue.showEditEventCommentItem(` + elem.id + `); window.vue.toggleContextMenu(document.getElementById('comment-options-` + elem.id + `'));" href="javascript:void(0)" class="dropdown-item">
+                        <i class="far fa-edit"></i>&nbsp;` + window.vue.translationTable.edit + `
+                    </a>
+                `;
+            }
+
+            let deleteOption = '';
+            if (elem.is_sender_or_admin) {
+                deleteOption = `
+                    <a href="` + window.location.origin + '/events/thread/' + elem.id + `/remove" class="dropdown-item">
+                        <i class="fas fa-times"></i>&nbsp;` + window.vue.translationTable.delete + `
+                    </a>
+                `;
+            }
+
+            let divider = '';
+            if ((editOption.length > 0) || (deleteOption.length > 0)) {
+                divider = '<hr class="dropdown-divider">';
+            }
+
+            let edited = '';
+            if (elem.edited) {
+                edited = `
+                    <div class="gb-edited">
+                        ` + this.translationTable.edited + `: <span title="` + elem.updated_at + `">` + elem.updatedDiffForHumans + `</span>
+                    </div>
+                `;
+            }
+
+            let html = `
+                <div class="comment-entry">
+                    <div class="comment-header">
+                        <div class="comment-userinfo">
+                            <div class="comment-avatar">
+                                <a href="` + window.location.origin + '/user/' + elem.sender.name + `"><img src="` + window.location.origin + '/gfx/avatars/' + elem.sender.avatar + `" alt="avatar"></a>
+                            </div>
+
+                            <div class="comment-details">
+                                <div class="comment-detail-name">
+                                    <a href="` + window.location.origin + '/user/' + elem.sender.name + `">` + elem.sender.name + `</a>
+                                </div>
+
+                                <div class="comment-detail-time" title="` + elem.created_at + `">
+                                    ` + elem.diffForHumans + `
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="comment-options">
+                            <div class="dropdown is-right" id="comment-options-` + elem.id + `">
+                                <div class="dropdown-trigger">
+                                    <i class="fas fa-ellipsis-v is-pointer" onclick="window.vue.toggleContextMenu(document.getElementById('comment-options-` + elem.id + `'));"></i>
+                                </div>
+                                
+                                <div class="dropdown-menu" role="menu">
+                                    <div class="dropdown-content">
+                                        ` + editOption + `
+                                        ` + deleteOption + `
+                                        ` + divider + `
+
+                                        <a href="` + window.location.origin + '/member/report/' + elem.userId + `" class="dropdown-item">
+                                            ` + window.vue.translationTable.report + `
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="comment-content" id="comment-entry-content-` + elem.id + `">
+                        ` + elem.content + `
+                    </div>
+
+                    ` + edited + `
+                </div>
+            `;
+
+            return html;
+        },
+
         toggleContextMenu: function(elem) {
             if (elem.classList.contains('is-active')) {
                 elem.classList.remove('is-active');
@@ -588,6 +693,13 @@ window.vue = new Vue({
             document.getElementById('gb_entry_content').value = document.getElementById('gb-entry-content-' + id).innerHTML;
 
             this.bShowEditGbEntry = true;
+        },
+
+        showEditEventCommentItem: function(id) {
+            document.getElementById('comment_entry_id').value = id;
+            document.getElementById('comment_entry_content').value = document.getElementById('comment-entry-content-' + id).innerHTML;
+
+            this.bShowEditEventComment = true;
         },
 
         showTabMenu: function(target) {
@@ -875,6 +987,12 @@ window.vue = new Vue({
             var expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
             document.cookie = 'clep=1; expires=' + expDate.toUTCString() + '; path=/;';
         },
+
+        deleteEvent: function(id) {
+            if (confirm(window.vue.translationTable.confirmDeleteEvent)) {
+                location.href = window.location.origin + '/events/delete/' + id;
+            }
+        }
     }
 });
 
