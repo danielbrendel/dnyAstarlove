@@ -762,7 +762,7 @@ window.vue = new Vue({
             let html = `
                 <div class="liked">
                     <div class="liked-avatar">
-                        <a href="`+ window.location.origin + '/user/' + elem.user.name + `"><img src="`+ window.location.origin + '/gfx/avatars/default.png' + `" alt="avatar"></a>
+                        <a href="`+ window.location.origin + '/user/' + elem.user.name + `"><img src="`+ window.location.origin + '/gfx/avatars/' + elem.user.avatar + `" alt="avatar"></a>
                     </div>
             
                     <div class="liked-name">
@@ -782,7 +782,7 @@ window.vue = new Vue({
             let html = `
             <div class="ignore">
                 <div class="ignore-avatar">
-                    <a href="`+ window.location.origin + '/user/' + elem.user.name + `"><img src="`+ window.location.origin + '/gfx/avatars/default.png' + `" alt="avatar"></a>
+                    <a href="`+ window.location.origin + '/user/' + elem.user.name + `"><img src="`+ window.location.origin + '/gfx/avatars/' + elem.user.avatar + `" alt="avatar"></a>
                 </div>
         
                 <div class="ignore-name">
