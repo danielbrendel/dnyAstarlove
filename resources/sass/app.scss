@@ -478,6 +478,9 @@ a.navbar-item:hover {
     color: rgb(50, 50, 50);
     display: inline-block;
     margin-left: 25px;
+    @media screen and (max-width: 490px) {
+        display: none;
+    }
 }
 .message-thread-text {
     color: rgb(230, 230, 230);

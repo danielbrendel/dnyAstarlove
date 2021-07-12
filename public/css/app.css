@@ -562,6 +562,11 @@ a.navbar-item:hover {
   display: inline-block;
   margin-left: 25px;
 }
+@media screen and (max-width: 490px) {
+  .message-thread-header-subject {
+    display: none;
+  }
+}
 
 .message-thread-text {
   color: #e6e6e6;
