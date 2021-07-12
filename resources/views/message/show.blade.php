@@ -98,7 +98,7 @@
                     }
 
                     if (response.data.length > 0) {
-                        content.innerHTML += '<div id="loadmore"><center><br/><i class="fas fa-arrow-down is-pointer" onclick="window.queryMessages();"></i></center></div>';
+                        content.innerHTML += '<div id="loadmore"><center><br/><i class="fas fa-plus is-pointer" onclick="window.queryMessages();"></i></center></div>';
                     }
                 } else {
                     console.error(response.msg);

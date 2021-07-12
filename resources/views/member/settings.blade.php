@@ -533,7 +533,7 @@
                     } else {
                         window.paginateVisitors = response.data[response.data.length - 1].updated_at;
 
-                        content.innerHTML += '<div id="visitor-loadmore"><br/><center><i class="fas fa-arrow-down is-pointer" onclick="window.queryVisitors();"></i></center></div>';
+                        content.innerHTML += '<div id="visitor-loadmore"><br/><center><i class="fas fa-plus is-pointer" onclick="window.queryVisitors();"></i></center></div>';
                     }
                 } else {
                     console.error(response);
@@ -569,7 +569,7 @@
                     } else {
                         window.paginateReceivedLikes = response.data[response.data.length - 1].id;
 
-                        content.innerHTML += '<div id="received-loadmore"><br/><center><i class="fas fa-arrow-down is-pointer" onclick="window.queryReceivedLikeList();"></i></center></div>';
+                        content.innerHTML += '<div id="received-loadmore"><br/><center><i class="fas fa-plus is-pointer" onclick="window.queryReceivedLikeList();"></i></center></div>';
                     }
                 } else {
                     console.error(response);
@@ -605,7 +605,7 @@
                     } else {
                         window.paginateGivenLikes = response.data[response.data.length - 1].id;
 
-                        content.innerHTML += '<div id="given-loadmore"><br/><center><i class="fas fa-arrow-down is-pointer" onclick="window.queryGivenLikeList();"></i></center></div>';
+                        content.innerHTML += '<div id="given-loadmore"><br/><center><i class="fas fa-plus is-pointer" onclick="window.queryGivenLikeList();"></i></center></div>';
                     }
                 } else {
                     console.error(response);
@@ -641,7 +641,7 @@
                     } else {
                         window.paginateIgnoreList = response.data[response.data.length - 1].id;
 
-                        content.innerHTML += '<div id="ignore-loadmore"><br/><center><i class="fas fa-arrow-down is-pointer" onclick="window.queryIgnoreList();"></i></center></div>';
+                        content.innerHTML += '<div id="ignore-loadmore"><br/><center><i class="fas fa-plus is-pointer" onclick="window.queryIgnoreList();"></i></center></div>';
                     }
                 } else {
                     console.error(response);

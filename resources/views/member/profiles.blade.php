@@ -295,7 +295,7 @@
                     if (response.data.length === 0) {
                         content.innerHTML += '<div><br/>{{ __('app.no_more_profiles') }}</div>';
                     } else {
-                        content.innerHTML += '<div id="loadmore"><center><br/><i class="fas fa-arrow-down is-pointer" onclick="window.queryProfiles();"></i></center></div>';
+                        content.innerHTML += '<div id="loadmore"><center><br/><i class="fas fa-plus is-pointer" onclick="window.queryProfiles();"></i></center></div>';
                     }
                 } else {
                     console.error(response.msg);

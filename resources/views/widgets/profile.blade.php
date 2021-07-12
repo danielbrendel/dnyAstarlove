@@ -259,7 +259,7 @@
                         if (response.data.length > 0) {
                             window.paginateGb = response.data[response.data.length - 1];
 
-                            content.innerHTML += '<div id="loadmore" onclick="window.queryGuestbook();"><br/><center><i class="fas fa-arrow-down is-pointer"></i></center></div>';
+                            content.innerHTML += '<div id="loadmore" onclick="window.queryGuestbook();"><br/><center><i class="fas fa-plus is-pointer"></i></center></div>';
                         } else {
                             content.innerHTML += '<div><br/><center>{{ __('app.no_more_entries_found') }}</center></div>';
                         }

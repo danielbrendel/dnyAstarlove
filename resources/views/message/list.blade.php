@@ -61,7 +61,7 @@
                     if (response.data.length > 0) {
                         window.paginateList = response.data[response.data.length - 1].updated_at;
 
-                        document.getElementById('messages-list').innerHTML += '<div id="loadmore" class="is-pointer" onclick="window.fetchMessageList();"><br/><center><i class="fas fa-arrow-down"></i></center></div>';
+                        document.getElementById('messages-list').innerHTML += '<div id="loadmore" class="is-pointer" onclick="window.fetchMessageList();"><br/><center><i class="fas fa-plus"></i></center></div>';
                     } else {
                         document.getElementById('messages-list').innerHTML += "<div><br/>{{ __('app.no_more_messages') }}</div>"
                     }

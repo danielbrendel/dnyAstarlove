@@ -252,7 +252,7 @@
 
                             window.notificationPagination = response.data[response.data.length-1].id;
 
-                            document.getElementById('notification-content').innerHTML += '<center><i id="load-more-notifications" class="fas fa-arrow-down is-pointer" onclick="fetchNotificationList()"></i></center>';
+                            document.getElementById('notification-content').innerHTML += '<center><i id="load-more-notifications" class="fas fa-plus is-pointer" onclick="fetchNotificationList()"></i></center>';
                             document.getElementById('notification-spinner').remove();
                         } else {
                             if (window.notificationPagination === null) {
@@ -296,7 +296,7 @@
                         if (response.data.length > 0) {
                             window.favoritesPagination = response.data[response.data.length - 1].id;
 
-                            document.getElementById('favorites-content').innerHTML += '<div id="favorites-loadmore" class="is-pointer" onclick="window.fetchFavorites();"><br/><center><i class="fas fa-arrow-down"></i></center></div>';
+                            document.getElementById('favorites-content').innerHTML += '<div id="favorites-loadmore" class="is-pointer" onclick="window.fetchFavorites();"><br/><center><i class="fas fa-plus"></i></center></div>';
                         } else {
                             if (window.favoritesPagination === null) {
                                 document.getElementById('favorites-content').innerHTML = '<div><br/><center>{{ __('app.no_favorites_yet') }}</center></div>';

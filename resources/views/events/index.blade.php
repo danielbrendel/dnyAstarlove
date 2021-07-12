@@ -112,7 +112,7 @@
                     if (response.data.length > 0) {
                         window.paginate = response.data[response.data.length - 1].dateOfEvent;
 
-                        content.innerHTML += '<div id="loadmore" class="is-pointer" onclick="window.queryEvents();"><br/><center><i class="fas fa-arrow-down"></i></center></div>';
+                        content.innerHTML += '<div id="loadmore" class="is-pointer" onclick="window.queryEvents();"><br/><center><i class="fas fa-plus"></i></center></div>';
                     } else {
                         content.innerHTML += '<div><br/><center>{{ __('app.no_more_events') }}</center></div>';
                     }
