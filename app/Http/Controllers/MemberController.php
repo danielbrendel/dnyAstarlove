@@ -173,8 +173,13 @@ class MemberController extends Controller
             $paginate = request('paginate', null);
 
             $data = User::queryProfiles($geo, $male, $female, $diverse, $heterosexual, $bisexual, $homosexual, $from, $till, $online, $verified, $paginate);
-            foreach ($data as &$item) {
+            foreach ($data as $key => &$item) {
                 User::filterNonApprovedPhotos($item);
+
+                if ((IgnoreModel::hasIgnored(auth()->id(), $item->id)) || (IgnoreModel::hasIgnored($item->id, auth()->id()))) {
+                    unset($data[$key]);
+                    $data = array_values($data);
+                }
             }
 
             return response()->json(array('code' => 200, 'data' => $data));
