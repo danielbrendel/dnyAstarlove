@@ -17,6 +17,10 @@
     <div class="form">
         <h4>{{ __('app.events') }}</h4>
 
+        <p>
+            {{ __('app.events_about') }}
+        </p>
+
         <div>
             <a href="javascript:void(0);" class="button is-success" onclick="window.vue.bShowCreateEvent = true;">{{ __('app.create') }}</a>
         </div>

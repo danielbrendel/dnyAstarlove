@@ -424,5 +424,6 @@ return [
     'content' => 'Content (HTML allowed)',
     'until' => 'Date until',
     'announcement_created' => 'Announcement has been created',
-    'dashboard_event_count' => 'There are currently <a href=":url"><b>:count</b></a> events planned'
+    'dashboard_event_count' => 'There are currently <a href=":url"><b>:count</b></a> events planned',
+    'events_about' => 'Here you can view or create events. Events are occasions where you can meet other likeminded people. Go to an event in order to view details and perform actions.'
 ];
