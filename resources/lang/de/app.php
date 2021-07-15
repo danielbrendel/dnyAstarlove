@@ -425,5 +425,6 @@ return [
     'until' => 'Bis wann anzeigen',
     'announcement_created' => 'Ankündigung wurde erstellt',
     'dashboard_event_count' => 'Es werden derzeit <a href=":url"><b>:count</b></a> Veranstaltungen geplant.',
-    'events_about' => 'Hier kannst du Veranstaltungen sehen oder erstellen. Veranstaltungen sind nützlich, um andere Benutzer zu treffen. Gehe auf eine Veranstaltung, um Details anzusehen und Aktionen auszuführen.'
+    'events_about' => 'Hier kannst du Veranstaltungen sehen oder erstellen. Veranstaltungen sind nützlich, um andere Benutzer zu treffen. Gehe auf eine Veranstaltung, um Details anzusehen und Aktionen auszuführen.',
+    'message_not_found' => 'Die Nachricht konnte nicht gefunden werden'
 ];

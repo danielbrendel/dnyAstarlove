@@ -199,7 +199,8 @@ class MessageModel extends Model
         try {
             $msg = static::where('id', '=', $msgId)->first();
             if (!$msg) {
-                throw new \Exception('Message not found: ' . $msgId);
+                //throw new \Exception('Message not found: ' . $msgId);
+                return null;
             }
 
             if (($msg->userId !== auth()->id()) && ($msg->senderId !== auth()->id())) {
