@@ -158,4 +158,21 @@ class EventsModel extends Model
             throw $e;
         }
     }
+
+    /**
+     * Get current event count
+     * 
+     * @return int
+     * @throws \Exception
+     */
+    public static function getCurrentEventCount()
+    {
+        try {
+            $count = static::where('dateOfEvent', '>=', Carbon::now())->where('initialApproved', '=', true)->count();
+
+            return $count;
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
 }

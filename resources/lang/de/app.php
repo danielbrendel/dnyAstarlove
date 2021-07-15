@@ -423,5 +423,6 @@ return [
     'title' => 'Titel',
     'content' => 'Inhalt (HTML erlaubt)',
     'until' => 'Bis wann anzeigen',
-    'announcement_created' => 'Ankündigung wurde erstellt'
+    'announcement_created' => 'Ankündigung wurde erstellt',
+    'dashboard_event_count' => 'Es werden derzeit <a href=":url"><b>:count</b></a> Veranstaltungen geplant.'
 ];

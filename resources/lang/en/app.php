@@ -423,5 +423,6 @@ return [
     'title' => 'Title',
     'content' => 'Content (HTML allowed)',
     'until' => 'Date until',
-    'announcement_created' => 'Announcement has been created'
+    'announcement_created' => 'Announcement has been created',
+    'dashboard_event_count' => 'There are currently <a href=":url"><b>:count</b></a> events planned'
 ];

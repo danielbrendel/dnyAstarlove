@@ -52,6 +52,10 @@
         </p>
 
         <p>
+            {!! __('app.dashboard_event_count', ['count' => $eventCount, 'url' => url('/events')]) !!}
+        </p>
+
+        <p>
             @if ($user->verify_state == \App\Models\VerifyModel::STATE_INPROGRESS)
                 {{ __('app.dashboard_verification_inprogress') }}
             @elseif ($user->verify_state == \App\Models\VerifyModel::STATE_VERIFIED)

@@ -24,6 +24,7 @@ use App\Models\MessageModel;
 use App\Models\VerifyModel;
 use App\Models\VisitorModel;
 use App\Models\AnnouncementsModel;
+use App\Models\EventsModel;
 
 /**
  * Class MainController
@@ -66,6 +67,7 @@ class MainController extends Controller
             return view('member.home', [
                 'user' => $user,
                 'userCount' => User::getOnlineUserCount(),
+                'eventCount' => EventsModel::getCurrentEventCount(),
                 'announcements' => AnnouncementsModel::queryAll()
             ]);
         }
