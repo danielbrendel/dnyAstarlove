@@ -338,6 +338,16 @@ class MemberController extends Controller
 
             IgnoreModel::add(auth()->id(), $id);
 
+            $item = FavoritesModel::where('userId', '=', $id)->where('favoriteId', '=', auth()->id())->first();
+            if ($item) {
+                $item->delete();
+            }
+
+            $item = FavoritesModel::where('userId', '=', auth()->id())->where('favoriteId', '=', $id)->first();
+            if ($item) {
+                $item->delete();
+            }
+
             return back()->with('flash.success', __('app.ignored_successfully'));
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
@@ -846,7 +856,9 @@ class MemberController extends Controller
                 throw new \Exception(__('app.user_not_found_or_deactivated'));
             }
 
-            FavoritesModel::add(auth()->id(), $id);
+            if ((!IgnoreModel::hasIgnored(auth()->id(), $id)) && (!IgnoreModel::hasIgnored($id, auth()->id()))) {
+                FavoritesModel::add(auth()->id(), $id);
+            }
 
             return back()->with('flash.success', __('app.added_to_favorites'));
         } catch (\Exception $e) {
