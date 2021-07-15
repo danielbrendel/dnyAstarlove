@@ -50,6 +50,7 @@ Route::any('/member/unlike/{id}', [MemberController::class, 'unlikeUser']);
 Route::any('/member/ignore/{id}', [MemberController::class, 'ignoreUser']);
 Route::any('/member/unignore/{id}', [MemberController::class, 'unignoreUser']);
 Route::any('/member/report/{id}', [MemberController::class, 'reportUser']);
+Route::post('/member/report/reason/{id}', [MemberController::class, 'reportUserReason']);
 Route::get('/settings', [MemberController::class, 'viewSettings']);
 Route::post('/member/visitors/query', [MemberController::class, 'queryVisitors']);
 Route::post('/member/profile/save', [MemberController::class, 'saveProfile']);

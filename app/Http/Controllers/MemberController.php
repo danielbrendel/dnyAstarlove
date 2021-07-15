@@ -384,13 +384,32 @@ class MemberController extends Controller
         try {
             $this->validateLogin();
 
-            $reason = request('reason', null);
-
-            ReportModel::add(auth()->id(), $id, $reason);
+            ReportModel::add(auth()->id(), $id, null);
 
             return back()->with('flash.success', __('app.reported_successfully'));
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Report a user
+     * 
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function reportUserReason($id)
+    {
+        try {
+            $this->validateLogin();
+
+            $reason = request('reason', null);
+
+            ReportModel::add(auth()->id(), $id, $reason);
+
+            return response()->json(array('code' => 200, 'msg' => __('app.reported_successfully')));
+        } catch (\Exception $e) {
+            return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
         }
     }
 

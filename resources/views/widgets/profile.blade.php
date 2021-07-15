@@ -128,7 +128,7 @@
 
 
                         <span class="float-right"><a href="{{ url('/member/ignore/' . $user->id) }}">{{ __('app.ignore') }}&nbsp;</a></span>
-                        <span class="float-right"><a href="{{ url('/member/report/' . $user->id) }}">{{ __('app.report') }}&nbsp;|&nbsp;</a></span>
+                        <span class="float-right"><a href="javascript:void(0);" onclick="window.vue.reportUser({{ $user->id }});">{{ __('app.report') }}&nbsp;|&nbsp;</a></span>
                     @else 
                         <span class="float-right"><a href="{{ url('/member/unignore/' . $user->id) }}">{{ __('app.unignore') }}</a></span>
                     @endif

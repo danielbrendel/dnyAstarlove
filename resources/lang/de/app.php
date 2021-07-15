@@ -248,7 +248,7 @@ return [
     'report_confirm_lock' => 'Möchtest du diesen Benutzer sperren?',
     'report_confirm_safe' => 'Soll der Nutzer als sicher markiert werden?',
     'user_deactivated' => 'Benutzer wurde deaktiviert',
-    'user_now_safe' => 'Nutzer ist jetzt unbedenklich',
+    'user_now_safe' => 'Nutzer wurde als bisher unbedenklich gesetzt',
     'report_reason' => 'Begründung',
     'newsletter_in_progress' => 'Der Newsletter wird jetzt verschickt',
     'mail_subject_register' => 'Konto Registrierung',
@@ -426,5 +426,6 @@ return [
     'announcement_created' => 'Ankündigung wurde erstellt',
     'dashboard_event_count' => 'Es werden derzeit <a href=":url"><b>:count</b></a> Veranstaltungen geplant.',
     'events_about' => 'Hier kannst du Veranstaltungen sehen oder erstellen. Veranstaltungen sind nützlich, um andere Benutzer zu treffen. Gehe auf eine Veranstaltung, um Details anzusehen und Aktionen auszuführen.',
-    'message_not_found' => 'Die Nachricht konnte nicht gefunden werden'
+    'message_not_found' => 'Die Nachricht konnte nicht gefunden werden',
+    'enter_report_reason' => 'Bitte gib den Grund an, weshalb du das Mitglied meldest.'
 ];

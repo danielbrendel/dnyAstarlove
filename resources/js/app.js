@@ -50,6 +50,7 @@ window.vue = new Vue({
             delete: 'Delete',
             edited: 'Edited',
             confirmDeleteEvent: 'Do you really want to delete this event?',
+            enterReportReason: 'Please enter the reason why you would like to report this user',
         },
 
         settingsTable: {
@@ -992,7 +993,18 @@ window.vue = new Vue({
             if (confirm(window.vue.translationTable.confirmDeleteEvent)) {
                 location.href = window.location.origin + '/events/delete/' + id;
             }
-        }
+        },
+
+        reportUser: function(id) {
+            let reason = prompt(this.translationTable.enterReportReason, '');
+            if (reason !== null) {
+                this.ajaxRequest('post', window.location.origin + '/member/report/reason/' + id, { reason: reason}, function(response) {
+                    if (response.code == 200) {
+                        alert(response.msg);
+                    }
+                });
+            }
+        },
     }
 });
 
