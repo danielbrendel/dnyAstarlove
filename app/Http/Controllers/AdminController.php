@@ -25,6 +25,7 @@ use App\Models\PhotoApprovalModel;
 use App\Models\EventsModel;
 use App\Models\EventsParticipantsModel;
 use App\Models\EventsThreadModel;
+use App\Models\AnnouncementsModel;
 
 /**
  * Class AdminController
@@ -749,6 +750,28 @@ class AdminController extends Controller
             $event->delete();
 
             return back()->with('flash.success', __('app.event_declined'));
+        } catch (\Exception $e) {
+            return back()->with('flash.error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Create an announcement
+     * 
+     * @return mixed
+     */
+    public function createAnnouncement()
+    {
+        try {
+            $attr = request()->validate([
+                'title' => 'required',
+                'content' => 'required',
+                'until' => 'required|date'
+            ]);
+
+            AnnouncementsModel::add($attr['title'], $attr['content'], date('Y-m-d 23:59:59', strtotime($attr['until'])));
+
+            return back()->with('flash.success', __('app.announcement_created'));
         } catch (\Exception $e) {
             return back()->with('flash.error', $e->getMessage());
         }

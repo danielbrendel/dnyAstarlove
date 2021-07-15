@@ -418,5 +418,10 @@ return [
     'no_more_events' => 'No more events',
     'not_approved_yet' => 'Not yet approved',
     'image_posted' => 'Image has been posted',
-    'send_image' => 'Send image'
+    'send_image' => 'Send image',
+    'announcements' => 'Announcements',
+    'title' => 'Title',
+    'content' => 'Content (HTML allowed)',
+    'until' => 'Date until',
+    'announcement_created' => 'Announcement has been created'
 ];

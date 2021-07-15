@@ -48,6 +48,7 @@
             <li><a href="#tab-page-16">{{ __('app.verification') }}</a></li>
             <li><a href="#tab-page-17">{{ __('app.approvals') }}</a></li>
             <li><a href="#tab-page-18">{{ __('app.events') }}</a></li>
+            <li><a href="#tab-page-19">{{ __('app.announcements') }}</a></li>
         </ul>
         <div class="border bd-default no-border-top p-2">
             <div id="tab-page-1">
@@ -803,6 +804,39 @@
                     @endforeach
                     </tbody>
                 </table>
+            </div>
+
+            <div id="tab-page-19">
+                <form method="POST" action="{{ url('/admin/announcements/create') }}">
+                    @csrf
+
+                    <div class="field">
+                        <label class="label">{{ __('app.title') }}</label>
+                        <div class="control">
+                            <input type="text" name="title">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">{{ __('app.content') }}</label>
+                        <div class="control">
+                            <textarea name="content"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">{{ __('app.until') }}</label>
+                        <div class="control">
+                            <input type="date" class="input" name="until">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <input type="submit" value="{{ __('app.create') }}">
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
 

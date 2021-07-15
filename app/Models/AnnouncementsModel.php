@@ -31,17 +31,17 @@ class AnnouncementsModel extends Model
      * 
      * @param $title
      * @param $content
-     * @param $duration
+     * @param $until
      * @return void
      * @throws \Exception
      */
-    public static function add($title, $content, $duration)
+    public static function add($title, $content, $until)
     {
         try {
             $item = new self();
             $item->title = $title;
             $item->content = $content;
-            $item->duration = $duration;
+            $item->until = $until;
             $item->save();
         } catch (\Exception $e) {
             throw $e;
