@@ -84,7 +84,7 @@
         @endguest
 
         @auth
-            <a href="{{ url('/logout') }}" class="navbar-item is-underline">
+            <a href="{{ url('/logout') }}" class="navbar-item">
                 {{ __('app.logout') }}
             </a>
         @endauth
