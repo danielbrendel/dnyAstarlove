@@ -588,7 +588,7 @@ window.vue = new Vue({
                         <span><i class="fas fa-clock"></i>&nbsp;` + elem.displayDate + `</span>
                         <span><i class="fas fa-map-marker-alt"></i>&nbsp;` + elem.location + `</span>
                         <span><i class="far fa-comments"></i>&nbsp;` + elem.commentCount + `</span>
-                        <span><i class="fas fa-users"></i>&nbsp;` + elem.participantCount + `</span>
+                        <span><i class="fas fa-users"></i>&nbsp;` + elem.entireCount + `</span>
                     </div>
                 </div>
             `;

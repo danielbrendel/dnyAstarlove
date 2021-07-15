@@ -2271,7 +2271,7 @@ window.vue = new Vue({
       return html;
     },
     renderEvent: function renderEvent(elem) {
-      var html = "\n                <div class=\"event-list-item is-pointer\" onclick=\"location.href = '" + window.location.origin + '/events/show/' + elem.id + "';\">\n                    <div class=\"event-list-name\">" + elem.name + "</div>\n\n                    <div class=\"event-list-info\">\n                        <span><i class=\"fas fa-clock\"></i>&nbsp;" + elem.displayDate + "</span>\n                        <span><i class=\"fas fa-map-marker-alt\"></i>&nbsp;" + elem.location + "</span>\n                        <span><i class=\"far fa-comments\"></i>&nbsp;" + elem.commentCount + "</span>\n                        <span><i class=\"fas fa-users\"></i>&nbsp;" + elem.participantCount + "</span>\n                    </div>\n                </div>\n            ";
+      var html = "\n                <div class=\"event-list-item is-pointer\" onclick=\"location.href = '" + window.location.origin + '/events/show/' + elem.id + "';\">\n                    <div class=\"event-list-name\">" + elem.name + "</div>\n\n                    <div class=\"event-list-info\">\n                        <span><i class=\"fas fa-clock\"></i>&nbsp;" + elem.displayDate + "</span>\n                        <span><i class=\"fas fa-map-marker-alt\"></i>&nbsp;" + elem.location + "</span>\n                        <span><i class=\"far fa-comments\"></i>&nbsp;" + elem.commentCount + "</span>\n                        <span><i class=\"fas fa-users\"></i>&nbsp;" + elem.entireCount + "</span>\n                    </div>\n                </div>\n            ";
       return html;
     },
     renderEventComment: function renderEventComment(elem) {

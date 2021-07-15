@@ -70,7 +70,7 @@ class EventsController extends Controller
                 $item->displayDate = date('Y-m-d', strtotime($item->dateOfEvent));
                 $item->location = ucfirst($item->location);
                 $item->commentCount = EventsThreadModel::where('eventId', '=', $item->id)->count();
-                $item->participantCount = EventsParticipantsModel::where('eventId', '=', $item->id)->count();
+                $item->entireCount = EventsParticipantsModel::where('eventId', '=', $item->id)->count();
             }
 
             return response()->json(array('code' => 200, 'data' => $data));
