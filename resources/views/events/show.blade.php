@@ -90,7 +90,7 @@
             <div class="event-small-headline">{{ __('app.interested') }}</div>
 
             <div>
-                @if (count($event->participants) === 0)
+                @if (count($event->interested) === 0)
                     <i>{{ __('app.no_interested_yet') }}</i>
                 @endif
 
