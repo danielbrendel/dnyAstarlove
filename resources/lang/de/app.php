@@ -427,5 +427,6 @@ return [
     'dashboard_event_count' => 'Es werden derzeit <a href=":url"><b>:count</b></a> Veranstaltungen geplant.',
     'events_about' => 'Hier kannst du Veranstaltungen sehen oder erstellen. Veranstaltungen sind nützlich, um andere Benutzer:innen zu treffen. Gehe auf eine Veranstaltung, um Details anzusehen und Aktionen auszuführen.',
     'message_not_found' => 'Die Nachricht konnte nicht gefunden werden',
-    'enter_report_reason' => 'Bitte gib den Grund an, weshalb du das Mitglied meldest.'
+    'enter_report_reason' => 'Bitte gib den Grund an, weshalb du das Mitglied meldest.',
+    'theme' => 'Theme'
 ];

@@ -49,6 +49,7 @@
             <li><a href="#tab-page-17">{{ __('app.approvals') }}</a></li>
             <li><a href="#tab-page-18">{{ __('app.events') }}</a></li>
             <li><a href="#tab-page-19">{{ __('app.announcements') }}</a></li>
+            <li><a href="#tab-page-20">{{ __('app.theme') }}</a></li>
         </ul>
         <div class="border bd-default no-border-top p-2">
             <div id="tab-page-1">
@@ -834,6 +835,29 @@
                     <div class="field">
                         <div class="control">
                             <input type="submit" value="{{ __('app.create') }}">
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div id="tab-page-20">
+                <form method="POST" action="{{ url('/admin/theme/save') }}">
+                    @csrf
+
+                    <div class="field">
+                        <label class="label">{{ __('app.theme') }}</label>
+                        <div class="control">
+                            <select name="theme">
+                                @foreach ($themes as $theme)
+                                    <option value="{{ $theme }}">{{ $theme }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <input type="submit" value="{{ __('app.save') }}">
                         </div>
                     </div>
                 </form>

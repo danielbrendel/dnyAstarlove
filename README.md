@@ -33,6 +33,7 @@ detailed first impressions of each other.
 + Pro-mode system
 + Photo approval system
 + Admin system
++ Theme system
 + HelpRealm integration
 + Twitter news integration
 + Installer

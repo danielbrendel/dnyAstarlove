@@ -21,7 +21,7 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('css/metro-all.min.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('css/quill.core.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('css/quill.snow.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ \App\Models\AppModel::getIncludableTheme() }}">
 
 <link rel="icon" type="image/png" href="{{ asset('logo.png') }}">
 

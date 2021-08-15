@@ -77,6 +77,7 @@ class AdminController extends Controller
 
         return view('admin.index', [
             'settings' => AppModel::getAppSettings(),
+            'themes' => AppModel::getThemeList(),
             'langs' => $langs,
             'features' => FeatureItemModel::getAll(),
             'faqs' => FaqModel::getAll(),
@@ -774,6 +775,26 @@ class AdminController extends Controller
             return back()->with('flash.success', __('app.announcement_created'));
         } catch (\Exception $e) {
             return back()->with('flash.error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Save theme
+     * 
+     * @return mixed
+     */
+    public function saveTheme()
+    {
+        try {
+            $attr = request()->validate([
+                'theme' => 'required'
+            ]);
+
+            AppModel::saveTheme($attr['theme']);
+
+            return back()->with('flash.success', __('app.data_saved'));
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
         }
     }
 }

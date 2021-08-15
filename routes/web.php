@@ -132,6 +132,7 @@ Route::any('/admin/approval/photo/{userId}/{which}/decline', [AdminController::c
 Route::any('/admin/event/{id}/approve', [AdminController::class, 'approveEvent']);
 Route::any('/admin/event/{id}/decline', [AdminController::class, 'declineEvent']);
 Route::post('/admin/announcements/create', [AdminController::class, 'createAnnouncement']);
+Route::post('/admin/theme/save', [AdminController::class, 'saveTheme']);
 
 Route::any('/cronjob/newsletter/{password}', [MainController::class, 'cronjob_newsletter']);
 

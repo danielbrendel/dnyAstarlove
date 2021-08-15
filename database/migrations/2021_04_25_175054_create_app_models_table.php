@@ -28,6 +28,7 @@ class CreateAppModelsTable extends Migration
             $table->id();
             $table->string('backgroundImage')->nullable();
             $table->string('alphaChannel')->nullable();
+            $table->string('theme')->default('_default');
             $table->string('headline')->nullable();
             $table->string('subline')->nullable();
             $table->text('description')->nullable();

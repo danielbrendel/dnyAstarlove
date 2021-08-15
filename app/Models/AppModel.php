@@ -407,4 +407,84 @@ class AppModel extends Model
             throw $e;
         }
     }
+
+    /**
+     * Get current theme
+     * 
+     * @return string
+     * @throws \Exception
+     */
+    public static function getCurrentTheme()
+    {
+        try {
+            return static::getAppSettings()->theme;
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Get includable theme full file name
+     * 
+     * @return string
+     * @throws \Exception
+     */
+    public static function getIncludableTheme()
+    {
+        try {
+            $theme = static::getAppSettings()->theme;
+
+            if ($theme === '_default') {
+                return asset('css/app.css');
+            }
+
+            return asset('css/themes/' . $theme . '.css');
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Get list of themes
+     * 
+     * @return array
+     * @throws \Exception
+     */
+    public static function getThemeList()
+    {
+        try {
+            $list = array();
+            $list[] = '_default';
+
+            $files = scandir(public_path() . '/css/themes');
+            foreach ($files as $file) {
+                $ext = pathinfo(public_path() . '/css/themes/' . $file, PATHINFO_EXTENSION);
+                if ($ext === 'css') {
+                    $list[] = pathinfo(public_path() . '/css/themes/' . $file, PATHINFO_FILENAME);
+                }
+            }
+
+            return $list;
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Save theme
+     * 
+     * @param $theme
+     * @return void
+     * @throws \Exception
+     */
+    public static function saveTheme($theme)
+    {
+        try {
+            $settings = static::getAppSettings();
+            $settings->theme = $theme;
+            $settings->save();
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
 }
