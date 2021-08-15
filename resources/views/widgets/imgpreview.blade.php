@@ -18,7 +18,7 @@
         </div>
     </div>
 
-    <div class="imgpreview-body">
+    <div class="imgpreview-body" id="imgpreview-body">
         <div class="imgpreview-switch">
             <div onclick="window.vue.displayNextPhoto('left');"><i class="fas fa-chevron-left fa-5x is-color-white is-pointer"></i></div>
         </div>

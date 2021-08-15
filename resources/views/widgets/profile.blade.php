@@ -15,7 +15,7 @@
             <div class="user-photos">
                 <div class="user-photos-avatar">
                     @if (!$user->ignored)
-                        <a id="imgpreview-photo-avatar" href="javascript:void(0);" onclick="window.vue.showImagePreview('avatar', '{{ $user->avatar_large }}', '{{ $user->name }}');"><img src="{{ asset('gfx/avatars/' . $user->avatar) }}" alt="avatar"></a>
+                        <a id="imgpreview-photo-avatar" href="javascript:void(0);" onclick="window.vue.showImagePreview('avatar', '{{ $user->avatar }}', '{{ $user->name }}');"><img src="{{ asset('gfx/avatars/' . $user->avatar) }}" alt="avatar"></a>
                     @else
                         <img src="{{ asset('gfx/avatars/default.png') }}" alt="avatar">
                     @endif
@@ -25,7 +25,7 @@
                     @if (!$user->ignored)
                         <div class="user-photos-photo">
                             @if ($user->photo1 !== null)
-                                <a id="imgpreview-photo-photo1" href="javascript:void(0);" onclick="window.vue.showImagePreview('photo1', '{{ $user->photo1_large }}', '{{ $user->name }}');"><img src="{{ asset('gfx/avatars/' . $user->photo1) }}" alt="photo"></a>
+                                <a id="imgpreview-photo-photo1" href="javascript:void(0);" onclick="window.vue.showImagePreview('photo1', '{{ $user->photo1 }}', '{{ $user->name }}');"><img src="{{ asset('gfx/avatars/' . $user->photo1) }}" alt="photo"></a>
                             @else
                                 <img src="{{ asset('gfx/avatars/default.png') }}" alt="photo">
                             @endif
@@ -33,7 +33,7 @@
 
                         <div class="user-photos-photo">
                             @if ($user->photo2 !== null)
-                                <a id="imgpreview-photo-photo2" href="javascript:void(0);" onclick="window.vue.showImagePreview('photo2', '{{ $user->photo2_large }}', '{{ $user->name }}');"><img src="{{ asset('gfx/avatars/' . $user->photo2) }}" alt="photo"></a>
+                                <a id="imgpreview-photo-photo2" href="javascript:void(0);" onclick="window.vue.showImagePreview('photo2', '{{ $user->photo2 }}', '{{ $user->name }}');"><img src="{{ asset('gfx/avatars/' . $user->photo2) }}" alt="photo"></a>
                             @else
                                 <img src="{{ asset('gfx/avatars/default.png') }}" alt="photo">
                             @endif
@@ -41,7 +41,7 @@
 
                         <div class="user-photos-photo">
                             @if ($user->photo3 !== null)
-                                <a id="imgpreview-photo-photo3" href="javascript:void(0);" onclick="window.vue.showImagePreview('photo3', '{{ $user->photo3_large }}', '{{ $user->name }}');"><img src="{{ asset('gfx/avatars/' . $user->photo3) }}" alt="photo"></a>
+                                <a id="imgpreview-photo-photo3" href="javascript:void(0);" onclick="window.vue.showImagePreview('photo3', '{{ $user->photo3 }}', '{{ $user->name }}');"><img src="{{ asset('gfx/avatars/' . $user->photo3) }}" alt="photo"></a>
                             @else
                                 <img src="{{ asset('gfx/avatars/default.png') }}" alt="photo">
                             @endif

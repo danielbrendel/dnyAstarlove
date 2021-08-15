@@ -1092,8 +1092,8 @@ a.navbar-item:hover {
     align-items: center;
 }
 .imgpreview-body img {
-    width: auto;
-    height: auto;
+    max-width: 100%;
+    max-height: 100%;
 }
 .imgpreview-switch {
     margin-left: 10px;
