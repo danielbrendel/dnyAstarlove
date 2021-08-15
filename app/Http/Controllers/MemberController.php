@@ -544,7 +544,10 @@ class MemberController extends Controller
 
             $data = VisitorModel::getVisitorPack(auth()->id(), env('APP_VISITORPACK', 20), $paginate);
             foreach ($data as &$item) {
-                $item['user'] = User::get($item['visitorId'])->toArray();
+                $item['user'] = User::get($item['visitorId']);
+                User::filterNonApprovedPhotos($item['user']);
+
+                $item['user'] = $item['user']->toArray();
             }
 
             return response()->json(array('code' => 200, 'data' => $data));
@@ -567,7 +570,9 @@ class MemberController extends Controller
 
             $data = LikeModel::queryReceivedLikes(auth()->id(), env('APP_LIKEPACK', 20), $paginate);
             foreach ($data as &$item) {
-                $item['user'] = User::get($item['userId'])->toArray();
+                $item['user'] = User::get($item['userId']);
+                User::filterNonApprovedPhotos($item['user']);
+                $item['user'] = $item['user']->toArray();
             }
 
             return response()->json(array('code' => 200, 'data' => $data));
@@ -590,7 +595,9 @@ class MemberController extends Controller
 
             $data = LikeModel::queryGivenLikes(auth()->id(), env('APP_LIKEPACK', 20), $paginate);
             foreach ($data as &$item) {
-                $item['user'] = User::get($item['likedUserId'])->toArray();
+                $item['user'] = User::get($item['likedUserId']);
+                User::filterNonApprovedPhotos($item['user']);
+                $item['user'] = $item['user']->toArray();
             }
 
             return response()->json(array('code' => 200, 'data' => $data));
@@ -613,7 +620,9 @@ class MemberController extends Controller
 
             $data = IgnoreModel::getIgnorePack(auth()->id(), env('APP_IGNOREPACK', 10), $paginate);
             foreach ($data as &$item) {
-                $item['user'] = User::get($item['targetId'])->toArray();
+                $item['user'] = User::get($item['targetId']);
+                User::filterNonApprovedPhotos($item['user']);
+                $item['user'] = $item['user']->toArray();
             }
 
             return response()->json(array('code' => 200, 'data' => $data));
