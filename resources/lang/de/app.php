@@ -35,7 +35,7 @@ return [
     'register_confirm_email' => 'Dein Konto wurde erstellt! Bitte bestätige jetzt noch deine E-Mail Adresse bevor du dich anmeldest. <a href="' . url('/resend') . '/:id">Bestätigungs-Link neu anfordern</a>',
     'resend_ok' => 'Bestätigungs-Nachricht wurde erneut gesendet. <a href="' . url('/resend') . '/:id">Nochmal</a>.',
     'register_confirmed_ok' => 'Dein Konto wurde bestätigt. Viel Spaß nun!',
-    'user_id_not_found_or_already_confirmed' => 'Benutzer nicht gefunden oder bereits bestätigt: :id',
+    'user_id_not_found_or_already_confirmed' => 'Benutzer:in nicht gefunden oder bereits bestätigt: :id',
     'password_confirm' => 'Passwort Bestätigung',
     'password_reset' => 'Passwort zurücksetzen',
     'reset' => 'Zurücksetzen',
@@ -72,7 +72,7 @@ return [
     'message_thread' => 'Unterhaltung mit :name',
     'send' => 'Senden',
     'message_sent' => 'Die Nachricht wurde gesendet',
-    'user_not_found_or_deactivated' => 'Benutzer nicht gefunden oder deaktiviert',
+    'user_not_found_or_deactivated' => 'Benutzer:in nicht gefunden oder deaktiviert',
     'profile' => 'Profil',
     'no_introduction_specified' => 'Keine Beschreibung angegeben',
     'no_information_specified' => 'Keine Informationen angegeben',
@@ -425,7 +425,7 @@ return [
     'until' => 'Bis wann anzeigen',
     'announcement_created' => 'Ankündigung wurde erstellt',
     'dashboard_event_count' => 'Es werden derzeit <a href=":url"><b>:count</b></a> Veranstaltungen geplant.',
-    'events_about' => 'Hier kannst du Veranstaltungen sehen oder erstellen. Veranstaltungen sind nützlich, um andere Benutzer zu treffen. Gehe auf eine Veranstaltung, um Details anzusehen und Aktionen auszuführen.',
+    'events_about' => 'Hier kannst du Veranstaltungen sehen oder erstellen. Veranstaltungen sind nützlich, um andere Benutzer:innen zu treffen. Gehe auf eine Veranstaltung, um Details anzusehen und Aktionen auszuführen.',
     'message_not_found' => 'Die Nachricht konnte nicht gefunden werden',
     'enter_report_reason' => 'Bitte gib den Grund an, weshalb du das Mitglied meldest.'
 ];
