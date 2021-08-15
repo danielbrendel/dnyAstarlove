@@ -383,6 +383,8 @@ window.vue = new Vue({
         },
 
         renderProfileForm: function(elem) {
+            const MAX_INFO_DISPLAY_LENGTH = 20;
+
             let online = '';
             if (elem.is_online) {
                 online = '<span class="profile-avatar-online"></span>';
@@ -397,15 +399,26 @@ window.vue = new Vue({
             if (rel_status === null) {
                 rel_status = 'n/a';
             }
+            if (rel_status.length >= MAX_INFO_DISPLAY_LENGTH - 3) {
+                rel_status = rel_status.substr(0, MAX_INFO_DISPLAY_LENGTH - 3) + '...';
+            }
 
             let location = elem.location;
             if (location === null) {
                 location = 'n/a';
             }
+            if (location.length >= MAX_INFO_DISPLAY_LENGTH - 3) {
+                location = location.substr(0, MAX_INFO_DISPLAY_LENGTH - 3) + '...';
+            }
 
             let introduction = elem.introduction;
             if (introduction === null) {
                 introduction = 'n/a';
+            }
+
+            let displayName = elem.name;
+            if (displayName.length >= MAX_INFO_DISPLAY_LENGTH - 3) {
+                displayName = displayName.substr(0, MAX_INFO_DISPLAY_LENGTH - 3) + '...';
             }
 
             let html = `
@@ -415,7 +428,7 @@ window.vue = new Vue({
                         ` + online + `
                     </div>
 
-                    <div class="profile-name"><a href="` + window.location.origin + '/user/' + elem.name + `">` + elem.name + `</a>` + verified + `</div>
+                    <div class="profile-name"><a href="` + window.location.origin + '/user/' + elem.name + `">` + displayName + `</a>` + verified + `</div>
 
                     <div class="profile-info">
                         <div><strong>` + this.translationTable.age + `: </strong>` + elem.age + `</div>

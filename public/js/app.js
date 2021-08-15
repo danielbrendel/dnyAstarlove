@@ -2188,6 +2188,7 @@ window.vue = new Vue({
       document.cookie = 'search_onlyverified=' + value + '; expires=' + expDate.toUTCString() + ';';
     },
     renderProfileForm: function renderProfileForm(elem) {
+      var MAX_INFO_DISPLAY_LENGTH = 20;
       var online = '';
 
       if (elem.is_online) {
@@ -2206,10 +2207,18 @@ window.vue = new Vue({
         rel_status = 'n/a';
       }
 
+      if (rel_status.length >= MAX_INFO_DISPLAY_LENGTH - 3) {
+        rel_status = rel_status.substr(0, MAX_INFO_DISPLAY_LENGTH - 3) + '...';
+      }
+
       var location = elem.location;
 
       if (location === null) {
         location = 'n/a';
+      }
+
+      if (location.length >= MAX_INFO_DISPLAY_LENGTH - 3) {
+        location = location.substr(0, MAX_INFO_DISPLAY_LENGTH - 3) + '...';
       }
 
       var introduction = elem.introduction;
@@ -2218,7 +2227,13 @@ window.vue = new Vue({
         introduction = 'n/a';
       }
 
-      var html = "\n                <div class=\"profile\">\n                    <div class=\"profile-avatar\">\n                        <a href=\"" + window.location.origin + '/user/' + elem.name + "\"><img src=\"" + window.location.origin + '/gfx/avatars/' + elem.avatar + "\" alt=\"avatar\"></a>\n                        " + online + "\n                    </div>\n\n                    <div class=\"profile-name\"><a href=\"" + window.location.origin + '/user/' + elem.name + "\">" + elem.name + "</a>" + verified + "</div>\n\n                    <div class=\"profile-info\">\n                        <div><strong>" + this.translationTable.age + ": </strong>" + elem.age + "</div>\n                        <div><strong>" + this.translationTable.status + ": </strong>" + rel_status + "</div>\n                        <div><strong>" + this.translationTable.location + ": </strong>" + location + "</div>\n                        <div><strong>" + this.translationTable.gender + ": </strong>" + elem.gender + "</div>\n                    </div>\n\n                    <div class=\"profile-introduction\">\n                        " + introduction + "\n                    </div>\n                </div>\n            ";
+      var displayName = elem.name;
+
+      if (displayName.length >= MAX_INFO_DISPLAY_LENGTH - 3) {
+        displayName = displayName.substr(0, MAX_INFO_DISPLAY_LENGTH - 3) + '...';
+      }
+
+      var html = "\n                <div class=\"profile\">\n                    <div class=\"profile-avatar\">\n                        <a href=\"" + window.location.origin + '/user/' + elem.name + "\"><img src=\"" + window.location.origin + '/gfx/avatars/' + elem.avatar + "\" alt=\"avatar\"></a>\n                        " + online + "\n                    </div>\n\n                    <div class=\"profile-name\"><a href=\"" + window.location.origin + '/user/' + elem.name + "\">" + displayName + "</a>" + verified + "</div>\n\n                    <div class=\"profile-info\">\n                        <div><strong>" + this.translationTable.age + ": </strong>" + elem.age + "</div>\n                        <div><strong>" + this.translationTable.status + ": </strong>" + rel_status + "</div>\n                        <div><strong>" + this.translationTable.location + ": </strong>" + location + "</div>\n                        <div><strong>" + this.translationTable.gender + ": </strong>" + elem.gender + "</div>\n                    </div>\n\n                    <div class=\"profile-introduction\">\n                        " + introduction + "\n                    </div>\n                </div>\n            ";
       return html;
     },
     renderMessageListItem: function renderMessageListItem(item) {
