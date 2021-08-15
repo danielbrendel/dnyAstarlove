@@ -325,6 +325,9 @@ a.navbar-item:hover {
 .profiles-filter-options {
     margin-top: 25px;
 }
+.profiles-content {
+    text-align: center;
+}
 .profile {
     position: relative;
     display: inline-block;
@@ -372,6 +375,7 @@ a.navbar-item:hover {
     position: relative;
     margin-left: 10px;
     margin-right: 10px;
+    text-align: left;
 }
 .profile-introduction {
     margin-top: 15px;
@@ -380,6 +384,7 @@ a.navbar-item:hover {
     padding: 10px;
     height: 120px;
     overflow-y: auto;
+    text-align: left;
 }
 .btn-margin {
     margin-right: 5px;
