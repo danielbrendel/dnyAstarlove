@@ -382,7 +382,7 @@ return [
     'edited' => 'Edited',
     'info_profile_visit' => 'Notify me about new profile visits',
     'online_user_count' => 'Currently there are :count users online',
-    'tab_scroll_hint' => 'Hint: you can scroll the following menu to both left and right',
+    'tab_scroll_hint' => 'Hint: you can scroll the following menu to both right and left',
     'events' => 'Events',
     'name' => 'Name',
     'dateOfEvent' => 'Date',

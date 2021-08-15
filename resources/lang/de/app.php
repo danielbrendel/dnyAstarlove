@@ -382,7 +382,7 @@ return [
     'edited' => 'Bearbeitet',
     'info_profile_visit' => 'Benachrichtigung erhalten bei neuen Profilbesuchern',
     'online_user_count' => 'Es sind gerade :count Mitglieder online',
-    'tab_scroll_hint' => 'Hinweis: Du kannst das nachfolgende Menu nach links und rechts scrollen',
+    'tab_scroll_hint' => 'Hinweis: Du kannst das nachfolgende Menu nach rechts und links scrollen',
     'events' => 'Veranstaltungen',
     'name' => 'Name',
     'dateOfEvent' => 'Datum',
