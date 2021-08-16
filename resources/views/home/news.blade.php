@@ -11,7 +11,7 @@
 
 @extends('layouts.layout_home')
 
-@section('title', env('APP_NAME') . ' - ' . __('app.imprint'))
+@section('title', env('APP_NAME') . ' - ' . __('app.news'))
 
 @section('content')
     <div class="form">

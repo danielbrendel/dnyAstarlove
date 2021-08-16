@@ -11,7 +11,7 @@
 
 @extends('layouts.layout_home')
 
-@section('title', env('APP_NAME') . ' - ' . __('app.about'))
+@section('title', env('APP_NAME') . ' - ' . __('app.faq'))
 
 @section('content')
     <div class="form">
