@@ -1018,12 +1018,12 @@ class User extends Authenticatable
                 throw new \Exception('Invalid photo type: ' . $which);
             }
 
-            if ($user->$which !== 'default.png') {
+            if (($user->$which !== 'default.png') && (strlen($user->$which) > 0)) {
                 unlink(public_path() . '/gfx/avatars/' . $user->$which);
             }
 
             $large = $which . '_large';
-            if ($user->$large !== 'default.png') {
+            if (($user->$large !== 'default.png') && (strlen($user->$large) > 0)) {
                 unlink(public_path() . '/gfx/avatars/' . $user->$large);
             }
 

@@ -428,5 +428,6 @@ return [
     'events_about' => 'Here you can view or create events. Events are occasions where you can meet other likeminded people. Go to an event in order to view details and perform actions.',
     'message_not_found' => 'Message could not be found',
     'enter_report_reason' => 'Please enter the reason why you want to report this user.',
-    'theme' => 'Theme'
+    'theme' => 'Theme',
+    'settings_photos_hint' => 'Click or tap on a photo to replace it'
 ];

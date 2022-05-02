@@ -428,5 +428,6 @@ return [
     'events_about' => 'Hier kannst du Veranstaltungen sehen oder erstellen. Veranstaltungen sind nützlich, um andere Benutzer:innen zu treffen. Gehe auf eine Veranstaltung, um Details anzusehen und Aktionen auszuführen.',
     'message_not_found' => 'Die Nachricht konnte nicht gefunden werden',
     'enter_report_reason' => 'Bitte gib den Grund an, weshalb du das Mitglied meldest.',
-    'theme' => 'Theme'
+    'theme' => 'Theme',
+    'settings_photos_hint' => 'Klicke oder tippe auf ein Foto, um es zu ersetzen.'
 ];

@@ -186,71 +186,87 @@
         </div>
 
         <div id="tabPhotos-form" class="tab-content is-hidden">
-            <form method="POST" action="{{ url('/member/photo/save') }}" enctype="multipart/form-data">
-                @csrf
-
-                <input type="hidden" name="which" value="avatar">
-
-                <div class="field">
-                    <div class="control">
-                        <span class="settings-photo-image"><img src="{{ asset('gfx/avatars/' . $user->avatar) }}" alt="avatar"></span>
-                        <span class="settings-photo-input"><input type="file" data-role="file" data-button-title="{{ __('app.select_photo') }}" name="image"></span>
-                        <span><button class="button is-success" type="submit">{{ __('app.save') }}</button></span>
-                        <span><a href="{{ url('/member/photo/avatar/delete') }}">{{ __('app.delete_photo') }}</a></span>
-                    </div>
-                </div>
-            </form>
-
+            <p>{{ __('app.settings_photos_hint') }}</p>
+            
             <br/>
 
-            <form method="POST" action="{{ url('/member/photo/save') }}" enctype="multipart/form-data">
-                @csrf
+            <div>
+                <form class="is-hidden" id="form-photo-avatar" method="POST" action="{{ url('/member/photo/save') }}" enctype="multipart/form-data">
+                    @csrf
 
-                <input type="hidden" name="which" value="photo1">
-
-                <div class="field">
-                    <div class="control">
-                        <span class="settings-photo-image"><img src="{{ asset('gfx/avatars/' . $user->photo1) }}" alt="photo"></span>
-                        <span class="settings-photo-input"><input type="file" data-role="file" data-button-title="{{ __('app.select_photo') }}" name="image"></span>
-                        <span><button class="button is-success" type="submit">{{ __('app.save') }}</button></span>
-                        <span><a href="{{ url('/member/photo/photo1/delete') }}">{{ __('app.delete_photo') }}</a></span>
-                    </div>
-                </div>
-            </form>
-
-            <br/>
-
-            <form method="POST" action="{{ url('/member/photo/save') }}" enctype="multipart/form-data">
-                @csrf
-
-                <input type="hidden" name="which" value="photo2">
+                    <input type="hidden" name="which" value="avatar">
+                    <input type="file" name="image" id="file-photo-avatar">
+                </form>
 
                 <div class="field">
                     <div class="control">
-                        <span class="settings-photo-image"><img src="{{ asset('gfx/avatars/' . $user->photo2) }}" alt="photo"></span>
-                        <span class="settings-photo-input"><input type="file" data-role="file" data-button-title="{{ __('app.select_photo') }}" name="image"></span>
-                        <span><button class="button is-success" type="submit">{{ __('app.save') }}</button></span>
-                        <span><a href="{{ url('/member/photo/photo2/delete') }}">{{ __('app.delete_photo') }}</a></span>
+                        <a href="javascript:void(0);" onclick="window.sendPhoto('avatar');">
+                            <img src="{{ asset('gfx/avatars/' . $user->avatar) }}" alt="Avatar" width="256" height="256"/>
+                        </a>
                     </div>
+                    <p><a href="{{ url('/member/photo/avatar/delete') }}">{{ __('app.delete_photo') }}</a></p>
                 </div>
-            </form>
 
-            <br/>
+                <br/>
+            </div>
 
-            <form method="POST" action="{{ url('/member/photo/save') }}" enctype="multipart/form-data">
-                @csrf
+            <div>
+                <form class="is-hidden" id="form-photo-photo1" method="POST" action="{{ url('/member/photo/save') }}" enctype="multipart/form-data">
+                    @csrf
 
-                <input type="hidden" name="which" value="photo3">
+                    <input type="hidden" name="which" value="photo1">
+                    <input type="file" name="image" id="file-photo-photo1">
+                </form>
 
                 <div class="field">
                     <div class="control">
-                        <span class="settings-photo-image"><img src="{{ asset('gfx/avatars/' . $user->photo3) }}" alt="photo"></span>
-                        <span class="settings-photo-input"><input type="file" data-role="file" data-button-title="{{ __('app.select_photo') }}" name="image"></span>
-                        <span><button class="button is-success" type="submit">{{ __('app.save') }}</button></span>
-                        <span><a href="{{ url('/member/photo/photo3/delete') }}">{{ __('app.delete_photo') }}</a></span>
+                        <a href="javascript:void(0);" onclick="window.sendPhoto('photo1');">
+                            <img src="{{ asset('gfx/avatars/' . $user->photo1) }}" alt="Photo1" width="256" height="256"/>
+                        </a>
                     </div>
+                    <p><a href="{{ url('/member/photo/photo1/delete') }}">{{ __('app.delete_photo') }}</a></p>
                 </div>
-            </form>
+
+                <br/>
+            </div>
+
+            <div>
+                <form class="is-hidden" id="form-photo-photo2" method="POST" action="{{ url('/member/photo/save') }}" enctype="multipart/form-data">
+                    @csrf
+
+                    <input type="hidden" name="which" value="photo2">
+                    <input type="file" name="image" id="file-photo-photo2">
+                </form>
+
+                <div class="field">
+                    <div class="control">
+                        <a href="javascript:void(0);" onclick="window.sendPhoto('photo2');">
+                            <img src="{{ asset('gfx/avatars/' . $user->photo2) }}" alt="Photo2" width="256" height="256"/>
+                        </a>
+                    </div>
+                    <p><a href="{{ url('/member/photo/photo2/delete') }}">{{ __('app.delete_photo') }}</a></p>
+                </div>
+
+                <br/>
+            </div>
+
+            <div>
+                <form class="is-hidden" id="form-photo-photo3" method="POST" action="{{ url('/member/photo/save') }}" enctype="multipart/form-data">
+                    @csrf
+
+                    <input type="hidden" name="which" value="photo3">
+                    <input type="file" name="image" id="file-photo-photo3">
+                </form>
+
+                <div class="field">
+                    <div class="control">
+                        <a href="javascript:void(0);" onclick="window.sendPhoto('photo3');">
+                            <img src="{{ asset('gfx/avatars/' . $user->photo3) }}" alt="Photo3" width="256" height="256"/>
+                        </a>
+                    </div>
+                    <p><a href="{{ url('/member/photo/photo3/delete') }}">{{ __('app.delete_photo') }}</a></p>
+                </div>
+            </div>
         </div>
 
         <div id="tabSecurity-form" class="tab-content is-hidden">
@@ -662,6 +678,14 @@
             form.appendChild(hiddenInput);
             form.submit();
         }
+
+        window.sendPhoto = function(which) {
+            document.getElementById('file-photo-' + which).onchange = function() {
+                document.getElementById('form-photo-' + which).submit();
+            };
+
+            document.getElementById('file-photo-' + which).click();
+        };
 
         document.addEventListener('DOMContentLoaded', function() {
             window.queryVisitors();
