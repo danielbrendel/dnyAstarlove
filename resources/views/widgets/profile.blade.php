@@ -133,7 +133,7 @@
                         <span class="float-right"><a href="{{ url('/member/unignore/' . $user->id) }}">{{ __('app.unignore') }}</a></span>
                     @endif
                 @else
-                    <span><a href="{{ url('/settings?tab=profile') }}">{{ __('app.edit_profile') }}</a></span>
+                    <span><a href="{{ url('/settings?tab=profile') }}">{{ __('app.edit_profile') }}</a> | <a href="{{ url('/settings?tab=photos') }}">{{ __('app.photos') }}</a></span>
                 @endif
             </div>
         </div>

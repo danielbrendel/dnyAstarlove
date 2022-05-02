@@ -54,6 +54,10 @@
         </div>
 
         <div id="tabProfile-form" class="tab-content is-hidden">
+            <div>
+                <a class="is-underline" href="{{ url('/settings?tab=photos') }}">{{ __('app.photos') }}</a><br/><br/>
+            </div>
+
             <form method="POST" action="{{ url('/member/profile/save') }}">
                 @csrf
 
