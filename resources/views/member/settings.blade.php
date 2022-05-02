@@ -369,6 +369,7 @@
         </div>
 
         <div id="tabMembership-form" class="tab-content is-hidden">
+            @if (env('APP_ACCOUNTVERIFICATION'))
             <div>
                 @if ($user->state === \App\Models\VerifyModel::STATE_INPROGRESS)
                     <strong>{{ __('app.verification_in_progress') }}</strong>
@@ -414,6 +415,7 @@
 
                 <hr/>
             </div>
+            @endif
 
             <div>
                 @if (env('STRIPE_ENABLE'))

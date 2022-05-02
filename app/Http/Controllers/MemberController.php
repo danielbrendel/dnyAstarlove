@@ -970,6 +970,10 @@ class MemberController extends Controller
         try {
             $this->validateLogin();
 
+            if (!env('APP_ACCOUNTVERIFICATION')) {
+                throw new Exception('Account verification is currently disabled');
+            }
+
             $attr = request()->validate([
                 'idcard_front' => 'required|file',
                 'idcard_back' => 'required|file',
