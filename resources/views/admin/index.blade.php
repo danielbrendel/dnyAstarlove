@@ -730,7 +730,9 @@
                         <th class="text-left">{{ __('app.approval_user') }}</th>
                         <th class="text-left">{{ __('app.approval_photo') }}</th>
                         <th class="text-right">{{ __('app.approve') }}</th>
+                        <th class="text-right">{{ __('app.approve_all') }}</th>
                         <th class="text-right">{{ __('app.decline') }}</th>
+                        <th class="text-right">{{ __('app.decline_all') }}</th>
                     </tr>
                     </thead>
 
@@ -754,7 +756,15 @@
                             </td>
 
                             <td>
+                                <a href="{{ url('/admin/approval/photo/' . $approval->user->id . '/all/approve') }}">{{ __('app.approve_all') }}</a>
+                            </td>
+
+                            <td>
                                 <a href="{{ url('/admin/approval/photo/' . $approval->user->id . '/' . $approval->which . '/decline') }}">{{ __('app.decline') }}</a>
+                            </td>
+
+                            <td>
+                                <a href="{{ url('/admin/approval/photo/' . $approval->user->id . '/all/decline') }}">{{ __('app.decline_all') }}</a>
                             </td>
                         </tr>
                     @endforeach

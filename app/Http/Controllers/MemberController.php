@@ -825,6 +825,7 @@ class MemberController extends Controller
     {
         try {
             User::deletePhoto($which);
+            PhotoApprovalModel::deleteRequest(auth()->id(), $which);
 
             return redirect('/settings?tab=photos')->with('flash.success', __('app.photo_deleted'));
         } catch (\Exception $e) {

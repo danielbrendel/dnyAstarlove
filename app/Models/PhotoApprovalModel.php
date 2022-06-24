@@ -98,13 +98,22 @@ class PhotoApprovalModel extends Model
     public static function approve($userId, $which)
     {
         try {
-            static::validatePhotoType($which);
+            if ($which !== 'all') {
+                static::validatePhotoType($which);
 
-            $item = static::where('userId', '=', $userId)->where('which', '=', $which)->first();
-            if ($item) {
+                $item = static::where('userId', '=', $userId)->where('which', '=', $which)->first();
+                if ($item) {
+                    PushModel::addNotification(__('app.approval_approved_short'), __('app.approval_approved_long'), 'PUSH_APPROVAL', $item->userId);
+
+                    $item->delete();
+                }
+            } else {
+                $items = static::where('userId', '=', $userId)->get();
+                foreach ($items as $item) {
+                    $item->delete();
+                }
+
                 PushModel::addNotification(__('app.approval_approved_short'), __('app.approval_approved_long'), 'PUSH_APPROVAL', $item->userId);
-
-                $item->delete();
             }
         } catch (\Exception $e) {
             throw $e;
@@ -122,24 +131,69 @@ class PhotoApprovalModel extends Model
     public static function decline($userId, $which)
     {
         try {
+            if ($which !== 'all') {
+                static::validatePhotoType($which);
+
+                $item = static::where('userId', '=', $userId)->where('which', '=', $which)->first();
+                if ($item) {
+                    $user = User::get($userId);
+                    if ($user) {
+                        $large = $which . '_large';
+
+                        unlink(public_path() . '/gfx/avatars/' . $user->$which);
+                        unlink(public_path() . '/gfx/avatars/' . $user->$large);
+
+                        $user->$which = 'default.png';
+                        $user->$large = 'default.png';
+                        $user->save();
+                    }
+
+                    PushModel::addNotification(__('app.approval_declined_short'), __('app.approval_declined_long'), 'PUSH_APPROVAL', $item->userId);
+
+                    $item->delete();
+                }
+            } else {
+                $user = User::get($userId);
+                if ($user) {
+                    $items = static::where('userId', '=', $userId)->get();
+
+                    foreach ($items as $item) {
+                        $which = $item->which;
+                        $large = $which . '_large';
+
+                        unlink(public_path() . '/gfx/avatars/' . $user->$which);
+                        unlink(public_path() . '/gfx/avatars/' . $user->$large);
+
+                        $user->$which = 'default.png';
+                        $user->$large = 'default.png';
+                        $user->save();
+
+                        $item->delete();
+                    }
+
+                    PushModel::addNotification(__('app.approval_declined_short'), __('app.approval_declined_long'), 'PUSH_APPROVAL', $item->userId);
+                }
+            }
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Delete photo approval request
+     * 
+     * @param $userId
+     * @param $which
+     * @return void
+     * @throws \Exception
+     */
+    public static function deleteRequest($userId, $which)
+    {
+        try {
             static::validatePhotoType($which);
 
             $item = static::where('userId', '=', $userId)->where('which', '=', $which)->first();
             if ($item) {
-                $user = User::get($userId);
-                if ($user) {
-                    $large = $which . '_large';
-
-                    unlink(public_path() . '/gfx/avatars/' . $user->$which);
-                    unlink(public_path() . '/gfx/avatars/' . $user->$large);
-
-                    $user->$which = 'default.png';
-                    $user->$large = 'default.png';
-                    $user->save();
-                }
-
-                PushModel::addNotification(__('app.approval_declined_short'), __('app.approval_declined_long'), 'PUSH_APPROVAL', $item->userId);
-
                 $item->delete();
             }
         } catch (\Exception $e) {
