@@ -55,6 +55,7 @@
             {!! __('app.dashboard_event_count', ['count' => $eventCount, 'url' => url('/events')]) !!}
         </p>
 
+        @if (env('APP_ACCOUNTVERIFICATION'))
         <p>
             @if ($user->verify_state == \App\Models\VerifyModel::STATE_INPROGRESS)
                 {{ __('app.dashboard_verification_inprogress') }}
@@ -66,6 +67,7 @@
                 {!! __('app.dashboard_not_verified', ['url' => url('/settings?tab=membership')]) !!}
             @endif
         </p>
+        @endif
 
         @if (env('STRIPE_ENABLE'))
             <p>
