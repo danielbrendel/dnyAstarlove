@@ -80,7 +80,7 @@
         @endif
 
         <p>
-            <strong>{{ __('app.last_members') }}:</strong><br>
+            <strong>{{ __('app.latest_members') }}:</strong><br>
             @include('widgets.lastmembers')
         </p>
     </div>

@@ -36,7 +36,7 @@
         @auth
 
         <a class="navbar-item" href="{{ url('/profiles') }}">
-            {{ __('app.profiles') }}
+            {{ __('app.members') }}
         </a>
 
         <a class="navbar-item" href="{{ url('/random') }}">

@@ -311,13 +311,16 @@ a.navbar-item:hover {
 
 .home-member {
   display: inline-block;
-  margin-left: 20px;
+  min-width: 99px;
+  margin-left: 10px;
   margin-right: 20px;
+  margin-bottom: 10px;
 }
 
 .home-member-avatar {
-  width: 64px;
+  width: 100%;
   height: 64px;
+  text-align: center;
 }
 
 .home-member-avatar img {
@@ -327,6 +330,7 @@ a.navbar-item:hover {
 }
 
 .home-member-name {
+  width: 100%;
   text-align: center;
   color: rgb(250, 250, 250);
 }
