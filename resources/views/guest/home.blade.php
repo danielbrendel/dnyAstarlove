@@ -41,7 +41,7 @@
         @endforeach
     </div>
 
-    <h3 class="is-color-white">{{ __('app.last_members') }}</h3>
+    <h3 class="is-color-white">{{ __('app.latest_members') }}</h3>
     <div class="home-members">
         @include('widgets.lastmembers')
     </div>
