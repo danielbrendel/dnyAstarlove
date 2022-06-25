@@ -1275,7 +1275,7 @@ a.navbar-item:hover {
 .forum-title {
   font-size: 1.2em;
   padding: 20px;
-  background-color: rgba(150, 150, 150, 0.4);
+  background-color: rgba(100, 100, 100, 0.4);
   color: rgb(200, 200, 200);
 }
 
@@ -1435,7 +1435,7 @@ a.navbar-item:hover {
 
 .last-poster-name {
   display: inline-block;
-  color: rgb(200, 200, 200);
+  color: rgb(50, 50, 50);
   font-size: 0.7em;
 }
 
@@ -1454,7 +1454,7 @@ a.navbar-item:hover {
 
 .last-poster-date {
   font-size: 0.7em;
-  color: rgb(150, 150, 150);
+  color: rgb(80, 80, 80);
 }
 
 .settings-photo-image img {

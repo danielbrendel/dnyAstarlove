@@ -26,6 +26,24 @@ use App\Models\ReportModel;
 class ForumController extends Controller
 {
     /**
+     * Construct object
+     * 
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->middleware(function ($request, $next) {
+            if (!env('APP_ENABLEFORUM')) {
+                return redirect('/');
+            }
+
+            return $next($request);
+        });
+    }
+    
+    /**
      * View forum index
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
