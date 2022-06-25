@@ -2087,6 +2087,12 @@ window.vue = new Vue({
     bShowCreateEvent: false,
     bShowEditEvent: false,
     bShowEditEventComment: false,
+    bShowReplyForumThread: false,
+    bShowEditForumThread: false,
+    bShowEditForumPost: false,
+    bShowCreateForum: false,
+    bShowEditForum: false,
+    bShowCreateThread: false,
     translationTable: {
       usernameOk: 'The given name is valid and available',
       invalidUsername: 'The name is invalid. Please use only alphanumeric characters, numbers 0-9 and the characters \'-\' and \'_\'. Also number only identifiers are considered invalid',
@@ -2106,10 +2112,13 @@ window.vue = new Vue({
       birthdayTooYoung: 'You must be at least N years old in order to register',
       report: 'Report',
       edit: 'Edit',
+      lock: 'Lock',
       "delete": 'Delete',
       edited: 'Edited',
       confirmDeleteEvent: 'Do you really want to delete this event?',
-      enterReportReason: 'Please enter the reason why you would like to report this user'
+      enterReportReason: 'Please enter the reason why you would like to report this user',
+      forumPostEdited: 'Edited',
+      confirmLockForumPost: 'Do you want to lock this forum post?'
     },
     settingsTable: {
       minRegAge: 21
@@ -2626,6 +2635,9 @@ window.vue = new Vue({
       } else if (elem.type === 'PUSH_GUESTBOOK') {
         icon = 'fas fa-book-open';
         color = 'is-notification-color-black';
+      } else if (elem.type === 'PUSH_FORUMREPLY') {
+        icon = 'fas fa-landmark';
+        color = 'is-notification-color-black';
       }
 
       var html = "\n                <div class=\"notification-item " + (newItem ? 'is-new-notification' : '') + "\" id=\"notification-item-" + elem.id + "\">\n                    <div class=\"notification-icon\">\n                        <div class=\"notification-item-icon\"><i class=\"" + icon + " fa-3x " + color + "\"></i></div>\n                    </div>\n                    <div class=\"notification-info\">\n                        <div class=\"notification-item-message\">" + elem.longMsg + "</div>\n                        <div class=\"notification-item-message is-color-grey is-font-size-small is-margin-top-5\">" + elem.diffForHumans + "</div>\n                    </div>\n                </div>\n            ";
@@ -2642,6 +2654,62 @@ window.vue = new Vue({
       }
 
       var html = "\n                <div class=\"favorites-item\">\n                    <div class=\"favorites-avatar\">\n                        <img src=\"" + window.location.origin + '/gfx/avatars/' + elem.user.avatar + "\" alt=\"avatar\">\n                    </div>\n\n                    <div class=\"favorites-info\">\n                        <div class=\"favorites-name\"><a href=\"" + window.location.origin + '/user/' + elem.user.name + "\">" + elem.user.name + "</a></div>\n                        " + status + "\n                    </div>\n\n                    <div class=\"favorites-action\">\n                        <a class=\"button is-success\" href=\"" + window.location.origin + '/messages/create?u=' + elem.user.name + "\">" + this.translationTable.message + "</a>\n                    </div>\n                </div>\n            ";
+      return html;
+    },
+    renderForumItem: function renderForumItem(item) {
+      var lastPoster = '';
+
+      if (item.lastUser !== null) {
+        lastPoster = "\n                    <div class=\"last-poster is-pointer\" onclick=\"location.href = '" + window.location.origin + '/forum/thread/' + item.lastUser.threadId + "/show';\">\n                        <div class=\"last-poster-avatar\"><img src=\"" + window.location.origin + '/gfx/avatars/' + item.lastUser.avatar + "\" alt=\"avatar\"></div>\n                        <div class=\"last-poster-userdata\">\n                            <div class=\"last-poster-name \">" + item.lastUser.name + "</div>\n                            <div class=\"last-poster-date\">" + item.lastUser.diffForHumans + "</div>\n                        </div>\n                    </div>\n                ";
+      }
+
+      var html = "\n                <div class=\"forum-item\">\n                    <div class=\"forum-title\">\n                        <div class=\"is-pointer is-breakall is-width-73-percent\" onclick=\"location.href = '" + window.location.origin + '/forum/' + item.id + "/show';\">" + item.name + "</div>\n                        " + lastPoster + "\n                    </div>\n                    <div class=\"forum-description is-pointer is-breakall\" onclick=\"location.href = '" + window.location.origin + '/forum/' + item.id + "/show';\">" + item.description + "</div>\n                </div>\n            ";
+      return html;
+    },
+    renderForumThreadItem: function renderForumThreadItem(item) {
+      var flags = '';
+
+      if (item.sticky) {
+        flags += '<i class="fas fa-thumbtack"></i> ';
+      }
+
+      if (item.locked) {
+        flags += '<i class="fas fa-lock"></i> ';
+      }
+
+      var html = "\n                <div class=\"forum-thread\">\n                    <div class=\"forum-thread-infos\">\n                        <div class=\"forum-thread-info-id\">#" + item.id + "</div>\n                        <div class=\"forum-thread-info-title is-breakall is-pointer\" onclick=\"location.href = '" + window.location.origin + '/forum/thread/' + item.id + "/show';\">" + flags + ' ' + item.title + "</div>\n                        <div class=\"forum-thread-info-lastposter\">\n                            <div class=\"forum-thread-info-lastposter-avatar\"><a href=\"" + window.location.origin + '/user/' + item.user.name + "\"><img src=\"" + window.location.origin + '/gfx/avatars/' + item.user.avatar + "\" alt=\"avatar\"/></a></div>\n                            <div class=\"forum-thread-info-lastposter-userinfo\">\n                                <div class=\"forum-thread-info-lastposter-userinfo-name\"><a href=\"" + window.location.origin + '/user/' + item.user.name + "\">" + item.user.name + "</a></div>\n                                <div class=\"forum-thread-info-lastposter-userinfo-date\">" + item.user.diffForHumans + "</div>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n            ";
+      return html;
+    },
+    renderForumPostingItem: function renderForumPostingItem(item) {
+      var admin = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      var owner = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+      var adminCode = '';
+
+      if (admin) {
+        adminCode = " | <a href=\"javascript:void(0);\" onclick=\"window.vue.lockForumPost(" + item.id + ");\">" + window.vue.translationTable.lock + "</a>";
+      }
+
+      if (admin && !owner) {
+        owner = true;
+      }
+
+      var ownerCode = '';
+
+      if (owner) {
+        ownerCode = " | <a href=\"javascript:void(0);\" onclick=\"document.getElementById('forum-post-id').value = '" + item.id + "'; document.getElementById('forum-edit-thread-post-post').value = document.getElementById('forum-posting-message-" + item.id + "').innerText; window.vue.bShowEditForumPost = true;\">" + window.vue.translationTable.edit + "</a>";
+      }
+
+      if (item.locked) {
+        item.message = '<i class="is-color-grey">' + item.message + '</i>';
+      }
+
+      var editedInfo = '';
+
+      if (item.created_at !== item.updated_at && !item.locked) {
+        editedInfo = '<br/><i class="is-color-dark is-font-small">' + window.vue.translationTable.forumPostEdited + ' ' + item.updatedAtDiff + '</i>';
+      }
+
+      var html = "\n                <div class=\"forum-posting\">\n                    <div class=\"forum-posting-userinfo\">\n                        <div class=\"forum-posting-userinfo-avatar\"><a href=\"" + window.location.origin + '/user/' + item.user.name + "\"><img src=\"" + window.location.origin + '/gfx/avatars/' + item.user.avatar + "\" alt=\"avatar\"/></a></div>\n                        <div class=\"forum-posting-userinfo-name\"><a href=\"" + window.location.origin + '/user/' + item.user.name + "\">" + item.user.name + "</a></div>\n                    </div>\n        \n                    <div class=\"forum-posting-message\">\n                        <div class=\"forum-posting-message-content\">\n                            <div id=\"forum-posting-message-" + item.id + "\" class=\"is-wordbreak\">" + item.message + "</div> " + editedInfo + "\n                        </div>\n        \n                        <div class=\"forum-posting-message-footer\">\n                            <span class=\"is-color-dark\" title=\"" + item.created_at + "\">" + item.diffForHumans + "</span> | <a href=\"javascript:void(0);\" onclick=\"window.vue.reportUser(" + item.user.id + ")\">" + window.vue.translationTable.report + "</a>" + adminCode + " " + ownerCode + "\n                        </div>\n                    </div>\n                </div>\n            ";
       return html;
     },
     toggleOverlay: function toggleOverlay(ident) {
@@ -2777,6 +2845,13 @@ window.vue = new Vue({
           if (response.code == 200) {
             alert(response.msg);
           }
+        });
+      }
+    },
+    lockForumPost: function lockForumPost(id) {
+      if (confirm(window.vue.translationTable.confirmLockForumPost)) {
+        window.vue.ajaxRequest('get', window.location.origin + '/forum/thread/post/' + id + '/lock', {}, function (response) {
+          alert(response.msg);
         });
       }
     }

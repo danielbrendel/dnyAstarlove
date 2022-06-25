@@ -26,6 +26,7 @@ detailed first impressions of each other.
 + Favorites system
 + Guestbook system
 + Events system
++ Forum system
 + E-Mail system
 + Reporting system
 + Ignore system

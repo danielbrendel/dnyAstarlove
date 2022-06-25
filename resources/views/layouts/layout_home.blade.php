@@ -330,10 +330,13 @@
                 window.vue.translationTable.birthdayTooYoung = '{{ __('app.register_min_age', ['min' => env('APP_MINREGISTERAGE')]) }}';
                 window.vue.translationTable.report = '{{ __('app.report') }}';
                 window.vue.translationTable.edit = '{{ __('app.edit') }}';
+                window.vue.translationTable.lock = '{{ __('app.lock') }}';
                 window.vue.translationTable.delete = '{{ __('app.delete') }}';
                 window.vue.translationTable.edited = '{{ __('app.edited') }}';
                 window.vue.translationTable.confirmDeleteEvent = '{{ __('app.confirm_delete_event') }}';
                 window.vue.translationTable.enterReportReason = '{{ __('app.enter_report_reason') }}';
+                window.vue.translationTable.forumPostEdited = '{{ __('app.forumPostEdited') }}';
+                window.vue.translationTable.confirmLockForumPost = '{{ __('app.confirmLockForumPost') }}';
                 window.vue.settingsTable.minRegAge = {{ env('APP_MINREGISTERAGE') }};
 
                 @auth

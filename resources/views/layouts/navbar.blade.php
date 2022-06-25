@@ -47,6 +47,12 @@
             {{ __('app.events') }}
         </a>
 
+        @if (env('APP_ENABLEFORUM'))
+            <a class="navbar-item" href="{{ url('/forum') }}">
+                {{ __('app.forum') }}
+            </a>
+        @endif
+
         <a class="navbar-item" href="javascript:void(0);" onclick="window.vue.toggleOverlay('favorites'); if (window.menuVisible) { document.getElementById('navbarMenu').classList.remove('is-active'); document.getElementById('navbarBurger').classList.remove('is-active'); }">
             {{ __('app.favorites') }}
         </a>

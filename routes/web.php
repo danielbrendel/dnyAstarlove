@@ -20,6 +20,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\InstallerController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\EventsController;
+use App\Http\Controllers\ForumController;
 
 Route::get('/', [MainController::class, 'index']);
 Route::get('/faq', [MainController::class, 'faq']);
@@ -102,6 +103,20 @@ Route::any('/events/{id}/participate/remove', [EventsController::class, 'removeP
 Route::any('/events/{id}/interested/add', [EventsController::class, 'addInterested']);
 Route::any('/events/{id}/interested/remove', [EventsController::class, 'removeInterested']);
 
+Route::get('/forum', [ForumController::class, 'index']);
+Route::post('/forum/list', [ForumController::class, 'list']);
+Route::get('/forum/{id}/show', [ForumController::class, 'show']);
+Route::post('/forum/{id}/list', [ForumController::class, 'threadList']);
+Route::get('/forum/thread/{id}/show', [ForumController::class, 'showThread']);
+Route::post('/forum/thread/{id}/posts', [ForumController::class, 'threadPostings']);
+Route::post('/forum/thread/create', [ForumController::class, 'createThread']);
+Route::post('/forum/thread/reply', [ForumController::class, 'replyThread']);
+Route::post('/forum/thread/edit', [ForumController::class, 'editThread']);
+Route::get('/forum/thread/post/{id}/show', [ForumController::class, 'showPost']);
+Route::any('/forum/thread/post/{id}/report', [ForumController::class, 'reportPost']);
+Route::any('/forum/thread/post/{id}/lock', [ForumController::class, 'lockPost']);
+Route::post('/forum/thread/post/edit', [ForumController::class, 'editPost']);
+
 Route::get('/admin', [AdminController::class, 'index']);
 Route::post('/admin/about/save', [AdminController::class, 'saveAbout']);
 Route::post('/admin/background/save', [AdminController::class, 'saveBackground']);
@@ -133,6 +148,10 @@ Route::any('/admin/event/{id}/approve', [AdminController::class, 'approveEvent']
 Route::any('/admin/event/{id}/decline', [AdminController::class, 'declineEvent']);
 Route::post('/admin/announcements/create', [AdminController::class, 'createAnnouncement']);
 Route::post('/admin/theme/save', [AdminController::class, 'saveTheme']);
+Route::post('/admin/forum/create', [AdminController::class, 'createForum']);
+Route::post('/admin/forum/edit', [AdminController::class, 'editForum']);
+Route::any('/admin/forum/{id}/lock', [AdminController::class, 'lockForum']);
+Route::any('/admin/forum/{id}/remove', [AdminController::class, 'removeForum']);
 
 Route::any('/cronjob/newsletter/{password}', [MainController::class, 'cronjob_newsletter']);
 

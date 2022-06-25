@@ -26,6 +26,7 @@ use App\Models\EventsModel;
 use App\Models\EventsParticipantsModel;
 use App\Models\EventsThreadModel;
 use App\Models\AnnouncementsModel;
+use App\Models\ForumModel;
 
 /**
  * Class AdminController
@@ -84,7 +85,8 @@ class AdminController extends Controller
             'reports' => ReportModel::getReportPack(),
             'verification_users' => VerifyModel::fetchPack(),
             'approvals' => $approvals,
-            'events' => $events
+            'events' => $events,
+            'forums' => ForumModel::all()
         ]);
     }
 
@@ -794,6 +796,81 @@ class AdminController extends Controller
 
             return back()->with('flash.success', __('app.data_saved'));
         } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Create forum
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function createForum()
+    {
+        try {
+            $attr = request()->validate([
+                'name' => 'required',
+                'description' => 'required'
+            ]);
+
+            ForumModel::add($attr['name'], $attr['description']);
+
+            return back()->with('flash.success', __('app.forum_created'));
+        } catch (Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Edit forum
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function editForum()
+    {
+        try {
+            $attr = request()->validate([
+                'id' => 'required|numeric',
+                'name' => 'required',
+                'description' => 'required'
+            ]);
+
+            ForumModel::edit($attr['id'], $attr['name'], $attr['description']);
+
+            return back()->with('flash.success', __('app.forum_edited'));
+        } catch (Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Lock forum
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function lockForum($id)
+    {
+        try {
+            ForumModel::lock($id);
+
+            return back()->with('flash.success', __('app.forum_locked'));
+        } catch (Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Remove forum
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function removeForum($id)
+    {
+        try {
+            ForumModel::remove($id);
+
+            return back()->with('flash.success', __('app.forum_removed'));
+        } catch (Exception $e) {
             return back()->with('error', $e->getMessage());
         }
     }
