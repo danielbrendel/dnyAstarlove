@@ -1160,6 +1160,16 @@ class User extends Authenticatable
                 $item->delete();
             }
 
+            $forumPosts = ForumPostModel::where('userId', '=', $userId)->get();
+            foreach ($forumPosts as $item) {
+                $item->delete();
+            }
+
+            $forumThreads = ForumThreadModel::where('ownerId', '=', $userId)->get();
+            foreach ($forumThreads as $item) {
+                $item->delete();
+            }
+
             $user->delete();
         } catch (\Exception $e) {
             throw $e;
