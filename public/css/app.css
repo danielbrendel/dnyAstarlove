@@ -196,6 +196,10 @@ a.is-link-blue:hover {
   text-decoration: underline;
 }
 
+.is-round {
+  border-radius: 50%;
+}
+
 .scroll-hint {
   font-size: 0.9em;
   margin-bottom: 10px;
